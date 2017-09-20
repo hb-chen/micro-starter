@@ -7,6 +7,8 @@ import (
 	"github.com/hb-go/micro/post/srv/subscriber"
 
 	example "github.com/hb-go/micro/post/srv/proto/example"
+	post "github.com/hb-go/micro/post/srv/proto/post"
+	comment "github.com/hb-go/micro/post/srv/proto/comment"
 )
 
 func main() {
@@ -24,6 +26,12 @@ func main() {
 
 	// Register Function as Subscriber
 	micro.RegisterSubscriber("topic.go.micro.srv.post", service.Server(), subscriber.Handler)
+
+	// Post
+	post.RegisterPostHandler(service.Server(), new(handler.Post))
+
+	// Comment
+	comment.RegisterCommentHandler(service.Server(), new(handler.Comment))
 
 	// Initialise service
 	service.Init()

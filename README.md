@@ -1,13 +1,27 @@
 # micro
 Go Micro 应用服务化治理实践
 
+### 模块创建
+```bash
+micro new --type srv --alias account github.com/hb-go/micro/account/srv
+micro new --type api --alias account github.com/hb-go/micro/account/api
+micro new --type web --alias account github.com/hb-go/micro/account/web
+```
+
 ### Protocol
 ```bash
 go get github.com/micro/protobuf/{proto,protoc-gen-go}
-protoc --go_out=plugins=micro:. greeter.proto
+protoc --go_out=plugins=micro:. account/srv/proto/example/example.proto
+
+# api中import "github.com/micro/go-api/proto/api.proto";
+# 报错:github.com/micro/go-api/proto/api.proto: File not found.
+# 需要增加依赖的路径 -I$GOPATH/src \
+protoc -I/usr/local/include -I. \
+  -I$GOPATH/src \
+  --go_out=plugins=micro:. \
+  post/api/proto/example/example.proto
 ```
 
-micro new demo
 
 ### API
 	micro api
@@ -31,8 +45,3 @@ micro new demo
 
 ### Web
 	micro --enable_stats web
-	
-### 模块创建
-micro new --type srv --alias account github.com/hb-go/micro/account/srv
-micro new --type api --alias account github.com/hb-go/micro/account/api
-micro new --type web --alias account github.com/hb-go/micro/account/web
