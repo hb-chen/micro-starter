@@ -80,6 +80,12 @@
   revision = "cdf30746f9f70dc7a366d3d885792a092fd83102"
 
 [[projects]]
+  name = "github.com/micro/micro"
+  packages = ["api/proto"]
+  revision = "1133b5ab77de4e49e9b99c709f0d52280765680d"
+  version = "v0.3.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/micro/misc"
   packages = ["lib/addr","lib/net","lib/tls"]
@@ -124,6 +130,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6a20f870f850c839d2c10c2445fa42951b858a82fc6f2dcda98dce894407d1db"
+  inputs-digest = "357a3b50e919a14995521efc0f8c7d5e14cbde8b65f3e648b5b06a04160c8b53"
   solver-name = "gps-cdcl"
   solver-version = 1

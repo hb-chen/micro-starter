@@ -8,13 +8,8 @@ It is generated from these files:
 	post/srv/proto/post/post.proto
 
 It has these top-level messages:
-	Message
-	Request
-	Response
-	StreamingRequest
-	StreamingResponse
-	Ping
-	Pong
+	ReqPost
+	RspPost
 */
 package go_micro_srv_post
 
@@ -39,134 +34,57 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Message struct {
-	Say string `protobuf:"bytes,1,opt,name=say" json:"say,omitempty"`
-	P   string `protobuf:"bytes,2,opt,name=p" json:"p,omitempty"`
+type ReqPost struct {
+	Id int64 `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
 }
 
-func (m *Message) Reset()                    { *m = Message{} }
-func (m *Message) String() string            { return proto.CompactTextString(m) }
-func (*Message) ProtoMessage()               {}
-func (*Message) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *ReqPost) Reset()                    { *m = ReqPost{} }
+func (m *ReqPost) String() string            { return proto.CompactTextString(m) }
+func (*ReqPost) ProtoMessage()               {}
+func (*ReqPost) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *Message) GetSay() string {
+func (m *ReqPost) GetId() int64 {
 	if m != nil {
-		return m.Say
-	}
-	return ""
-}
-
-func (m *Message) GetP() string {
-	if m != nil {
-		return m.P
-	}
-	return ""
-}
-
-type Request struct {
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-}
-
-func (m *Request) Reset()                    { *m = Request{} }
-func (m *Request) String() string            { return proto.CompactTextString(m) }
-func (*Request) ProtoMessage()               {}
-func (*Request) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
-
-func (m *Request) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-type Response struct {
-	Msg string `protobuf:"bytes,1,opt,name=msg" json:"msg,omitempty"`
-}
-
-func (m *Response) Reset()                    { *m = Response{} }
-func (m *Response) String() string            { return proto.CompactTextString(m) }
-func (*Response) ProtoMessage()               {}
-func (*Response) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
-
-func (m *Response) GetMsg() string {
-	if m != nil {
-		return m.Msg
-	}
-	return ""
-}
-
-type StreamingRequest struct {
-	Count int64 `protobuf:"varint,1,opt,name=count" json:"count,omitempty"`
-}
-
-func (m *StreamingRequest) Reset()                    { *m = StreamingRequest{} }
-func (m *StreamingRequest) String() string            { return proto.CompactTextString(m) }
-func (*StreamingRequest) ProtoMessage()               {}
-func (*StreamingRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
-
-func (m *StreamingRequest) GetCount() int64 {
-	if m != nil {
-		return m.Count
+		return m.Id
 	}
 	return 0
 }
 
-type StreamingResponse struct {
-	Count int64 `protobuf:"varint,1,opt,name=count" json:"count,omitempty"`
+type RspPost struct {
+	Id      int64  `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
+	Title   string `protobuf:"bytes,2,opt,name=title" json:"title,omitempty"`
+	Content string `protobuf:"bytes,3,opt,name=content" json:"content,omitempty"`
 }
 
-func (m *StreamingResponse) Reset()                    { *m = StreamingResponse{} }
-func (m *StreamingResponse) String() string            { return proto.CompactTextString(m) }
-func (*StreamingResponse) ProtoMessage()               {}
-func (*StreamingResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *RspPost) Reset()                    { *m = RspPost{} }
+func (m *RspPost) String() string            { return proto.CompactTextString(m) }
+func (*RspPost) ProtoMessage()               {}
+func (*RspPost) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *StreamingResponse) GetCount() int64 {
+func (m *RspPost) GetId() int64 {
 	if m != nil {
-		return m.Count
+		return m.Id
 	}
 	return 0
 }
 
-type Ping struct {
-	Stroke int64 `protobuf:"varint,1,opt,name=stroke" json:"stroke,omitempty"`
-}
-
-func (m *Ping) Reset()                    { *m = Ping{} }
-func (m *Ping) String() string            { return proto.CompactTextString(m) }
-func (*Ping) ProtoMessage()               {}
-func (*Ping) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
-
-func (m *Ping) GetStroke() int64 {
+func (m *RspPost) GetTitle() string {
 	if m != nil {
-		return m.Stroke
+		return m.Title
 	}
-	return 0
+	return ""
 }
 
-type Pong struct {
-	Stroke int64 `protobuf:"varint,1,opt,name=stroke" json:"stroke,omitempty"`
-}
-
-func (m *Pong) Reset()                    { *m = Pong{} }
-func (m *Pong) String() string            { return proto.CompactTextString(m) }
-func (*Pong) ProtoMessage()               {}
-func (*Pong) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
-
-func (m *Pong) GetStroke() int64 {
+func (m *RspPost) GetContent() string {
 	if m != nil {
-		return m.Stroke
+		return m.Content
 	}
-	return 0
+	return ""
 }
 
 func init() {
-	proto.RegisterType((*Message)(nil), "go.micro.srv.post.Message")
-	proto.RegisterType((*Request)(nil), "go.micro.srv.post.Request")
-	proto.RegisterType((*Response)(nil), "go.micro.srv.post.Response")
-	proto.RegisterType((*StreamingRequest)(nil), "go.micro.srv.post.StreamingRequest")
-	proto.RegisterType((*StreamingResponse)(nil), "go.micro.srv.post.StreamingResponse")
-	proto.RegisterType((*Ping)(nil), "go.micro.srv.post.Ping")
-	proto.RegisterType((*Pong)(nil), "go.micro.srv.post.Pong")
+	proto.RegisterType((*ReqPost)(nil), "go.micro.srv.post.ReqPost")
+	proto.RegisterType((*RspPost)(nil), "go.micro.srv.post.RspPost")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -177,9 +95,7 @@ var _ server.Option
 // Client API for Post service
 
 type PostClient interface {
-	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Post_StreamClient, error)
-	PingPong(ctx context.Context, opts ...client.CallOption) (Post_PingPongClient, error)
+	GetPost(ctx context.Context, in *ReqPost, opts ...client.CallOption) (*RspPost, error)
 }
 
 type postClient struct {
@@ -200,9 +116,9 @@ func NewPostClient(serviceName string, c client.Client) PostClient {
 	}
 }
 
-func (c *postClient) Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.serviceName, "Post.Call", in)
-	out := new(Response)
+func (c *postClient) GetPost(ctx context.Context, in *ReqPost, opts ...client.CallOption) (*RspPost, error) {
+	req := c.c.NewRequest(c.serviceName, "Post.GetPost", in)
+	out := new(RspPost)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -210,102 +126,10 @@ func (c *postClient) Call(ctx context.Context, in *Request, opts ...client.CallO
 	return out, nil
 }
 
-func (c *postClient) Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Post_StreamClient, error) {
-	req := c.c.NewRequest(c.serviceName, "Post.Stream", &StreamingRequest{})
-	stream, err := c.c.Stream(ctx, req, opts...)
-	if err != nil {
-		return nil, err
-	}
-	if err := stream.Send(in); err != nil {
-		return nil, err
-	}
-	return &postStreamClient{stream}, nil
-}
-
-type Post_StreamClient interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Recv() (*StreamingResponse, error)
-}
-
-type postStreamClient struct {
-	stream client.Streamer
-}
-
-func (x *postStreamClient) Close() error {
-	return x.stream.Close()
-}
-
-func (x *postStreamClient) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *postStreamClient) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *postStreamClient) Recv() (*StreamingResponse, error) {
-	m := new(StreamingResponse)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *postClient) PingPong(ctx context.Context, opts ...client.CallOption) (Post_PingPongClient, error) {
-	req := c.c.NewRequest(c.serviceName, "Post.PingPong", &Ping{})
-	stream, err := c.c.Stream(ctx, req, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &postPingPongClient{stream}, nil
-}
-
-type Post_PingPongClient interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Ping) error
-	Recv() (*Pong, error)
-}
-
-type postPingPongClient struct {
-	stream client.Streamer
-}
-
-func (x *postPingPongClient) Close() error {
-	return x.stream.Close()
-}
-
-func (x *postPingPongClient) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *postPingPongClient) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *postPingPongClient) Send(m *Ping) error {
-	return x.stream.Send(m)
-}
-
-func (x *postPingPongClient) Recv() (*Pong, error) {
-	m := new(Pong)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // Server API for Post service
 
 type PostHandler interface {
-	Call(context.Context, *Request, *Response) error
-	Stream(context.Context, *StreamingRequest, Post_StreamStream) error
-	PingPong(context.Context, Post_PingPongStream) error
+	GetPost(context.Context, *ReqPost, *RspPost) error
 }
 
 func RegisterPostHandler(s server.Server, hdlr PostHandler, opts ...server.HandlerOption) {
@@ -316,105 +140,23 @@ type Post struct {
 	PostHandler
 }
 
-func (h *Post) Call(ctx context.Context, in *Request, out *Response) error {
-	return h.PostHandler.Call(ctx, in, out)
-}
-
-func (h *Post) Stream(ctx context.Context, stream server.Streamer) error {
-	m := new(StreamingRequest)
-	if err := stream.Recv(m); err != nil {
-		return err
-	}
-	return h.PostHandler.Stream(ctx, m, &postStreamStream{stream})
-}
-
-type Post_StreamStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*StreamingResponse) error
-}
-
-type postStreamStream struct {
-	stream server.Streamer
-}
-
-func (x *postStreamStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *postStreamStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *postStreamStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *postStreamStream) Send(m *StreamingResponse) error {
-	return x.stream.Send(m)
-}
-
-func (h *Post) PingPong(ctx context.Context, stream server.Streamer) error {
-	return h.PostHandler.PingPong(ctx, &postPingPongStream{stream})
-}
-
-type Post_PingPongStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Pong) error
-	Recv() (*Ping, error)
-}
-
-type postPingPongStream struct {
-	stream server.Streamer
-}
-
-func (x *postPingPongStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *postPingPongStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *postPingPongStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *postPingPongStream) Send(m *Pong) error {
-	return x.stream.Send(m)
-}
-
-func (x *postPingPongStream) Recv() (*Ping, error) {
-	m := new(Ping)
-	if err := x.stream.Recv(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+func (h *Post) GetPost(ctx context.Context, in *ReqPost, out *RspPost) error {
+	return h.PostHandler.GetPost(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("post/srv/proto/post/post.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 282 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0x41, 0x4b, 0xf3, 0x40,
-	0x10, 0x86, 0xbb, 0x5f, 0xf3, 0xa5, 0x75, 0xf0, 0xd0, 0x0e, 0xa2, 0x25, 0x6a, 0x91, 0xd5, 0x43,
-	0x7a, 0xd9, 0x14, 0xfd, 0x05, 0xea, 0x59, 0x90, 0x78, 0xf0, 0x1c, 0xcb, 0xb2, 0x04, 0x9b, 0xdd,
-	0xb8, 0xb3, 0x2d, 0xf8, 0x87, 0xfd, 0x1d, 0xb2, 0x9b, 0x04, 0x44, 0x57, 0x2f, 0x61, 0x5e, 0x9e,
-	0x27, 0x2f, 0x33, 0x09, 0x2c, 0x5b, 0x43, 0xae, 0x20, 0xbb, 0x2f, 0x5a, 0x6b, 0x9c, 0x29, 0x42,
-	0xf4, 0x0f, 0x11, 0x32, 0xce, 0x95, 0x11, 0x4d, 0xbd, 0xb1, 0x46, 0x90, 0xdd, 0x0b, 0x0f, 0xf8,
-	0x0a, 0x26, 0x0f, 0x92, 0xa8, 0x52, 0x12, 0x67, 0x30, 0xa6, 0xea, 0x7d, 0xc1, 0x2e, 0x58, 0x7e,
-	0x50, 0xfa, 0x11, 0x0f, 0x81, 0xb5, 0x8b, 0x7f, 0x21, 0xb3, 0x96, 0x9f, 0xc3, 0xa4, 0x94, 0x6f,
-	0x3b, 0x49, 0x0e, 0x11, 0x12, 0x5d, 0x35, 0xb2, 0x77, 0xc3, 0xcc, 0xcf, 0x60, 0x5a, 0x4a, 0x6a,
-	0x8d, 0xa6, 0x50, 0xd5, 0x90, 0x1a, 0xaa, 0x1a, 0x52, 0x3c, 0x87, 0xd9, 0x93, 0xb3, 0xb2, 0x6a,
-	0x6a, 0xad, 0x86, 0x96, 0x23, 0xf8, 0xbf, 0x31, 0x3b, 0xed, 0x82, 0x37, 0x2e, 0xbb, 0xc0, 0x57,
-	0x30, 0xff, 0x62, 0xf6, 0x85, 0x71, 0x75, 0x09, 0xc9, 0x63, 0xad, 0x15, 0x1e, 0x43, 0x4a, 0xce,
-	0x9a, 0x57, 0xd9, 0xe3, 0x3e, 0x05, 0x6e, 0x7e, 0xe7, 0xd7, 0x1f, 0xcc, 0x0b, 0xe4, 0xf0, 0x16,
-	0x92, 0xfb, 0x6a, 0xbb, 0xc5, 0x4c, 0xfc, 0xf8, 0x42, 0xa2, 0xdf, 0x36, 0x3b, 0x8d, 0xb2, 0x6e,
-	0x3f, 0x3e, 0xc2, 0x67, 0x48, 0xbb, 0xb5, 0xf1, 0x32, 0x22, 0x7e, 0xbf, 0x3d, 0xbb, 0xfa, 0x5b,
-	0x1a, 0x6a, 0xd7, 0x0c, 0xef, 0x60, 0xea, 0x8f, 0x0c, 0x87, 0x9c, 0x44, 0xde, 0xf2, 0x30, 0x8b,
-	0x02, 0xa3, 0x15, 0x1f, 0xe5, 0x6c, 0xcd, 0x5e, 0xd2, 0xf0, 0xff, 0x6f, 0x3e, 0x03, 0x00, 0x00,
-	0xff, 0xff, 0x71, 0x47, 0x94, 0xc6, 0x21, 0x02, 0x00, 0x00,
+	// 169 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x2b, 0xc8, 0x2f, 0x2e,
+	0xd1, 0x2f, 0x2e, 0x2a, 0xd3, 0x2f, 0x28, 0xca, 0x2f, 0xc9, 0xd7, 0x07, 0x73, 0x41, 0x84, 0x1e,
+	0x98, 0x2f, 0x24, 0x98, 0x9e, 0xaf, 0x97, 0x9b, 0x99, 0x5c, 0x94, 0xaf, 0x57, 0x5c, 0x54, 0xa6,
+	0x07, 0x92, 0x50, 0x92, 0xe4, 0x62, 0x0f, 0x4a, 0x2d, 0x0c, 0xc8, 0x2f, 0x2e, 0x11, 0xe2, 0xe3,
+	0x62, 0xca, 0x4c, 0x91, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x0e, 0x62, 0xca, 0x4c, 0x51, 0xf2, 0xe4,
+	0x62, 0x0f, 0x2a, 0x2e, 0xc0, 0x26, 0x25, 0x24, 0xc2, 0xc5, 0x5a, 0x92, 0x59, 0x92, 0x93, 0x2a,
+	0xc1, 0xa4, 0xc0, 0xa8, 0xc1, 0x19, 0x04, 0xe1, 0x08, 0x49, 0x70, 0xb1, 0x27, 0xe7, 0xe7, 0x95,
+	0xa4, 0xe6, 0x95, 0x48, 0x30, 0x83, 0xc5, 0x61, 0x5c, 0x23, 0x6f, 0x2e, 0x16, 0xb0, 0x39, 0xce,
+	0x5c, 0xec, 0xee, 0xa9, 0x25, 0x60, 0xa6, 0x94, 0x1e, 0x86, 0x63, 0xf4, 0xa0, 0x2e, 0x91, 0xc2,
+	0x2a, 0x07, 0x71, 0x8a, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x33, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0xef, 0x6c, 0xe5, 0x8b, 0xee, 0x00, 0x00, 0x00,
 }

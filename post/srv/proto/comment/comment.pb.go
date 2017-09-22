@@ -8,13 +8,9 @@ It is generated from these files:
 	post/srv/proto/comment/comment.proto
 
 It has these top-level messages:
-	Message
-	Request
-	Response
-	StreamingRequest
-	StreamingResponse
-	Ping
-	Pong
+	ReqComment
+	RspComments
+	CommentDto
 */
 package go_micro_srv_post
 
@@ -39,126 +35,58 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Message struct {
-	Say string `protobuf:"bytes,1,opt,name=say" json:"say,omitempty"`
+type ReqComment struct {
+	Id int64 `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
 }
 
-func (m *Message) Reset()                    { *m = Message{} }
-func (m *Message) String() string            { return proto.CompactTextString(m) }
-func (*Message) ProtoMessage()               {}
-func (*Message) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *ReqComment) Reset()                    { *m = ReqComment{} }
+func (m *ReqComment) String() string            { return proto.CompactTextString(m) }
+func (*ReqComment) ProtoMessage()               {}
+func (*ReqComment) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *Message) GetSay() string {
+func (m *ReqComment) GetId() int64 {
 	if m != nil {
-		return m.Say
+		return m.Id
+	}
+	return 0
+}
+
+type RspComments struct {
+	Comments []*CommentDto `protobuf:"bytes,1,rep,name=comments" json:"comments,omitempty"`
+}
+
+func (m *RspComments) Reset()                    { *m = RspComments{} }
+func (m *RspComments) String() string            { return proto.CompactTextString(m) }
+func (*RspComments) ProtoMessage()               {}
+func (*RspComments) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+
+func (m *RspComments) GetComments() []*CommentDto {
+	if m != nil {
+		return m.Comments
+	}
+	return nil
+}
+
+type CommentDto struct {
+	Content string `protobuf:"bytes,1,opt,name=content" json:"content,omitempty"`
+}
+
+func (m *CommentDto) Reset()                    { *m = CommentDto{} }
+func (m *CommentDto) String() string            { return proto.CompactTextString(m) }
+func (*CommentDto) ProtoMessage()               {}
+func (*CommentDto) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+
+func (m *CommentDto) GetContent() string {
+	if m != nil {
+		return m.Content
 	}
 	return ""
-}
-
-type Request struct {
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-}
-
-func (m *Request) Reset()                    { *m = Request{} }
-func (m *Request) String() string            { return proto.CompactTextString(m) }
-func (*Request) ProtoMessage()               {}
-func (*Request) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
-
-func (m *Request) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-type Response struct {
-	Msg string `protobuf:"bytes,1,opt,name=msg" json:"msg,omitempty"`
-}
-
-func (m *Response) Reset()                    { *m = Response{} }
-func (m *Response) String() string            { return proto.CompactTextString(m) }
-func (*Response) ProtoMessage()               {}
-func (*Response) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
-
-func (m *Response) GetMsg() string {
-	if m != nil {
-		return m.Msg
-	}
-	return ""
-}
-
-type StreamingRequest struct {
-	Count int64 `protobuf:"varint,1,opt,name=count" json:"count,omitempty"`
-}
-
-func (m *StreamingRequest) Reset()                    { *m = StreamingRequest{} }
-func (m *StreamingRequest) String() string            { return proto.CompactTextString(m) }
-func (*StreamingRequest) ProtoMessage()               {}
-func (*StreamingRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
-
-func (m *StreamingRequest) GetCount() int64 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
-type StreamingResponse struct {
-	Count int64 `protobuf:"varint,1,opt,name=count" json:"count,omitempty"`
-}
-
-func (m *StreamingResponse) Reset()                    { *m = StreamingResponse{} }
-func (m *StreamingResponse) String() string            { return proto.CompactTextString(m) }
-func (*StreamingResponse) ProtoMessage()               {}
-func (*StreamingResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
-
-func (m *StreamingResponse) GetCount() int64 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
-type Ping struct {
-	Stroke int64 `protobuf:"varint,1,opt,name=stroke" json:"stroke,omitempty"`
-}
-
-func (m *Ping) Reset()                    { *m = Ping{} }
-func (m *Ping) String() string            { return proto.CompactTextString(m) }
-func (*Ping) ProtoMessage()               {}
-func (*Ping) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
-
-func (m *Ping) GetStroke() int64 {
-	if m != nil {
-		return m.Stroke
-	}
-	return 0
-}
-
-type Pong struct {
-	Stroke int64 `protobuf:"varint,1,opt,name=stroke" json:"stroke,omitempty"`
-}
-
-func (m *Pong) Reset()                    { *m = Pong{} }
-func (m *Pong) String() string            { return proto.CompactTextString(m) }
-func (*Pong) ProtoMessage()               {}
-func (*Pong) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
-
-func (m *Pong) GetStroke() int64 {
-	if m != nil {
-		return m.Stroke
-	}
-	return 0
 }
 
 func init() {
-	proto.RegisterType((*Message)(nil), "go.micro.srv.post.Message")
-	proto.RegisterType((*Request)(nil), "go.micro.srv.post.Request")
-	proto.RegisterType((*Response)(nil), "go.micro.srv.post.Response")
-	proto.RegisterType((*StreamingRequest)(nil), "go.micro.srv.post.StreamingRequest")
-	proto.RegisterType((*StreamingResponse)(nil), "go.micro.srv.post.StreamingResponse")
-	proto.RegisterType((*Ping)(nil), "go.micro.srv.post.Ping")
-	proto.RegisterType((*Pong)(nil), "go.micro.srv.post.Pong")
+	proto.RegisterType((*ReqComment)(nil), "go.micro.srv.post.ReqComment")
+	proto.RegisterType((*RspComments)(nil), "go.micro.srv.post.RspComments")
+	proto.RegisterType((*CommentDto)(nil), "go.micro.srv.post.CommentDto")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -169,9 +97,7 @@ var _ server.Option
 // Client API for Comment service
 
 type CommentClient interface {
-	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Comment_StreamClient, error)
-	PingPong(ctx context.Context, opts ...client.CallOption) (Comment_PingPongClient, error)
+	GetComments(ctx context.Context, in *ReqComment, opts ...client.CallOption) (*RspComments, error)
 }
 
 type commentClient struct {
@@ -192,9 +118,9 @@ func NewCommentClient(serviceName string, c client.Client) CommentClient {
 	}
 }
 
-func (c *commentClient) Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.serviceName, "Comment.Call", in)
-	out := new(Response)
+func (c *commentClient) GetComments(ctx context.Context, in *ReqComment, opts ...client.CallOption) (*RspComments, error) {
+	req := c.c.NewRequest(c.serviceName, "Comment.GetComments", in)
+	out := new(RspComments)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -202,102 +128,10 @@ func (c *commentClient) Call(ctx context.Context, in *Request, opts ...client.Ca
 	return out, nil
 }
 
-func (c *commentClient) Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Comment_StreamClient, error) {
-	req := c.c.NewRequest(c.serviceName, "Comment.Stream", &StreamingRequest{})
-	stream, err := c.c.Stream(ctx, req, opts...)
-	if err != nil {
-		return nil, err
-	}
-	if err := stream.Send(in); err != nil {
-		return nil, err
-	}
-	return &commentStreamClient{stream}, nil
-}
-
-type Comment_StreamClient interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Recv() (*StreamingResponse, error)
-}
-
-type commentStreamClient struct {
-	stream client.Streamer
-}
-
-func (x *commentStreamClient) Close() error {
-	return x.stream.Close()
-}
-
-func (x *commentStreamClient) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *commentStreamClient) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *commentStreamClient) Recv() (*StreamingResponse, error) {
-	m := new(StreamingResponse)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *commentClient) PingPong(ctx context.Context, opts ...client.CallOption) (Comment_PingPongClient, error) {
-	req := c.c.NewRequest(c.serviceName, "Comment.PingPong", &Ping{})
-	stream, err := c.c.Stream(ctx, req, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &commentPingPongClient{stream}, nil
-}
-
-type Comment_PingPongClient interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Ping) error
-	Recv() (*Pong, error)
-}
-
-type commentPingPongClient struct {
-	stream client.Streamer
-}
-
-func (x *commentPingPongClient) Close() error {
-	return x.stream.Close()
-}
-
-func (x *commentPingPongClient) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *commentPingPongClient) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *commentPingPongClient) Send(m *Ping) error {
-	return x.stream.Send(m)
-}
-
-func (x *commentPingPongClient) Recv() (*Pong, error) {
-	m := new(Pong)
-	err := x.stream.Recv(m)
-	if err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // Server API for Comment service
 
 type CommentHandler interface {
-	Call(context.Context, *Request, *Response) error
-	Stream(context.Context, *StreamingRequest, Comment_StreamStream) error
-	PingPong(context.Context, Comment_PingPongStream) error
+	GetComments(context.Context, *ReqComment, *RspComments) error
 }
 
 func RegisterCommentHandler(s server.Server, hdlr CommentHandler, opts ...server.HandlerOption) {
@@ -308,105 +142,24 @@ type Comment struct {
 	CommentHandler
 }
 
-func (h *Comment) Call(ctx context.Context, in *Request, out *Response) error {
-	return h.CommentHandler.Call(ctx, in, out)
-}
-
-func (h *Comment) Stream(ctx context.Context, stream server.Streamer) error {
-	m := new(StreamingRequest)
-	if err := stream.Recv(m); err != nil {
-		return err
-	}
-	return h.CommentHandler.Stream(ctx, m, &commentStreamStream{stream})
-}
-
-type Comment_StreamStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*StreamingResponse) error
-}
-
-type commentStreamStream struct {
-	stream server.Streamer
-}
-
-func (x *commentStreamStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *commentStreamStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *commentStreamStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *commentStreamStream) Send(m *StreamingResponse) error {
-	return x.stream.Send(m)
-}
-
-func (h *Comment) PingPong(ctx context.Context, stream server.Streamer) error {
-	return h.CommentHandler.PingPong(ctx, &commentPingPongStream{stream})
-}
-
-type Comment_PingPongStream interface {
-	SendMsg(interface{}) error
-	RecvMsg(interface{}) error
-	Close() error
-	Send(*Pong) error
-	Recv() (*Ping, error)
-}
-
-type commentPingPongStream struct {
-	stream server.Streamer
-}
-
-func (x *commentPingPongStream) Close() error {
-	return x.stream.Close()
-}
-
-func (x *commentPingPongStream) SendMsg(m interface{}) error {
-	return x.stream.Send(m)
-}
-
-func (x *commentPingPongStream) RecvMsg(m interface{}) error {
-	return x.stream.Recv(m)
-}
-
-func (x *commentPingPongStream) Send(m *Pong) error {
-	return x.stream.Send(m)
-}
-
-func (x *commentPingPongStream) Recv() (*Ping, error) {
-	m := new(Ping)
-	if err := x.stream.Recv(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+func (h *Comment) GetComments(ctx context.Context, in *ReqComment, out *RspComments) error {
+	return h.CommentHandler.GetComments(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("post/srv/proto/comment/comment.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 278 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0xc1, 0x4a, 0xc3, 0x40,
-	0x10, 0x86, 0xbb, 0x34, 0x26, 0x75, 0x4e, 0xed, 0x22, 0x2a, 0xa9, 0x8a, 0xac, 0x3d, 0xc4, 0xcb,
-	0xa6, 0xe8, 0x13, 0x68, 0xcf, 0x82, 0xc4, 0x83, 0xe7, 0x18, 0x96, 0x25, 0xd8, 0xdd, 0x89, 0x3b,
-	0xdb, 0x82, 0x8f, 0xec, 0x5b, 0x48, 0x36, 0x09, 0x88, 0xc6, 0x9e, 0x32, 0x93, 0xef, 0xff, 0x87,
-	0xf9, 0x67, 0x61, 0xd5, 0x20, 0xf9, 0x9c, 0xdc, 0x3e, 0x6f, 0x1c, 0x7a, 0xcc, 0x2b, 0x34, 0x46,
-	0x59, 0x3f, 0x7c, 0x65, 0xf8, 0xcb, 0x17, 0x1a, 0xa5, 0xa9, 0x2b, 0x87, 0x92, 0xdc, 0x5e, 0xb6,
-	0x16, 0xb1, 0x84, 0xe4, 0x49, 0x11, 0x95, 0x5a, 0xf1, 0x39, 0x4c, 0xa9, 0xfc, 0x3c, 0x67, 0xd7,
-	0x2c, 0x3b, 0x2e, 0xda, 0x52, 0x5c, 0x42, 0x52, 0xa8, 0x8f, 0x9d, 0x22, 0xcf, 0x39, 0x44, 0xb6,
-	0x34, 0xaa, 0xa7, 0xa1, 0x16, 0x17, 0x30, 0x2b, 0x14, 0x35, 0x68, 0x29, 0x98, 0x0d, 0xe9, 0xc1,
-	0x6c, 0x48, 0x8b, 0x0c, 0xe6, 0x2f, 0xde, 0xa9, 0xd2, 0xd4, 0x56, 0x0f, 0x53, 0x4e, 0xe0, 0xa8,
-	0xc2, 0x9d, 0xf5, 0x41, 0x37, 0x2d, 0xba, 0x46, 0xdc, 0xc2, 0xe2, 0x87, 0xb2, 0x1f, 0x38, 0x2e,
-	0xbd, 0x82, 0xe8, 0xb9, 0xb6, 0x9a, 0x9f, 0x42, 0x4c, 0xde, 0xe1, 0xbb, 0xea, 0x71, 0xdf, 0x05,
-	0x8e, 0xff, 0xf3, 0xbb, 0x2f, 0x06, 0xc9, 0xa6, 0xbb, 0x09, 0x7f, 0x80, 0x68, 0x53, 0x6e, 0xb7,
-	0x3c, 0x95, 0x7f, 0xce, 0x22, 0xfb, 0x85, 0xd3, 0xe5, 0x28, 0xeb, 0x56, 0x14, 0x13, 0xfe, 0x0a,
-	0x71, 0xb7, 0x39, 0xbf, 0x19, 0x11, 0xfe, 0x8e, 0x9f, 0xae, 0x0e, 0x8b, 0x86, 0xb1, 0x6b, 0xc6,
-	0x1f, 0x61, 0xd6, 0xe6, 0x0c, 0x59, 0xce, 0x46, 0x5c, 0x2d, 0x4c, 0x47, 0x01, 0x5a, 0x2d, 0x26,
-	0x19, 0x5b, 0xb3, 0xb7, 0x38, 0x3c, 0xfa, 0xfd, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0x08, 0xbd,
-	0x97, 0x94, 0x1c, 0x02, 0x00, 0x00,
+	// 188 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0x29, 0xc8, 0x2f, 0x2e,
+	0xd1, 0x2f, 0x2e, 0x2a, 0xd3, 0x2f, 0x28, 0xca, 0x2f, 0xc9, 0xd7, 0x4f, 0xce, 0xcf, 0xcd, 0x4d,
+	0xcd, 0x2b, 0x81, 0xd1, 0x7a, 0x60, 0x51, 0x21, 0xc1, 0xf4, 0x7c, 0xbd, 0xdc, 0xcc, 0xe4, 0xa2,
+	0x7c, 0xbd, 0xe2, 0xa2, 0x32, 0x3d, 0x90, 0x16, 0x25, 0x19, 0x2e, 0xae, 0xa0, 0xd4, 0x42, 0x67,
+	0x88, 0x32, 0x21, 0x3e, 0x2e, 0xa6, 0xcc, 0x14, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xe6, 0x20, 0xa6,
+	0xcc, 0x14, 0x25, 0x0f, 0x2e, 0xee, 0xa0, 0xe2, 0x02, 0xa8, 0x6c, 0xb1, 0x90, 0x25, 0x17, 0x07,
+	0xd4, 0xc0, 0x62, 0x09, 0x46, 0x05, 0x66, 0x0d, 0x6e, 0x23, 0x59, 0x3d, 0x0c, 0x23, 0xf5, 0xa0,
+	0xca, 0x5d, 0x4a, 0xf2, 0x83, 0xe0, 0xca, 0x95, 0xd4, 0xb8, 0xb8, 0x10, 0xe2, 0x42, 0x12, 0x5c,
+	0xec, 0xc9, 0xf9, 0x79, 0x25, 0xa9, 0x79, 0x25, 0x60, 0xcb, 0x38, 0x83, 0x60, 0x5c, 0xa3, 0x48,
+	0x2e, 0x76, 0x98, 0x63, 0xfc, 0xb8, 0xb8, 0xdd, 0x53, 0x4b, 0xe0, 0x96, 0x63, 0xb3, 0x0a, 0xe1,
+	0x74, 0x29, 0x39, 0x6c, 0xd2, 0x08, 0xb7, 0x2b, 0x31, 0x24, 0xb1, 0x81, 0x03, 0xc1, 0x18, 0x10,
+	0x00, 0x00, 0xff, 0xff, 0x9d, 0xef, 0x35, 0x9f, 0x2c, 0x01, 0x00, 0x00,
 }

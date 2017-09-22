@@ -8,6 +8,7 @@ import (
 	"github.com/hb-go/micro/post/api/client"
 
 	example "github.com/hb-go/micro/post/api/proto/example"
+	post "github.com/hb-go/micro/post/api/proto/post"
 )
 
 func main() {
@@ -20,10 +21,16 @@ func main() {
 	// Register Handler
 	example.RegisterExampleHandler(service.Server(), new(handler.Example))
 
+	post.RegisterPostHandler(service.Server(), new(handler.Post))
+
 	// Initialise service
 	service.Init(
-		// create wrap for the Example srv client
-		micro.WrapHandler(client.ExampleWrapper(service)),
+		// create wraps for the srv clients
+		micro.WrapHandler(
+			client.ExampleWrapper(service),
+			client.PostWrapper(service),
+			client.CommentWrapper(service),
+		),
 	)
 
 	// Run service

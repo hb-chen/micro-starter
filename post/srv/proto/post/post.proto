@@ -3,36 +3,15 @@ syntax = "proto3";
 package go.micro.srv.post;
 
 service Post {
-    rpc Call(Request) returns (Response) {}
-    rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
-    rpc PingPong(stream Ping) returns (stream Pong) {}
+    rpc GetPost(ReqPost) returns (RspPost) {}
 }
 
-message Message {
-    string say = 1;
-    string p = 2;
+message ReqPost {
+    int64 id = 1;
 }
 
-message Request {
-    string name = 1;
-}
-
-message Response {
-    string msg = 1;
-}
-
-message StreamingRequest {
-    int64 count = 1;
-}
-
-message StreamingResponse {
-    int64 count = 1;
-}
-
-message Ping {
-    int64 stroke = 1;
-}
-
-message Pong {
-    int64 stroke = 1;
+message RspPost {
+    int64 id = 1;
+    string title = 2;
+    string content = 3;
 }
