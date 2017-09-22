@@ -10,7 +10,6 @@ import (
 	api "github.com/micro/go-api/proto"
 	post "github.com/hb-go/micro/post/api/proto/post"
 	postSrv "github.com/hb-go/micro/post/srv/proto/post"
-	commentSrv "github.com/hb-go/micro/post/srv/proto/comment"
 
 	"golang.org/x/net/context"
 )
@@ -31,10 +30,10 @@ func (e *Post) Post(ctx context.Context, req *api.Request, rsp *api.Response) er
 	id, ok := req.Get["id"]
 	log.Log("Req post id:%v", id.String())
 
-	response := post.Response{}
+	response := post.Rsp{}
 
 	// make request
-	rspPost, err := postClient.GetPost(ctx, &postSrv.ReqPost{
+	rspPost, err := postClient.GetPost(ctx, &postSrv.Req{
 		Id: 0,
 	})
 	if err != nil {
@@ -48,7 +47,7 @@ func (e *Post) Post(ctx context.Context, req *api.Request, rsp *api.Response) er
 	}
 
 	// make request
-	rspComments, err := commentClient.GetComments(ctx, &commentSrv.ReqComment{
+	rspComments, err := commentClient.GetComments(ctx, &postSrv.Req{
 		Id: 0,
 	})
 	if err != nil {

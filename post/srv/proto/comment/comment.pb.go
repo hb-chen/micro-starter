@@ -2,21 +2,21 @@
 // source: post/srv/proto/comment/comment.proto
 
 /*
-Package go_micro_srv_post is a generated protocol buffer package.
+Package go_micro_srv_post_comment is a generated protocol buffer package.
 
 It is generated from these files:
 	post/srv/proto/comment/comment.proto
 
 It has these top-level messages:
-	ReqComment
-	RspComments
+	Rsp
 	CommentDto
 */
-package go_micro_srv_post
+package go_micro_srv_post_comment
 
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
+import go_micro_srv_post "github.com/hb-go/micro/post/srv/proto/post"
 
 import (
 	client "github.com/micro/go-micro/client"
@@ -35,32 +35,16 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type ReqComment struct {
-	Id int64 `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
-}
-
-func (m *ReqComment) Reset()                    { *m = ReqComment{} }
-func (m *ReqComment) String() string            { return proto.CompactTextString(m) }
-func (*ReqComment) ProtoMessage()               {}
-func (*ReqComment) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
-
-func (m *ReqComment) GetId() int64 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
-
-type RspComments struct {
+type Rsp struct {
 	Comments []*CommentDto `protobuf:"bytes,1,rep,name=comments" json:"comments,omitempty"`
 }
 
-func (m *RspComments) Reset()                    { *m = RspComments{} }
-func (m *RspComments) String() string            { return proto.CompactTextString(m) }
-func (*RspComments) ProtoMessage()               {}
-func (*RspComments) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *Rsp) Reset()                    { *m = Rsp{} }
+func (m *Rsp) String() string            { return proto.CompactTextString(m) }
+func (*Rsp) ProtoMessage()               {}
+func (*Rsp) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *RspComments) GetComments() []*CommentDto {
+func (m *Rsp) GetComments() []*CommentDto {
 	if m != nil {
 		return m.Comments
 	}
@@ -74,7 +58,7 @@ type CommentDto struct {
 func (m *CommentDto) Reset()                    { *m = CommentDto{} }
 func (m *CommentDto) String() string            { return proto.CompactTextString(m) }
 func (*CommentDto) ProtoMessage()               {}
-func (*CommentDto) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (*CommentDto) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *CommentDto) GetContent() string {
 	if m != nil {
@@ -84,9 +68,8 @@ func (m *CommentDto) GetContent() string {
 }
 
 func init() {
-	proto.RegisterType((*ReqComment)(nil), "go.micro.srv.post.ReqComment")
-	proto.RegisterType((*RspComments)(nil), "go.micro.srv.post.RspComments")
-	proto.RegisterType((*CommentDto)(nil), "go.micro.srv.post.CommentDto")
+	proto.RegisterType((*Rsp)(nil), "go.micro.srv.post.comment.Rsp")
+	proto.RegisterType((*CommentDto)(nil), "go.micro.srv.post.comment.CommentDto")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -97,7 +80,7 @@ var _ server.Option
 // Client API for Comment service
 
 type CommentClient interface {
-	GetComments(ctx context.Context, in *ReqComment, opts ...client.CallOption) (*RspComments, error)
+	GetComments(ctx context.Context, in *go_micro_srv_post.Req, opts ...client.CallOption) (*Rsp, error)
 }
 
 type commentClient struct {
@@ -110,7 +93,7 @@ func NewCommentClient(serviceName string, c client.Client) CommentClient {
 		c = client.NewClient()
 	}
 	if len(serviceName) == 0 {
-		serviceName = "go.micro.srv.post"
+		serviceName = "go.micro.srv.post.comment"
 	}
 	return &commentClient{
 		c:           c,
@@ -118,9 +101,9 @@ func NewCommentClient(serviceName string, c client.Client) CommentClient {
 	}
 }
 
-func (c *commentClient) GetComments(ctx context.Context, in *ReqComment, opts ...client.CallOption) (*RspComments, error) {
+func (c *commentClient) GetComments(ctx context.Context, in *go_micro_srv_post.Req, opts ...client.CallOption) (*Rsp, error) {
 	req := c.c.NewRequest(c.serviceName, "Comment.GetComments", in)
-	out := new(RspComments)
+	out := new(Rsp)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -131,7 +114,7 @@ func (c *commentClient) GetComments(ctx context.Context, in *ReqComment, opts ..
 // Server API for Comment service
 
 type CommentHandler interface {
-	GetComments(context.Context, *ReqComment, *RspComments) error
+	GetComments(context.Context, *go_micro_srv_post.Req, *Rsp) error
 }
 
 func RegisterCommentHandler(s server.Server, hdlr CommentHandler, opts ...server.HandlerOption) {
@@ -142,24 +125,25 @@ type Comment struct {
 	CommentHandler
 }
 
-func (h *Comment) GetComments(ctx context.Context, in *ReqComment, out *RspComments) error {
+func (h *Comment) GetComments(ctx context.Context, in *go_micro_srv_post.Req, out *Rsp) error {
 	return h.CommentHandler.GetComments(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("post/srv/proto/comment/comment.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 188 bytes of a gzipped FileDescriptorProto
+	// 199 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0x29, 0xc8, 0x2f, 0x2e,
 	0xd1, 0x2f, 0x2e, 0x2a, 0xd3, 0x2f, 0x28, 0xca, 0x2f, 0xc9, 0xd7, 0x4f, 0xce, 0xcf, 0xcd, 0x4d,
-	0xcd, 0x2b, 0x81, 0xd1, 0x7a, 0x60, 0x51, 0x21, 0xc1, 0xf4, 0x7c, 0xbd, 0xdc, 0xcc, 0xe4, 0xa2,
-	0x7c, 0xbd, 0xe2, 0xa2, 0x32, 0x3d, 0x90, 0x16, 0x25, 0x19, 0x2e, 0xae, 0xa0, 0xd4, 0x42, 0x67,
-	0x88, 0x32, 0x21, 0x3e, 0x2e, 0xa6, 0xcc, 0x14, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xe6, 0x20, 0xa6,
-	0xcc, 0x14, 0x25, 0x0f, 0x2e, 0xee, 0xa0, 0xe2, 0x02, 0xa8, 0x6c, 0xb1, 0x90, 0x25, 0x17, 0x07,
-	0xd4, 0xc0, 0x62, 0x09, 0x46, 0x05, 0x66, 0x0d, 0x6e, 0x23, 0x59, 0x3d, 0x0c, 0x23, 0xf5, 0xa0,
-	0xca, 0x5d, 0x4a, 0xf2, 0x83, 0xe0, 0xca, 0x95, 0xd4, 0xb8, 0xb8, 0x10, 0xe2, 0x42, 0x12, 0x5c,
-	0xec, 0xc9, 0xf9, 0x79, 0x25, 0xa9, 0x79, 0x25, 0x60, 0xcb, 0x38, 0x83, 0x60, 0x5c, 0xa3, 0x48,
-	0x2e, 0x76, 0x98, 0x63, 0xfc, 0xb8, 0xb8, 0xdd, 0x53, 0x4b, 0xe0, 0x96, 0x63, 0xb3, 0x0a, 0xe1,
-	0x74, 0x29, 0x39, 0x6c, 0xd2, 0x08, 0xb7, 0x2b, 0x31, 0x24, 0xb1, 0x81, 0x03, 0xc1, 0x18, 0x10,
-	0x00, 0x00, 0xff, 0xff, 0x9d, 0xef, 0x35, 0x9f, 0x2c, 0x01, 0x00, 0x00,
+	0xcd, 0x2b, 0x81, 0xd1, 0x7a, 0x60, 0x51, 0x21, 0xc9, 0xf4, 0x7c, 0xbd, 0xdc, 0xcc, 0xe4, 0xa2,
+	0x7c, 0xbd, 0xe2, 0xa2, 0x32, 0x3d, 0x90, 0x16, 0x3d, 0xa8, 0x02, 0x29, 0xd3, 0xf4, 0xcc, 0x92,
+	0x8c, 0xd2, 0x24, 0x10, 0x5f, 0x3f, 0x23, 0x49, 0x37, 0x3d, 0x5f, 0x1f, 0xac, 0x50, 0x1f, 0xcd,
+	0x5c, 0x30, 0x17, 0xac, 0x11, 0xcc, 0x57, 0xf2, 0xe0, 0x62, 0x0e, 0x2a, 0x2e, 0x10, 0x72, 0xe4,
+	0xe2, 0x80, 0x1a, 0x54, 0x2c, 0xc1, 0xa8, 0xc0, 0xac, 0xc1, 0x6d, 0xa4, 0xaa, 0x87, 0xd3, 0x2e,
+	0x3d, 0x67, 0x08, 0xed, 0x52, 0x92, 0x1f, 0x04, 0xd7, 0xa6, 0xa4, 0xc6, 0xc5, 0x85, 0x10, 0x17,
+	0x92, 0xe0, 0x62, 0x4f, 0xce, 0xcf, 0x2b, 0x49, 0xcd, 0x2b, 0x91, 0x60, 0x54, 0x60, 0xd4, 0xe0,
+	0x0c, 0x82, 0x71, 0x8d, 0x82, 0xb8, 0xd8, 0xa1, 0xea, 0x84, 0xdc, 0xb9, 0xb8, 0xdd, 0x53, 0x4b,
+	0xa0, 0xbc, 0x62, 0x21, 0x31, 0x2c, 0x56, 0x06, 0xa5, 0x16, 0x4a, 0xc9, 0xe1, 0x71, 0x4a, 0x50,
+	0x71, 0x81, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x33, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa8,
+	0x04, 0xa0, 0x5f, 0x46, 0x01, 0x00, 0x00,
 }

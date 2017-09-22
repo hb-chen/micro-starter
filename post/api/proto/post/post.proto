@@ -10,7 +10,7 @@ service Post {
     rpc Post(api.Request) returns (api.Response) {}
 }
 
-message Response {
-    go.micro.srv.post.RspPost post = 1;
-    repeated go.micro.srv.post.CommentDto comments = 2;
+message Rsp {
+    go.micro.srv.post.Rsp post = 1;
+    repeated go.micro.srv.post.comment.CommentDto comments = 2;
 }

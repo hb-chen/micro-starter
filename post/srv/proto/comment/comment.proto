@@ -1,16 +1,14 @@
 syntax = "proto3";
 
-package go.micro.srv.post;
+package go.micro.srv.post.comment;
+
+import "github.com/hb-go/micro/post/srv/proto/post/post.proto";
 
 service Comment {
-    rpc GetComments(ReqComment) returns (RspComments) {}
+    rpc GetComments(post.Req) returns (Rsp) {}
 }
 
-message ReqComment {
-    int64 id = 1;
-}
-
-message RspComments {
+message Rsp {
     repeated CommentDto comments = 1;
 }
 

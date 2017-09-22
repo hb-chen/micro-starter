@@ -3,14 +3,14 @@ syntax = "proto3";
 package go.micro.srv.post;
 
 service Post {
-    rpc GetPost(ReqPost) returns (RspPost) {}
+    rpc GetPost(Req) returns (Rsp) {}
 }
 
-message ReqPost {
+message Req {
     int64 id = 1;
 }
 
-message RspPost {
+message Rsp {
     int64 id = 1;
     string title = 2;
     string content = 3;

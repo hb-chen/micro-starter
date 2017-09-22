@@ -8,8 +8,8 @@ It is generated from these files:
 	post/srv/proto/post/post.proto
 
 It has these top-level messages:
-	ReqPost
-	RspPost
+	Req
+	Rsp
 */
 package go_micro_srv_post
 
@@ -34,48 +34,48 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type ReqPost struct {
+type Req struct {
 	Id int64 `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
 }
 
-func (m *ReqPost) Reset()                    { *m = ReqPost{} }
-func (m *ReqPost) String() string            { return proto.CompactTextString(m) }
-func (*ReqPost) ProtoMessage()               {}
-func (*ReqPost) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Req) Reset()                    { *m = Req{} }
+func (m *Req) String() string            { return proto.CompactTextString(m) }
+func (*Req) ProtoMessage()               {}
+func (*Req) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *ReqPost) GetId() int64 {
+func (m *Req) GetId() int64 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-type RspPost struct {
+type Rsp struct {
 	Id      int64  `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
 	Title   string `protobuf:"bytes,2,opt,name=title" json:"title,omitempty"`
 	Content string `protobuf:"bytes,3,opt,name=content" json:"content,omitempty"`
 }
 
-func (m *RspPost) Reset()                    { *m = RspPost{} }
-func (m *RspPost) String() string            { return proto.CompactTextString(m) }
-func (*RspPost) ProtoMessage()               {}
-func (*RspPost) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *Rsp) Reset()                    { *m = Rsp{} }
+func (m *Rsp) String() string            { return proto.CompactTextString(m) }
+func (*Rsp) ProtoMessage()               {}
+func (*Rsp) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *RspPost) GetId() int64 {
+func (m *Rsp) GetId() int64 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *RspPost) GetTitle() string {
+func (m *Rsp) GetTitle() string {
 	if m != nil {
 		return m.Title
 	}
 	return ""
 }
 
-func (m *RspPost) GetContent() string {
+func (m *Rsp) GetContent() string {
 	if m != nil {
 		return m.Content
 	}
@@ -83,8 +83,8 @@ func (m *RspPost) GetContent() string {
 }
 
 func init() {
-	proto.RegisterType((*ReqPost)(nil), "go.micro.srv.post.ReqPost")
-	proto.RegisterType((*RspPost)(nil), "go.micro.srv.post.RspPost")
+	proto.RegisterType((*Req)(nil), "go.micro.srv.post.Req")
+	proto.RegisterType((*Rsp)(nil), "go.micro.srv.post.Rsp")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -95,7 +95,7 @@ var _ server.Option
 // Client API for Post service
 
 type PostClient interface {
-	GetPost(ctx context.Context, in *ReqPost, opts ...client.CallOption) (*RspPost, error)
+	GetPost(ctx context.Context, in *Req, opts ...client.CallOption) (*Rsp, error)
 }
 
 type postClient struct {
@@ -116,9 +116,9 @@ func NewPostClient(serviceName string, c client.Client) PostClient {
 	}
 }
 
-func (c *postClient) GetPost(ctx context.Context, in *ReqPost, opts ...client.CallOption) (*RspPost, error) {
+func (c *postClient) GetPost(ctx context.Context, in *Req, opts ...client.CallOption) (*Rsp, error) {
 	req := c.c.NewRequest(c.serviceName, "Post.GetPost", in)
-	out := new(RspPost)
+	out := new(Rsp)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -129,7 +129,7 @@ func (c *postClient) GetPost(ctx context.Context, in *ReqPost, opts ...client.Ca
 // Server API for Post service
 
 type PostHandler interface {
-	GetPost(context.Context, *ReqPost, *RspPost) error
+	GetPost(context.Context, *Req, *Rsp) error
 }
 
 func RegisterPostHandler(s server.Server, hdlr PostHandler, opts ...server.HandlerOption) {
@@ -140,23 +140,23 @@ type Post struct {
 	PostHandler
 }
 
-func (h *Post) GetPost(ctx context.Context, in *ReqPost, out *RspPost) error {
+func (h *Post) GetPost(ctx context.Context, in *Req, out *Rsp) error {
 	return h.PostHandler.GetPost(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("post/srv/proto/post/post.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 169 bytes of a gzipped FileDescriptorProto
+	// 168 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x2b, 0xc8, 0x2f, 0x2e,
 	0xd1, 0x2f, 0x2e, 0x2a, 0xd3, 0x2f, 0x28, 0xca, 0x2f, 0xc9, 0xd7, 0x07, 0x73, 0x41, 0x84, 0x1e,
 	0x98, 0x2f, 0x24, 0x98, 0x9e, 0xaf, 0x97, 0x9b, 0x99, 0x5c, 0x94, 0xaf, 0x57, 0x5c, 0x54, 0xa6,
-	0x07, 0x92, 0x50, 0x92, 0xe4, 0x62, 0x0f, 0x4a, 0x2d, 0x0c, 0xc8, 0x2f, 0x2e, 0x11, 0xe2, 0xe3,
-	0x62, 0xca, 0x4c, 0x91, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x0e, 0x62, 0xca, 0x4c, 0x51, 0xf2, 0xe4,
-	0x62, 0x0f, 0x2a, 0x2e, 0xc0, 0x26, 0x25, 0x24, 0xc2, 0xc5, 0x5a, 0x92, 0x59, 0x92, 0x93, 0x2a,
-	0xc1, 0xa4, 0xc0, 0xa8, 0xc1, 0x19, 0x04, 0xe1, 0x08, 0x49, 0x70, 0xb1, 0x27, 0xe7, 0xe7, 0x95,
-	0xa4, 0xe6, 0x95, 0x48, 0x30, 0x83, 0xc5, 0x61, 0x5c, 0x23, 0x6f, 0x2e, 0x16, 0xb0, 0x39, 0xce,
-	0x5c, 0xec, 0xee, 0xa9, 0x25, 0x60, 0xa6, 0x94, 0x1e, 0x86, 0x63, 0xf4, 0xa0, 0x2e, 0x91, 0xc2,
-	0x2a, 0x07, 0x71, 0x8a, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x33, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff,
-	0xff, 0xef, 0x6c, 0xe5, 0x8b, 0xee, 0x00, 0x00, 0x00,
+	0x07, 0x92, 0x50, 0x12, 0xe5, 0x62, 0x0e, 0x4a, 0x2d, 0x14, 0xe2, 0xe3, 0x62, 0xca, 0x4c, 0x91,
+	0x60, 0x54, 0x60, 0xd4, 0x60, 0x0e, 0x62, 0xca, 0x4c, 0x51, 0x72, 0xe5, 0x62, 0x0e, 0x2a, 0x2e,
+	0x40, 0x17, 0x16, 0x12, 0xe1, 0x62, 0x2d, 0xc9, 0x2c, 0xc9, 0x49, 0x95, 0x60, 0x52, 0x60, 0xd4,
+	0xe0, 0x0c, 0x82, 0x70, 0x84, 0x24, 0xb8, 0xd8, 0x93, 0xf3, 0xf3, 0x4a, 0x52, 0xf3, 0x4a, 0x24,
+	0x98, 0xc1, 0xe2, 0x30, 0xae, 0x91, 0x33, 0x17, 0x4b, 0x40, 0x7e, 0x71, 0x89, 0x90, 0x35, 0x17,
+	0xbb, 0x7b, 0x6a, 0x09, 0x98, 0x29, 0xa6, 0x87, 0xe1, 0x08, 0xbd, 0xa0, 0xd4, 0x42, 0x29, 0xac,
+	0xe2, 0xc5, 0x05, 0x4a, 0x0c, 0x49, 0x6c, 0x60, 0xc7, 0x1b, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff,
+	0x41, 0x84, 0x47, 0x71, 0xde, 0x00, 0x00, 0x00,
 }
