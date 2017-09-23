@@ -4,7 +4,6 @@ package go.micro.api.post;
 
 import "github.com/micro/go-api/proto/api.proto";
 import "github.com/hb-go/micro/post/srv/proto/post/post.proto";
-import "github.com/hb-go/micro/post/srv/proto/comment/comment.proto";
 
 service Post {
     rpc Post(api.Request) returns (api.Response) {}
@@ -12,5 +11,4 @@ service Post {
 
 message Rsp {
     go.micro.srv.post.Rsp post = 1;
-    repeated go.micro.srv.post.comment.CommentDto comments = 2;
 }

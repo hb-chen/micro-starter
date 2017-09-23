@@ -9,6 +9,8 @@ import (
 
 	example "github.com/hb-go/micro/post/api/proto/example"
 	post "github.com/hb-go/micro/post/api/proto/post"
+	comment "github.com/hb-go/micro/post/api/proto/comment"
+
 )
 
 func main() {
@@ -22,6 +24,8 @@ func main() {
 	example.RegisterExampleHandler(service.Server(), new(handler.Example))
 
 	post.RegisterPostHandler(service.Server(), new(handler.Post))
+
+	comment.RegisterCommentHandler(service.Server(), new(handler.Comment))
 
 	// Initialise service
 	service.Init(

@@ -1,6 +1,8 @@
 # micro
 Go Micro 应用服务化治理实践
 
+[github.com/micro/micro](github.com/micro/micro)
+
 ### 模块创建
 ```bash
 micro new --type srv --alias account github.com/hb-go/micro/account/srv
@@ -8,7 +10,7 @@ micro new --type api --alias account github.com/hb-go/micro/account/api
 micro new --type web --alias account github.com/hb-go/micro/account/web
 ```
 
-### Protocol [GRPC Gateway](https://micro.mu/docs/grpc-gateway.html)
+### Protobuf [GRPC Gateway](https://micro.mu/docs/grpc-gateway.html)
 ```bash
 go get github.com/micro/protobuf/{proto,protoc-gen-go}
 protoc --go_out=plugins=micro:. account/srv/proto/example/example.proto
@@ -33,8 +35,12 @@ consul agent -dev -advertise 127.0.0.1
 go run post/srv/main.go
 go run post/api/main.go
 micro api
-
 http://localhost:8080/post/post/post?id=1
+
+# Post Web
+go run post/web/main.go
+micro web
+http://localhost:8082/post
 ```
 
 ### API

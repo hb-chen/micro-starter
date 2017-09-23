@@ -16,7 +16,7 @@ import (
 
 type Post struct{}
 
-// Example.Call is called by the API as /post/example/call with post body {"name": "foo"}
+// Post.Post is called by the API as /post/post/post with post body {"name": "foo"}
 func (e *Post) Post(ctx context.Context, req *api.Request, rsp *api.Response) error {
 	log.Log("Received Post.Post request")
 
@@ -40,20 +40,6 @@ func (e *Post) Post(ctx context.Context, req *api.Request, rsp *api.Response) er
 		return errors.InternalServerError("go.micro.api.post.post.GetPost", err.Error())
 	}
 	response.Post = rspPost
-
-	commentClient, ok := client.CommentFromContext(ctx)
-	if !ok {
-		return errors.InternalServerError("go.micro.api.post.comment", "post client not found")
-	}
-
-	// make request
-	rspComments, err := commentClient.GetComments(ctx, &postSrv.Req{
-		Id: 0,
-	})
-	if err != nil {
-		return errors.InternalServerError("go.micro.api.post.comment.GetComments", err.Error())
-	}
-	response.Comments = rspComments.Comments
 
 	b, _ := json.Marshal(response)
 
