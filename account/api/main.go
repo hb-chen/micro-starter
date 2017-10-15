@@ -7,6 +7,7 @@ import (
 	"github.com/hb-go/micro/account/api/handler"
 	"github.com/hb-go/micro/account/api/client"
 
+	account "github.com/hb-go/micro/account/api/proto/account"
 	example "github.com/hb-go/micro/account/api/proto/example"
 )
 
@@ -20,10 +21,16 @@ func main() {
 	// Register Handler
 	example.RegisterExampleHandler(service.Server(), new(handler.Example))
 
+	account.RegisterAccountHandler(service.Server(), new(handler.Account))
+
 	// Initialise service
 	service.Init(
 		// create wrap for the Example srv client
-		micro.WrapHandler(client.ExampleWrapper(service)),
+		micro.WrapHandler(
+			client.ExampleWrapper(service),
+			client.UserWrapper(service),
+			client.TokenWrapper(service),
+		),
 	)
 
 	// Run service

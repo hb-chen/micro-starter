@@ -24,7 +24,7 @@ protoc -I/usr/local/include -I. \
   post/api/proto/example/example.proto
 ```
 
-### Consul
+### 服务发现-Consul
 ```
 consul agent -dev -advertise 127.0.0.1
 ```

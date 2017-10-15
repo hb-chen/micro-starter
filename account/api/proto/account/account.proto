@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package go.micro.api.account;
+
+import "github.com/micro/go-api/proto/api.proto";
+
+service Account {
+    rpc Login(api.Request) returns (api.Response) {}
+    rpc Register(api.Request) returns (api.Response) {}
+}
+
+message ReqLogin {
+    string nickname = 1;
+    string pwd = 2;
+}
+
+message ReqRegister {
+    string nickname = 1;
+    string pwd = 2;
+    string pwdRe= 3;
+}
+
+message Rsp {
+    int64 id = 1;
+    string nickname = 2;
+    string token = 3;
+}

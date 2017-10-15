@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package go.micro.srv.auth.user;
+
+service User {
+    rpc GetUser(ReqId) returns (Rsp) {}
+    rpc GetUserLogin(ReqLogin) returns (Rsp) {}
+}
+
+message ReqId {
+    int64 id = 1;
+}
+
+message ReqLogin {
+    string nickname = 1;
+    string pwd = 2;
+}
+
+message Rsp {
+    int64 id = 1;
+    string nickname = 2;
+}
