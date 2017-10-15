@@ -59,7 +59,7 @@
                     url: url,
                     data: JSON.stringify({name: name}),
                     success: function(data) {
-                        $('.message').html('<h3>'+data.msg+'</h3>');
+                        $('.message').html('<h3>'+data.user.nickname+'</h3>');
                     },
                 });
             });
