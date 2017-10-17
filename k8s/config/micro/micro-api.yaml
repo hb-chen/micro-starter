@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: micro-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: micro-api
+    spec:
+      containers:
+        - name: api
+          command: [
+            "/micro",
+            "--registry=kubernetes",
+            "--register_ttl=60",
+            "--register_interval=30",
+            "--selector=cache",
+            "--enable_stats",
+            "api"
+          ]
+          image: microhq/micro:kubernetes
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+            name: api-port

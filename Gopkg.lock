@@ -68,6 +68,12 @@
   version = "v0.1.4"
 
 [[projects]]
+  name = "github.com/micro/go-plugins"
+  packages = ["registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch"]
+  revision = "ee30f5a87f745d8183418fc5bb94cd5ad11d4077"
+  version = "v0.5.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/micro/go-web"
   packages = ["."]
@@ -78,12 +84,6 @@
   name = "github.com/micro/mdns"
   packages = ["."]
   revision = "cdf30746f9f70dc7a366d3d885792a092fd83102"
-
-[[projects]]
-  name = "github.com/micro/micro"
-  packages = ["api/proto"]
-  revision = "1133b5ab77de4e49e9b99c709f0d52280765680d"
-  version = "v0.3.0"
 
 [[projects]]
   branch = "master"
@@ -130,6 +130,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "357a3b50e919a14995521efc0f8c7d5e14cbde8b65f3e648b5b06a04160c8b53"
+  inputs-digest = "9d253e40ea8fd536a624b906e5a02d53d1ee86304b25ad0dd8acdbd68a950726"
   solver-name = "gps-cdcl"
   solver-version = 1

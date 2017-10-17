@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "github.com/micro/go-plugins/registry/kubernetes"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/hb-go/micro/auth/srv/handler"

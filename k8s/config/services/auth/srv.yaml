@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: auth-srv
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: auth-srv
+        micro: go.micro.srv.auth
+    spec:
+      containers:
+        - name: auth
+          resources:
+            requests:
+              cpu: "35m"
+          command: [
+		"/auth-srv",
+		"--registry=kubernetes",
+		"--selector=cache",
+		"--server_address=0.0.0.0:9090",
+		"--broker_address=0.0.0.0:10001"
+	  ]
+          image: hbchen/micro-auth-srv:v0.0.1
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9090
+            name: auth-srv-port

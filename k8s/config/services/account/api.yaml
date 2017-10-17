@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: account-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: account-api
+    spec:
+      containers:
+        - name: discovery
+          resources:
+            requests:
+              cpu: "20m"
+          command: [
+		"/account-api",
+		"--registry=kubernetes",
+		"--selector=cache",
+		"--server_address=0.0.0.0:9090",
+		"--broker_address=0.0.0.0:10001"
+	  ]
+          image: hbchen/micro-account-api:v0.0.1
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9090
+            name: acc-api-port

@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: account-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: account-web
+    spec:
+      containers:
+        - name: account-web
+          resources:
+            requests:
+              cpu: "20m"
+          command: [
+		"/account-web",
+		"--registry=kubernetes",
+		"--selector=cache",
+	  ]
+          image: hbchen/micro-account-web:v0.0.1
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9090
+            name: geo-web-port

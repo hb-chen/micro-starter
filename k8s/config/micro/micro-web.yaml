@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: micro-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: micro-web
+    spec:
+      containers:
+        - name: web
+          resources:
+            limits:
+              cpu: "25m"
+          command: [
+            "/micro",
+            "--registry=kubernetes",
+            "--register_ttl=60",
+            "--register_interval=30",
+            "--selector=cache",
+            "--enable_stats",
+            "web"
+          ]
+          image: microhq/micro:kubernetes
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8082
+            name: web-port

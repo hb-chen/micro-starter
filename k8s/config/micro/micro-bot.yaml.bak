@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: default
+  name: micro-bot
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: micro-bot
+    spec:
+      containers:
+        - name: bot
+          resources:
+            limits:
+              cpu: "10m"
+          command: [
+            "/micro",
+            "--registry=kubernetes",
+            "--register_ttl=60",
+            "--register_interval=30",
+            "--selector=cache",
+            "bot",
+            "--inputs=slack",
+            "--slack_token=YOUR_SLACK_TOKEN"
+          ]
+          image: microhq/micro:bot
+          imagePullPolicy: Always
