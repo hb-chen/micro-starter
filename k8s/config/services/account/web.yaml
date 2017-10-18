@@ -20,7 +20,7 @@ spec:
 		"--registry=kubernetes",
 		"--selector=cache",
 	  ]
-          image: hbchen/micro-account-web:v0.0.1
+          image: hbchen/micro-account-web:v0.0.4
           imagePullPolicy: Always
           ports:
           - containerPort: 9090
