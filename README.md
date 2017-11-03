@@ -1,7 +1,7 @@
 # micro
 Go Micro 应用服务化治理实践
 
-[github.com/micro/micro](github.com/micro/micro)
+[github.com/micro/micro](http://github.com/micro/micro)
 
 ### 模块创建
 ```bash
