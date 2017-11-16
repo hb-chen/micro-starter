@@ -2,6 +2,36 @@
 
 
 [[projects]]
+  name = "github.com/apache/thrift"
+  packages = ["lib/go/thrift"]
+  revision = "b2a4d4ae21c789b689dd162deb819665567f481c"
+  version = "0.10.0"
+
+[[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
+  name = "github.com/eapache/go-resiliency"
+  packages = ["breaker"]
+  revision = "6800482f2c813e689c88b7ed3282262385011890"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/eapache/go-xerial-snappy"
+  packages = ["."]
+  revision = "bb955e01b9346ac19dc29eb16586c90ded99a98c"
+
+[[projects]]
+  name = "github.com/eapache/queue"
+  packages = ["."]
+  revision = "ded5959c0d4e360646dc9e9908cff48666781367"
+  version = "v1.0.2"
+
+[[projects]]
   name = "github.com/go-log/log"
   packages = [".","log"]
   revision = "37e2e1f19306361e1fc152a1839f1236149cb4e4"
@@ -12,6 +42,12 @@
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "ae59567b9aab61b50b2590679a62c3c044030b61"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  revision = "553a641470496b2327abcac10b36396bd98e45c9"
 
 [[projects]]
   name = "github.com/hashicorp/consul"
@@ -68,8 +104,14 @@
   version = "v0.1.4"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/micro/go-os"
+  packages = ["trace","trace/proto"]
+  revision = "bd87a0c3c18b189eb52c94d49854162925369401"
+
+[[projects]]
   name = "github.com/micro/go-plugins"
-  packages = ["registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch"]
+  packages = ["registry/kubernetes","registry/kubernetes/client","registry/kubernetes/client/api","registry/kubernetes/client/watch","trace/zipkin","trace/zipkin/thrift/gen-go/zipkincore"]
   revision = "ee30f5a87f745d8183418fc5bb94cd5ad11d4077"
   version = "v0.5.0"
 
@@ -116,6 +158,18 @@
   version = "v1.1"
 
 [[projects]]
+  name = "github.com/pierrec/lz4"
+  packages = ["."]
+  revision = "08c27939df1bd95e881e2c2367a749964ad1fceb"
+  version = "v1.0.1"
+
+[[projects]]
+  name = "github.com/pierrec/xxHash"
+  packages = ["xxHash32"]
+  revision = "f051bb7f1d1aaf1b5a665d74fb6b0217712c69f7"
+  version = "v0.1.1"
+
+[[projects]]
   name = "github.com/pkg/errors"
   packages = ["."]
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
@@ -123,13 +177,25 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/rcrowley/go-metrics"
+  packages = ["."]
+  revision = "1f30fe9094a513ce4c700b9a54458bbb0c96996c"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = ["bpf","context","internal/iana","internal/socket","ipv4","ipv6"]
   revision = "8351a756f30f1297fe94bbf4b767ec589c6ea6d0"
 
+[[projects]]
+  name = "gopkg.in/Shopify/sarama.v1"
+  packages = ["."]
+  revision = "bbdbe644099b7fdc8327d5cc69c030945188b2e9"
+  version = "v1.13.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9d253e40ea8fd536a624b906e5a02d53d1ee86304b25ad0dd8acdbd68a950726"
+  inputs-digest = "42809429d8dd2df21f50c2a090ac066e6e5c918ac22e53f0e72f6ee01a3806c9"
   solver-name = "gps-cdcl"
   solver-version = 1

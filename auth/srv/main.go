@@ -1,22 +1,34 @@
 package main
 
 import (
-	_ "github.com/micro/go-plugins/registry/kubernetes"
+	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-os/trace"
+	"github.com/micro/go-plugins/trace/zipkin"
+
 	"github.com/hb-go/micro/auth/srv/handler"
 	"github.com/hb-go/micro/auth/srv/subscriber"
-
 	example "github.com/hb-go/micro/auth/srv/proto/example"
 	token "github.com/hb-go/micro/auth/srv/proto/token"
 	user "github.com/hb-go/micro/auth/srv/proto/user"
 )
 
 func main() {
+	t := zipkin.NewTrace(
+		trace.Topic("zipkin"),
+		trace.Collectors("localhost:9092"),
+	)
+	defer t.Close()
+
+	srv := &registry.Service{Name: "go.micro.srv.auth"}
+
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.auth"),
 		micro.Version("latest"),
+		micro.WrapClient(trace.ClientWrapper(t, srv)),
+		micro.WrapHandler(trace.HandlerWrapper(t, srv)),
 	)
 
 	// Register Handler

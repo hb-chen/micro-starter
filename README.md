@@ -65,3 +65,21 @@ http://localhost:8082/post
 
 ### Web
 	micro --enable_stats web
+	
+### Trace
+- [Kafka&ZooKeeper安装使用](https://kafka.apache.org/quickstart)
+```bash
+# create topic
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic zipkin
+```
+- [Zipkin](https://github.com/openzipkin/zipkin)
+- [Kafka Collector](https://github.com/openzipkin/zipkin/tree/master/zipkin-server#kafka-collector)
+```bash
+# Docker 运行zipkin
+# 需要指定KAFKA_ZOOKEEPER，host使用主机IP
+docker run --name zipkin -d -p 9411:9411 \
+--env KAFKA_ZOOKEEPER=192.168.1.1:2181 \
+openzipkin/zipkin
+
+#localhost:9411 查看Trace信息
+```

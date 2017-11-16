@@ -20,7 +20,7 @@ type Account struct{}
 func (a *Account) Login(ctx context.Context, req *api.Request, rsp *api.Response) error {
 	log.Log("Received Account.Login request")
 	log.Logf("req get:%v", req.Get)
-	log.Logf("req post:%v", req.Get)
+	log.Logf("req post:%v", req.Post)
 	nickname, ok := req.Get["nickname"]
 	if !ok || len(nickname.Values) == 0 {
 		return errors.InternalServerError("go.micro.api.account", "nickname nil")
