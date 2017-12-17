@@ -1,4 +1,4 @@
-### 服务发现-k8s
+# 服务发现-k8s
 
 使用Pod的labels、annotations实现微服务的注册与发现功能
 - 添加两个label
@@ -9,7 +9,7 @@
 - 添加一个annotations
     > micro.mu/service-{服务名}:{registry.Service的JSON编码}
 
-#### 服务注册
+## 服务注册
 为Pod添加labels、annotations
 ```go
 func (c *kregistry) Register(s *registry.Service, opts ...registry.RegisterOption) error {
@@ -49,7 +49,7 @@ func (c *kregistry) Register(s *registry.Service, opts ...registry.RegisterOptio
 }
 ```
 
-#### 服务注销
+## 服务注销
 删除key=micro.mu/selector-{服务名}的label和key=micro.mu/service-{服务名}的annotation
 ```go
 func (c *kregistry) Deregister(s *registry.Service) error {
@@ -81,7 +81,7 @@ func (c *kregistry) Deregister(s *registry.Service) error {
 }
 ```
 
-#### 获取服务
+## 获取服务
 通过key=micro.mu/selector-{服务名}的label查询Pods，并根据svc.Version对服务节点进行分类合并
 ```go
 func (c *kregistry) GetService(name string) ([]*registry.Service, error) {
@@ -135,7 +135,7 @@ func (c *kregistry) GetService(name string) ([]*registry.Service, error) {
 }
 ```
 
-#### 全部微服务列表 
+## 全部微服务列表 
 通过micro.mu/type:service标签查找全部Micro微服务，并对Pod的Annotations进行验证，确保微服务信息的完整而未被注销  
 ```go
 func (c *kregistry) ListServices() ([]*registry.Service, error) {
