@@ -5,9 +5,13 @@ Go Micro 应用服务化治理实践
 
 ### 模块创建
 ```bash
-micro new --type srv --alias account github.com/hb-go/micro/account/srv
+micro new --type srv --alias account github.com/hb-go/micro/auth/srv
 micro new --type api --alias account github.com/hb-go/micro/account/api
 micro new --type web --alias account github.com/hb-go/micro/account/web
+
+micro new --type srv --alias account github.com/hb-go/micro/post/srv
+micro new --type api --alias account github.com/hb-go/micro/post/api
+micro new --type web --alias account github.com/hb-go/micro/post/web
 ```
 
 ### Protobuf [GRPC Gateway](https://micro.mu/docs/grpc-gateway.html)
@@ -31,15 +35,31 @@ consul agent -dev -advertise 127.0.0.1
 
 ### Running
 ```bash
+$ micro api
+$ micro web
+
+# Auth SRV
+$ cd auth/srv/ && go run main.go
+
+# Account API
+$ cd account/api/ && go run main.go
+$ curl -H 'Content-Type: application/json' \
+            -H "Authorization: Bearer VALID_TOKEN" \
+            -d '{"nickname": "Hobo", "pwd": "pwd"}' \
+             http://localhost:8080/login
+# Account Web
+$ cd account/web/ && go run main.go
+http://localhost:8082/accout
+
+# Post SRV
+$ cd post/srv/ && go run main.go
+
 # Post API
-go run post/srv/main.go
-go run post/api/main.go
-micro api
+$ cd post/api/ && go run main.go
 http://localhost:8080/post/post/post?id=1
 
 # Post Web
-go run post/web/main.go
-micro web
+$ cd post/web/ && go run main.go
 http://localhost:8082/post
 ```
 

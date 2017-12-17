@@ -21,14 +21,16 @@ func (a *Account) Login(ctx context.Context, req *api.Request, rsp *api.Response
 	log.Log("Received Account.Login request")
 	log.Logf("req get:%v", req.Get)
 	log.Logf("req post:%v", req.Post)
-	nickname, ok := req.Get["nickname"]
-	if !ok || len(nickname.Values) == 0 {
-		return errors.InternalServerError("go.micro.api.account", "nickname nil")
+	log.Logf("req body:%v", req.Body)
+
+	reqLogin := &user.ReqLogin{}
+	err := json.Unmarshal([]byte(req.Body), reqLogin)
+	if err != nil {
+		return errors.InternalServerError("go.micro.api.account", "json parse error with:"+err.Error())
 	}
 
-	pwd, ok := req.Get["pwd"]
-	if !ok || len(pwd.Values) == 0 {
-		return errors.InternalServerError("go.micro.api.account", "pwd nil")
+	if len(reqLogin.Nickname) == 0 || len(reqLogin.Pwd) == 0 {
+		return errors.InternalServerError("go.micro.api.account", "nickname/pwd nil")
 	}
 
 	userClient, ok := client.UserFromContext(ctx)
@@ -36,8 +38,7 @@ func (a *Account) Login(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.InternalServerError("go.micro.api.account", "user client not found")
 	}
 
-	reqLogin := user.ReqLogin{Nickname: strings.Join(nickname.Values, ""), Pwd: strings.Join(pwd.Values, "")}
-	u, err := userClient.GetUserLogin(ctx, &reqLogin)
+	u, err := userClient.GetUserLogin(ctx, reqLogin)
 	if err != nil {
 		return errors.InternalServerError("go.micro.api.account", "user login err:"+err.Error())
 	}
@@ -63,7 +64,6 @@ func (a *Account) Login(ctx context.Context, req *api.Request, rsp *api.Response
 	rsp.Body = string(b)
 
 	return nil
-
 }
 
 func (a *Account) Register(ctx context.Context, req *api.Request, rsp *api.Response) error {

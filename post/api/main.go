@@ -11,6 +11,7 @@ import (
 	post "github.com/hb-go/micro/post/api/proto/post"
 	comment "github.com/hb-go/micro/post/api/proto/comment"
 
+	"github.com/micro/go-api"
 )
 
 func main() {
@@ -21,11 +22,41 @@ func main() {
 	)
 
 	// Register Handler
-	example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	example.RegisterExampleHandler(service.Server(), new(handler.Example),
+		api.WithEndpoint(&api.Endpoint{
+			// The RPC method
+			Name: "Example.Call",
+			// The HTTP paths. This can be a POSIX regex
+			Path: []string{"/example/call"},
+			// The HTTP Methods for this endpoint
+			Method: []string{"GET"},
+			// The API handler to use
+			Handler: api.Api,
+		}))
 
-	post.RegisterPostHandler(service.Server(), new(handler.Post))
+	post.RegisterPostHandler(service.Server(), new(handler.Post),
+		api.WithEndpoint(&api.Endpoint{
+			// The RPC method
+			Name: "Post.Post",
+			// The HTTP paths. This can be a POSIX regex
+			Path: []string{"/post"},
+			// The HTTP Methods for this endpoint
+			Method: []string{"GET"},
+			// The API handler to use
+			Handler: api.Api,
+		}))
 
-	comment.RegisterCommentHandler(service.Server(), new(handler.Comment))
+	comment.RegisterCommentHandler(service.Server(), new(handler.Comment),
+		api.WithEndpoint(&api.Endpoint{
+			// The RPC method
+			Name: "Comment.Comments",
+			// The HTTP paths. This can be a POSIX regex
+			Path: []string{"/post/comments"},
+			// The HTTP Methods for this endpoint
+			Method: []string{"GET"},
+			// The API handler to use
+			Handler: api.Api,
+		}))
 
 	// Initialise service
 	service.Init(
