@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"time"
 
+	"golang.org/x/net/context"
+
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro/client"
-	user "github.com/hb-go/micro/auth/srv/proto/user"
 
-	"golang.org/x/net/context"
+	user "github.com/hb-go/micro/auth/srv/proto/user"
 )
 
 func ExampleCall(w http.ResponseWriter, r *http.Request) {
@@ -24,9 +25,9 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 
 	// call the backend service
 	userClient := user.NewUserClient("go.micro.srv.auth", client.DefaultClient)
-	rsp,err:= userClient.GetUserLogin(context.TODO(), &user.ReqLogin{
-		Nickname:"Hobo",
-		Pwd:"pwd",
+	rsp, err := userClient.GetUserLogin(context.TODO(), &user.ReqLogin{
+		Nickname: "Hobo",
+		Pwd:      "pwd",
 	})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -36,7 +37,7 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	// we want to augment the response
 	response := map[string]interface{}{
 		"user": rsp,
-		"ref": time.Now().UnixNano(),
+		"ref":  time.Now().UnixNano(),
 	}
 
 	// encode and write the response as json

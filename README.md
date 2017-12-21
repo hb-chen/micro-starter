@@ -42,6 +42,45 @@ $ cd post/web/ && go run main.go
 http://localhost:8082/post
 ```
 
+### 插件替换
+> 需要替换的插件import到plugins.go
+
+> micro工具需要手动编译
+```bash
+# 编译micro
+$ go build -i -o micro ./main.go ./plugins.go
+
+# 运行micro api/web
+$ micro --transport=tcp api
+$ micro --transport=tcp web
+
+# 运行go-micro服务
+$ go run main.go plugins.go --transport=tcp
+```
+```go
+// plugins.go
+
+package main
+
+import (
+	// registry
+	// k8s
+	_ "github.com/micro/go-plugins/registry/kubernetes"
+	// etcd v3
+	//_ "github.com/micro/go-plugins/registry/etcdv3"
+
+	// transport
+	// tcp
+	_ "github.com/micro/go-plugins/transport/tcp"
+	// nats
+	//_ "github.com/micro/go-plugins/transport/nats"
+
+	// broker
+	// kafka
+	//_ "github.com/micro/go-plugins/broker/kafka"
+)
+```
+
 ## 框架使用
 
 ### 模块创建
