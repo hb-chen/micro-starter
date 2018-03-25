@@ -1,7 +1,5 @@
-# micro
+# Micro [github.com/micro](http://github.com/micro)
 Go Micro 应用服务化治理实践
-
-[github.com/micro](http://github.com/micro)
 
 <a href="/doc/README.md">![go-micro](/doc/img/micro.jpg "go-micro")</a>
 
