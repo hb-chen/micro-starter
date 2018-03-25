@@ -9,8 +9,10 @@ import (
 
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/selector/cache"
 
 	user "github.com/hb-go/micro/auth/srv/proto/user"
+	"github.com/micro/go-plugins/transport/tcp"
 )
 
 func ExampleCall(w http.ResponseWriter, r *http.Request) {
@@ -22,6 +24,13 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+
+	time.Sleep(time.Millisecond *5)
+
+	client.NewClient(
+		client.Selector(cache.NewSelector(cache.TTL(time.Second *30))),
+		client.Transport(tcp.NewTransport()),
+	)
 
 	// call the backend service
 	userClient := user.NewUserClient("go.micro.srv.auth", client.DefaultClient)
