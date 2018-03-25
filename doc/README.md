@@ -23,25 +23,25 @@ go-micro是Micro的核心，是一套Go语言的可插拔RPC框架，提供服�
 ![go-micro](/doc/img/micro.jpg)
 
 主要有以下组件构成:
-- [Registry](doc/registry.md)
+- [Registry](/doc/registry.md)
     > 提供一套服务注册、发现、注销、监测机制，服务注册中心支持consul、etcd2/3、zookeeper、gossip、k8s、eureka等
 
-- [Selector](doc/selector.md)
+- [Selector](/doc/selector.md)
     > 选择器提供了负载均衡，可以通过过滤方法对微服务进行过滤，并通过不同路由算法选择微服务，以及缓存等
 
-- [Transport](doc/transport.md)
+- [Transport](/doc/transport.md)
     > 微服务间同步请求/响应通信方式，相对Go标准net包做了更高的抽象，支持更多的传输方式，如http、grpc、tcp、udp、Rabbitmq等
 
-- [Broker](doc/broker.md)
+- [Broker](/doc/broker.md)
     > 微服务键异步发布/订阅通信方式，更好的处理分布式系统解耦问题，默认使用http方式，生产环境通常会使用消息中间件，如Kafka、RabbitMQ、NSQ等
 
 - Codec
     > 服务间消息的编解码，支持json、protobuf、bson、msgpack等，与普通编码格式不同都是支持RPC格式
 
-- [Server](doc/server.md)
+- [Server](/doc/server.md)
     > 用于启动服务，为服务命名、注册Handler、添加中间件等
 
-- [Client](doc/client.md)
+- [Client](/doc/client.md)
     > 提供微服务客户端，通过Registry、Selector、Transport、Broker实现以服务名来查找服务、负载均衡、同步通信、异步消息等
 
 ### [go-plugins](https://github.com/micro/go-plugins)

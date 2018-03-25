@@ -2,6 +2,10 @@
 Go Micro 应用服务化治理实践
 
 [github.com/micro/micro](http://github.com/micro/micro)
+[github.com/micro/go-micro](http://github.com/micro/go-micro)
+
+##### [go-micro](/doc/README.md)
+![go-micro](/doc/img/micro.jpg "go-micro")
 
 ## 运行示例
 
