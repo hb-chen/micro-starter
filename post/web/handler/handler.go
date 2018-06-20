@@ -26,7 +26,7 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// call the backend service
-	exampleClient := example.NewExampleClient("go.micro.srv.post", client.DefaultClient)
+	exampleClient := example.NewExampleService("go.micro.srv.post", client.DefaultClient)
 	rsp, err := exampleClient.Call(context.TODO(), &example.Request{
 		Name: request["name"].(string),
 	})

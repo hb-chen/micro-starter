@@ -5,8 +5,8 @@ package go.micro.api.account;
 import "github.com/micro/go-api/proto/api.proto";
 
 service Account {
-    rpc Login(api.Request) returns (api.Response) {}
-    rpc Register(api.Request) returns (api.Response) {}
+    rpc Login(go.api.Request) returns (go.api.Response) {}
+    rpc Register(go.api.Request) returns (go.api.Response) {}
 }
 
 message ReqLogin {

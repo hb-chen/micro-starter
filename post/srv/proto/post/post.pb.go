@@ -17,12 +17,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -85,63 +79,6 @@ func (m *Rsp) GetContent() string {
 func init() {
 	proto.RegisterType((*Req)(nil), "go.micro.srv.post.Req")
 	proto.RegisterType((*Rsp)(nil), "go.micro.srv.post.Rsp")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for Post service
-
-type PostClient interface {
-	GetPost(ctx context.Context, in *Req, opts ...client.CallOption) (*Rsp, error)
-}
-
-type postClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewPostClient(serviceName string, c client.Client) PostClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "go.micro.srv.post"
-	}
-	return &postClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *postClient) GetPost(ctx context.Context, in *Req, opts ...client.CallOption) (*Rsp, error) {
-	req := c.c.NewRequest(c.serviceName, "Post.GetPost", in)
-	out := new(Rsp)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for Post service
-
-type PostHandler interface {
-	GetPost(context.Context, *Req, *Rsp) error
-}
-
-func RegisterPostHandler(s server.Server, hdlr PostHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&Post{hdlr}, opts...))
-}
-
-type Post struct {
-	PostHandler
-}
-
-func (h *Post) GetPost(ctx context.Context, in *Req, out *Rsp) error {
-	return h.PostHandler.GetPost(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("post/srv/proto/post/post.proto", fileDescriptor0) }

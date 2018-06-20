@@ -18,12 +18,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -95,79 +89,6 @@ func init() {
 	proto.RegisterType((*ReqKey)(nil), "go.micro.srv.auth.token.ReqKey")
 	proto.RegisterType((*ReqToken)(nil), "go.micro.srv.auth.token.ReqToken")
 	proto.RegisterType((*Rsp)(nil), "go.micro.srv.auth.token.Rsp")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for Token service
-
-type TokenClient interface {
-	Generate(ctx context.Context, in *ReqKey, opts ...client.CallOption) (*Rsp, error)
-	Verify(ctx context.Context, in *ReqToken, opts ...client.CallOption) (*Rsp, error)
-}
-
-type tokenClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewTokenClient(serviceName string, c client.Client) TokenClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "go.micro.srv.auth.token"
-	}
-	return &tokenClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *tokenClient) Generate(ctx context.Context, in *ReqKey, opts ...client.CallOption) (*Rsp, error) {
-	req := c.c.NewRequest(c.serviceName, "Token.Generate", in)
-	out := new(Rsp)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *tokenClient) Verify(ctx context.Context, in *ReqToken, opts ...client.CallOption) (*Rsp, error) {
-	req := c.c.NewRequest(c.serviceName, "Token.Verify", in)
-	out := new(Rsp)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for Token service
-
-type TokenHandler interface {
-	Generate(context.Context, *ReqKey, *Rsp) error
-	Verify(context.Context, *ReqToken, *Rsp) error
-}
-
-func RegisterTokenHandler(s server.Server, hdlr TokenHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&Token{hdlr}, opts...))
-}
-
-type Token struct {
-	TokenHandler
-}
-
-func (h *Token) Generate(ctx context.Context, in *ReqKey, out *Rsp) error {
-	return h.TokenHandler.Generate(ctx, in, out)
-}
-
-func (h *Token) Verify(ctx context.Context, in *ReqToken, out *Rsp) error {
-	return h.TokenHandler.Verify(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("auth/srv/proto/token/token.proto", fileDescriptor0) }

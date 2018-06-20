@@ -94,18 +94,11 @@ micro new --type api --alias account github.com/hb-go/micro/post/api
 micro new --type web --alias account github.com/hb-go/micro/post/web
 ```
 
-### Protobuf [GRPC Gateway](https://micro.mu/docs/grpc-gateway.html)
+### Protobuf [protoc-gen-micro](https://github.com/micro/protoc-gen-micro)
 ```bash
-go get github.com/micro/protobuf/{proto,protoc-gen-go}
-protoc --go_out=plugins=micro:. account/srv/proto/example/example.proto
+go get github.com/micro/protoc-gen-micro
 
-# api中import "github.com/micro/go-api/proto/api.proto";
-# 报错:github.com/micro/go-api/proto/api.proto: File not found.
-# 需要增加依赖的路径 -I$GOPATH/src \
-protoc -I/usr/local/include -I. \
-  -I$GOPATH/src \
-  --go_out=plugins=micro:. \
-  post/api/proto/example/example.proto
+protoc --proto_path=$GOPATH/src:. --micro_out=. --go_out=. post/srv/proto/example/example.proto
 ```
 
 ### API
@@ -136,19 +129,8 @@ $ micro --enable_stats web
 ```
 	
 ### Trace
-- [Kafka&ZooKeeper安装使用](https://kafka.apache.org/quickstart)
+[Jaeger](http://jaeger.readthedocs.io/en/latest/getting_started/#all-in-one-docker-image)
 ```bash
-# create topic
-$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic zipkin
-```
-- [Zipkin](https://github.com/openzipkin/zipkin)
-- [Kafka Collector](https://github.com/openzipkin/zipkin/tree/master/zipkin-server#kafka-collector)
-```bash
-# Docker 运行zipkin
-# 需要指定KAFKA_ZOOKEEPER，host使用主机IP
-$ docker run --name zipkin -d -p 9411:9411 \
---env KAFKA_ZOOKEEPER=192.168.1.1:2181 \
-openzipkin/zipkin
-
-#localhost:9411 查看Trace信息
+docker run -d --name=jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p5775:5775/udp -p6831:6831/udp -p6832:6832/udp   -p5778:5778 -p16686:16686 -p14268:14268 -p9411:9411 jaegertracing/all-in-one:latest
+#http://localhost:16686 查看Trace信息
 ```

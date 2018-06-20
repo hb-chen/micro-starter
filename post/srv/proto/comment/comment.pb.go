@@ -16,13 +16,7 @@ package go_micro_srv_post_comment
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import go_micro_srv_post "github.com/hb-go/micro/post/srv/proto/post"
-
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
+import _ "github.com/hb-go/micro/post/srv/proto/post"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -70,63 +64,6 @@ func (m *CommentDto) GetContent() string {
 func init() {
 	proto.RegisterType((*Rsp)(nil), "go.micro.srv.post.comment.Rsp")
 	proto.RegisterType((*CommentDto)(nil), "go.micro.srv.post.comment.CommentDto")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for Comment service
-
-type CommentClient interface {
-	GetComments(ctx context.Context, in *go_micro_srv_post.Req, opts ...client.CallOption) (*Rsp, error)
-}
-
-type commentClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewCommentClient(serviceName string, c client.Client) CommentClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "go.micro.srv.post.comment"
-	}
-	return &commentClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *commentClient) GetComments(ctx context.Context, in *go_micro_srv_post.Req, opts ...client.CallOption) (*Rsp, error) {
-	req := c.c.NewRequest(c.serviceName, "Comment.GetComments", in)
-	out := new(Rsp)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for Comment service
-
-type CommentHandler interface {
-	GetComments(context.Context, *go_micro_srv_post.Req, *Rsp) error
-}
-
-func RegisterCommentHandler(s server.Server, hdlr CommentHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&Comment{hdlr}, opts...))
-}
-
-type Comment struct {
-	CommentHandler
-}
-
-func (h *Comment) GetComments(ctx context.Context, in *go_micro_srv_post.Req, out *Rsp) error {
-	return h.CommentHandler.GetComments(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("post/srv/proto/comment/comment.proto", fileDescriptor0) }

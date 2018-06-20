@@ -33,7 +33,7 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 	)
 
 	// call the backend service
-	userClient := user.NewUserClient("go.micro.srv.auth", client.DefaultClient)
+	userClient := user.NewUserService("go.micro.srv.auth", client.DefaultClient)
 	rsp, err := userClient.GetUserLogin(context.TODO(), &user.ReqLogin{
 		Nickname: "Hobo",
 		Pwd:      "pwd",

@@ -1,12 +1,11 @@
 package main
 
 import (
-	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-os/trace"
-	"github.com/micro/go-plugins/trace/zipkin"
+	"github.com/micro/go-plugins/wrapper/trace/opentracing"
 
+	tracer "github.com/hb-go/micro/pkg/opentracing"
 	"github.com/hb-go/micro/auth/srv/handler"
 	"github.com/hb-go/micro/auth/srv/subscriber"
 	example "github.com/hb-go/micro/auth/srv/proto/example"
@@ -15,20 +14,19 @@ import (
 )
 
 func main() {
-	t := zipkin.NewTrace(
-		trace.Topic("zipkin"),
-		trace.Collectors("localhost:9092"),
-	)
-	defer t.Close()
-
-	srv := &registry.Service{Name: "go.micro.srv.auth"}
+	// Tracer
+	t, closer, err := tracer.NewJaegerTracer("auth.srv", "127.0.0.1:6831")
+	if err != nil {
+		log.Fatalf("opentracing tracer create error:%v", err)
+	}
+	defer closer.Close()
 
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.srv.auth"),
 		micro.Version("latest"),
-		micro.WrapClient(trace.ClientWrapper(t, srv)),
-		micro.WrapHandler(trace.HandlerWrapper(t, srv)),
+		micro.WrapClient(opentracing.NewClientWrapper(t)),
+		micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
 	)
 
 	// Register Handler

@@ -6,7 +6,7 @@ import "github.com/micro/go-api/proto/api.proto";
 import "github.com/hb-go/micro/post/srv/proto/post/post.proto";
 
 service Post {
-    rpc Post(api.Request) returns (api.Response) {}
+    rpc Post(go.api.Request) returns (go.api.Response) {}
 }
 
 message Rsp {

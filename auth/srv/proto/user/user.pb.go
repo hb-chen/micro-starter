@@ -18,12 +18,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
-import (
-	client "github.com/micro/go-micro/client"
-	server "github.com/micro/go-micro/server"
-	context "golang.org/x/net/context"
-)
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -103,79 +97,6 @@ func init() {
 	proto.RegisterType((*ReqId)(nil), "go.micro.srv.auth.user.ReqId")
 	proto.RegisterType((*ReqLogin)(nil), "go.micro.srv.auth.user.ReqLogin")
 	proto.RegisterType((*Rsp)(nil), "go.micro.srv.auth.user.Rsp")
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ client.Option
-var _ server.Option
-
-// Client API for User service
-
-type UserClient interface {
-	GetUser(ctx context.Context, in *ReqId, opts ...client.CallOption) (*Rsp, error)
-	GetUserLogin(ctx context.Context, in *ReqLogin, opts ...client.CallOption) (*Rsp, error)
-}
-
-type userClient struct {
-	c           client.Client
-	serviceName string
-}
-
-func NewUserClient(serviceName string, c client.Client) UserClient {
-	if c == nil {
-		c = client.NewClient()
-	}
-	if len(serviceName) == 0 {
-		serviceName = "go.micro.srv.auth.user"
-	}
-	return &userClient{
-		c:           c,
-		serviceName: serviceName,
-	}
-}
-
-func (c *userClient) GetUser(ctx context.Context, in *ReqId, opts ...client.CallOption) (*Rsp, error) {
-	req := c.c.NewRequest(c.serviceName, "User.GetUser", in)
-	out := new(Rsp)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) GetUserLogin(ctx context.Context, in *ReqLogin, opts ...client.CallOption) (*Rsp, error) {
-	req := c.c.NewRequest(c.serviceName, "User.GetUserLogin", in)
-	out := new(Rsp)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Server API for User service
-
-type UserHandler interface {
-	GetUser(context.Context, *ReqId, *Rsp) error
-	GetUserLogin(context.Context, *ReqLogin, *Rsp) error
-}
-
-func RegisterUserHandler(s server.Server, hdlr UserHandler, opts ...server.HandlerOption) {
-	s.Handle(s.NewHandler(&User{hdlr}, opts...))
-}
-
-type User struct {
-	UserHandler
-}
-
-func (h *User) GetUser(ctx context.Context, in *ReqId, out *Rsp) error {
-	return h.UserHandler.GetUser(ctx, in, out)
-}
-
-func (h *User) GetUserLogin(ctx context.Context, in *ReqLogin, out *Rsp) error {
-	return h.UserHandler.GetUserLogin(ctx, in, out)
 }
 
 func init() { proto.RegisterFile("auth/srv/proto/user/user.proto", fileDescriptor0) }
