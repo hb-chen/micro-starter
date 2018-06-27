@@ -1,5 +1,5 @@
-hash: a299624b1f32b7707c3ea49f282b9dc331d831cbb1140f827a5276abe5372b10
-updated: 2018-06-20T19:23:22.648605+08:00
+hash: e956c99ac21d0f8952f9c6f57de34d686a18fa2a2e5d45f1ed4baa225a848ca2
+updated: 2018-06-27T20:12:33.987062+08:00
 imports:
 - name: github.com/armon/go-metrics
   version: 783273d703149aaeb9897cf58613d5af48861c25
@@ -44,6 +44,17 @@ imports:
   version: 80ab48778deee28e4ea2dc4ef1ebb2c5f4063996
   subpackages:
   - coordinate
+- name: github.com/labstack/echo
+  version: 6d227dfea4d2e52cb76856120b3c17f758139b4e
+- name: github.com/labstack/gommon
+  version: d6898124de917583f5ff5592ef931d1dfe0ddc05
+  subpackages:
+  - color
+  - log
+- name: github.com/mattn/go-colorable
+  version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
+- name: github.com/mattn/go-isatty
+  version: 6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c
 - name: github.com/micro/cli
   version: 3d2263bb092286dde294a31049c92665f8373820
 - name: github.com/micro/examples
@@ -123,7 +134,6 @@ imports:
   subpackages:
   - ext
   - log
-  - mocktracer
 - name: github.com/pborman/uuid
   version: c65b2f87fee37d1c7854c9164a450713c28d50cd
 - name: github.com/pkg/errors
@@ -154,9 +164,15 @@ imports:
   version: f3cacc17c85ecb7f1b6a9e373ee85d1480919868
   subpackages:
   - codec
+- name: github.com/valyala/bytebufferpool
+  version: e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7
+- name: github.com/valyala/fasttemplate
+  version: dcecefd839c4193db0d35b88ec65b4c12d360ab0
 - name: golang.org/x/crypto
   version: 2d027ae1dddd4694d54f7a8b6cbe78dca8720226
   subpackages:
+  - acme
+  - acme/autocert
   - ed25519
   - ed25519/internal/edwards25519
 - name: golang.org/x/net
@@ -168,6 +184,10 @@ imports:
   - internal/socket
   - ipv4
   - ipv6
+- name: golang.org/x/sys
+  version: c11f84a56e43e20a78cee75a7c034031ecf57d1f
+  subpackages:
+  - unix
 - name: golang.org/x/text
   version: 7922cc490dd5a7dbaa7fd5d6196b49db59ac042f
 - name: google.golang.org/genproto

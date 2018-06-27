@@ -3,6 +3,7 @@ import:
 - package: golang.org/x/text
 - package: golang.org/x/net
 - package: golang.org/x/crypto
+- package: golang.org/x/sys
 - package: github.com/golang/protobuf
   version: ~1.0.0
   subpackages:
@@ -44,3 +45,7 @@ import:
   version: ^1.0.2
 - package: github.com/montanaflynn/stats
   version: ^0.3.0
+- package: github.com/labstack/echo
+  version: ^3.3.5
+- package: github.com/labstack/gommon
+  version: ^0.2.6

@@ -42,6 +42,10 @@ $ cd post/web/ && go run main.go
 http://localhost:8082/post
 ```
 
+### Echo做Web框架
+- [Micro＋Echo示范](/_echo-web)
+- 更多Echo示例☞[hb-go/echo-web](https://github.com/hb-go/echo-web)
+
 ### 插件替换
 > 需要替换的插件import到plugins.go
 
@@ -85,13 +89,13 @@ import (
 
 ### 模块创建
 ```bash
-micro new --type srv --alias account github.com/hb-go/micro/auth/srv
+micro new --type srv --alias auth github.com/hb-go/micro/auth/srv
 micro new --type api --alias account github.com/hb-go/micro/account/api
 micro new --type web --alias account github.com/hb-go/micro/account/web
 
-micro new --type srv --alias account github.com/hb-go/micro/post/srv
-micro new --type api --alias account github.com/hb-go/micro/post/api
-micro new --type web --alias account github.com/hb-go/micro/post/web
+micro new --type srv --alias post github.com/hb-go/micro/post/srv
+micro new --type api --alias post github.com/hb-go/micro/post/api
+micro new --type web --alias post github.com/hb-go/micro/post/web
 ```
 
 ### Protobuf [protoc-gen-micro](https://github.com/micro/protoc-gen-micro)
