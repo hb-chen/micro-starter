@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/micro/go-api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
@@ -25,6 +27,8 @@ func main() {
 	service := micro.NewService(
 		micro.Name("go.micro.api.account"),
 		micro.Version("latest"),
+		micro.RegisterTTL(time.Second*30),
+		micro.RegisterInterval(time.Second*15),
 		micro.WrapClient(opentracing.NewClientWrapper(t)),
 		micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
 	)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/micro/go-log"
 	"github.com/micro/go-web"
@@ -14,6 +15,8 @@ func main() {
 	service := web.NewService(
 		web.Name("go.micro.web.account"),
 		web.Version("latest"),
+		web.RegisterTTL(time.Second*30),
+		web.RegisterInterval(time.Second*15),
 	)
 
 	// register html handler
