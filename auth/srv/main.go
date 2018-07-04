@@ -5,7 +5,9 @@ import (
 
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/server"
 	"github.com/micro/go-plugins/wrapper/trace/opentracing"
+	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	tracer "github.com/hb-go/micro/pkg/opentracing"
 	"github.com/hb-go/micro/auth/srv/handler"
@@ -33,6 +35,11 @@ func main() {
 		micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
 	)
 
+	// graceful
+	service.Server().Init(
+		server.Wait(true),
+	)
+
 	// Register Handler
 	example.RegisterExampleHandler(service.Server(), new(handler.Example))
 
@@ -48,7 +55,12 @@ func main() {
 	user.RegisterUserHandler(service.Server(), new(handler.User))
 
 	// Initialise service
-	service.Init()
+	service.Init(
+		// handler wrap
+		micro.WrapHandler(
+			ratelimit.NewHandlerWrapper(1024),
+		),
+	)
 
 	// Run service
 	if err := service.Run(); err != nil {

@@ -49,3 +49,6 @@ import:
   version: ^3.3.5
 - package: github.com/labstack/gommon
   version: ^0.2.6
+- package: github.com/afex/hystrix-go
+  subpackages:
+  - hystrix

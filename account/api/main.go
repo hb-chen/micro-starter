@@ -6,7 +6,10 @@ import (
 	"github.com/micro/go-api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/server"
 	"github.com/micro/go-plugins/wrapper/trace/opentracing"
+	"github.com/micro/go-plugins/wrapper/breaker/hystrix"
+	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	tracer "github.com/hb-go/micro/pkg/opentracing"
 	"github.com/hb-go/micro/account/api/handler"
@@ -31,6 +34,11 @@ func main() {
 		micro.RegisterInterval(time.Second*15),
 		micro.WrapClient(opentracing.NewClientWrapper(t)),
 		micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
+	)
+
+	// graceful
+	service.Server().Init(
+		server.Wait(true),
 	)
 
 	// Register Handler
@@ -70,8 +78,15 @@ func main() {
 
 	// Initialise service
 	service.Init(
-		// create wrap for the Example srv client
+		// client wrap
+		micro.WrapClient(
+			// @TODO fallback
+			hystrix.NewClientWrapper(),
+			ratelimit.NewClientWrapper(1024),
+		),
+		// handler wrap
 		micro.WrapHandler(
+			ratelimit.NewHandlerWrapper(1024),
 			client.ExampleWrapper(service),
 			client.UserWrapper(service),
 			client.TokenWrapper(service),
