@@ -89,20 +89,29 @@ import (
 
 ### 模块创建
 ```bash
-micro new --type srv --alias auth github.com/hb-go/micro/auth/srv
-micro new --type api --alias account github.com/hb-go/micro/account/api
-micro new --type web --alias account github.com/hb-go/micro/account/web
+$ micro new --type srv --alias auth github.com/hb-go/micro/auth/srv
+$ micro new --type api --alias account github.com/hb-go/micro/account/api
+$ micro new --type web --alias account github.com/hb-go/micro/account/web
 
-micro new --type srv --alias post github.com/hb-go/micro/post/srv
-micro new --type api --alias post github.com/hb-go/micro/post/api
-micro new --type web --alias post github.com/hb-go/micro/post/web
+$ micro new --type srv --alias post github.com/hb-go/micro/post/srv
+$ micro new --type api --alias post github.com/hb-go/micro/post/api
+$ micro new --type web --alias post github.com/hb-go/micro/post/web
 ```
 
 ### Protobuf [protoc-gen-micro](https://github.com/micro/protoc-gen-micro)
 ```bash
-go get github.com/micro/protoc-gen-micro
+$ go get github.com/micro/protoc-gen-micro
 
-protoc --proto_path=$GOPATH/src:. --micro_out=. --go_out=. post/srv/proto/example/example.proto
+$ protoc --proto_path=$GOPATH/src:. --micro_out=. --go_out=. post/srv/proto/example/example.proto
+```
+
+##### .proto批量处理
+```bash
+# 批处理工具打包
+$ go build -i -o build/bin/proto_batch tools/proto/batch.go
+
+# ./build/bin/proto_batch -h
+$ ./build/bin/proto_batch -r auth:account:post
 ```
 
 ### API
@@ -135,6 +144,6 @@ $ micro --enable_stats web
 ### Trace
 [Jaeger](http://jaeger.readthedocs.io/en/latest/getting_started/#all-in-one-docker-image)
 ```bash
-docker run -d --name=jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p5775:5775/udp -p6831:6831/udp -p6832:6832/udp   -p5778:5778 -p16686:16686 -p14268:14268 -p9411:9411 jaegertracing/all-in-one:latest
+$ docker run -d --name=jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p5775:5775/udp -p6831:6831/udp -p6832:6832/udp   -p5778:5778 -p16686:16686 -p14268:14268 -p9411:9411 jaegertracing/all-in-one:latest
 #http://localhost:16686 查看Trace信息
 ```

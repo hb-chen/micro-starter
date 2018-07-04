@@ -14,8 +14,9 @@
 .glide/
 
 .idea
-vendor/
+build
+vendor
 
-/account/api/account-api
-/account/web/account-web
-/auth/srv/auth-srv
+account/api/account-api
+account/web/account-web
+auth/srv/auth-srv
