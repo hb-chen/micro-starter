@@ -8,7 +8,7 @@ import (
 	"github.com/micro/go-micro/server"
 	"github.com/micro/go-api"
 	"github.com/micro/go-plugins/wrapper/trace/opentracing"
-	"github.com/micro/go-plugins/wrapper/breaker/hystrix"
+	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	tracer "github.com/hb-go/micro/pkg/opentracing"
@@ -17,6 +17,7 @@ import (
 	example "github.com/hb-go/micro/post/api/proto/example"
 	post "github.com/hb-go/micro/post/api/proto/post"
 	comment "github.com/hb-go/micro/post/api/proto/comment"
+	"github.com/afex/hystrix-go/hystrix"
 )
 
 func main() {
@@ -83,8 +84,8 @@ func main() {
 	service.Init(
 		// client wrap
 		micro.WrapClient(
-			// @TODO fallback
-			hystrix.NewClientWrapper(),
+			// @TODO fallback、hystrix.ConfigureCommand()
+			breaker.NewClientWrapper(),
 			ratelimit.NewClientWrapper(1024),
 		),
 		// handler wrap
