@@ -10,11 +10,14 @@ import (
 	"github.com/montanaflynn/stats"
 	"golang.org/x/net/context"
 
+	"github.com/afex/hystrix-go/hystrix"
 	"github.com/micro/go-log"
 	//micro "github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/selector/cache"
 	"github.com/micro/go-plugins/transport/tcp"
+	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
+	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	proto "github.com/hb-go/micro/benchmark/proto"
 )
@@ -31,6 +34,11 @@ func main() {
 	log.Logf("concurrency: %d\nrequests per client: %d\n\n", n, m)
 
 	args := prepareArgs()
+
+	// Hystrix配置
+	hystrix.ConfigureCommand("hello.Hello.Say", hystrix.CommandConfig{
+		MaxConcurrentRequests: hystrix.DefaultMaxConcurrent * 2,
+	})
 
 	//b, _ := proto.Marshal(args)
 	//log.Logf("message size: %d bytes\n\n", len(b))
@@ -65,6 +73,8 @@ func main() {
 				client.Retries(1),
 				client.PoolSize(10),
 				client.RequestTimeout(time.Millisecond*100),
+				client.Wrap(breaker.NewClientWrapper()),
+				client.Wrap(ratelimit.NewClientWrapper(10)),
 			)
 			c := proto.NewHelloService("hello", helloClient)
 
@@ -82,6 +92,8 @@ func main() {
 
 				if err == nil && *reply.Field1 == "OK" {
 					atomic.AddUint64(&transOK, 1)
+				} else {
+					log.Logf("error:%v", err)
 				}
 
 				atomic.AddUint64(&trans, 1)

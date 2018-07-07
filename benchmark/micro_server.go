@@ -8,6 +8,7 @@ import (
 	"golang.org/x/net/context"
 	micro "github.com/micro/go-micro"
 	"github.com/micro/go-plugins/transport/tcp"
+	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	"github.com/hb-go/micro/benchmark/proto"
 )
@@ -39,7 +40,12 @@ func main() {
 		micro.Transport(tcp.NewTransport()),
 	)
 
-	service.Init()
+	service.Init(
+		// handler wrap
+		micro.WrapHandler(
+			ratelimit.NewHandlerWrapper(100),
+		),
+	)
 
 	proto.RegisterHelloHandler(service.Server(), &HelloS{})
 
