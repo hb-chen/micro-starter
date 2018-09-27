@@ -1,7 +1,7 @@
 # Benchmark
 [rpcx-benchmark](https://github.com/rpcx-ecosystem/rpcx-benchmark)
 
-- MPB开发环境
+- MBP开发环境
 ```bash
 go run micro_mclient.go -c 100 -n 50000
 2018/06/27 17:48:00 Servers: [127.0.0.1:8972]
