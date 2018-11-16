@@ -1,3 +1,7 @@
 FROM alpine:3.2
-ADD http-api /http-api
-ENTRYPOINT [ "/http-api" ]
+ADD sample /sample
+
+EXPOSE 9080
+
+# 配yaml的command覆盖
+ENTRYPOINT [ "/sample -p 9080 -cp 9080" ]

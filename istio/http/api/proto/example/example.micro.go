@@ -2,14 +2,14 @@
 // source: api/proto/example/example.proto
 
 /*
-Package go_micro_api_http is a generated protocol buffer package.
+Package go_micro_api_sample is a generated protocol buffer package.
 
 It is generated from these files:
 	api/proto/example/example.proto
 
 It has these top-level messages:
 */
-package go_micro_api_http
+package go_micro_api_sample
 
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
@@ -55,7 +55,7 @@ func NewExampleService(name string, c client.Client) ExampleService {
 		c = client.NewClient()
 	}
 	if len(name) == 0 {
-		name = "go.micro.api.http"
+		name = "go.micro.api.sample"
 	}
 	return &exampleService{
 		c:    c,

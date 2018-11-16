@@ -1,6 +1,6 @@
-# Http Api
+# Sample Api
 
-This is the Http service with fqdn go.micro.api.http.
+This is the Http service with fqdn go.micro.api.sample.
 
 ## Getting Started
 
@@ -24,7 +24,6 @@ $ go run main.go
 
 If you would like to build the docker container do the following
 ```
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o http-api ./main.go
-docker build -t http-api .
-
+$ CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o sample ./main.go
+$ docker build -t hbchen/go-micro-istio-api-sample:v0.0.1 .
 ```

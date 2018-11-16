@@ -1,3 +1,7 @@
 FROM alpine:3.2
-ADD http-srv /http-srv
-ENTRYPOINT [ "/http-srv" ]
+ADD sample /sample
+
+EXPOSE 9080
+
+# 配yaml的command覆盖
+ENTRYPOINT [ "/sample -p 9080 -cp 9080" ]

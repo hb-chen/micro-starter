@@ -1,6 +1,6 @@
-# Http Srv
+# Sample Srv
 
-This is the Http service with fqdn go.micro.srv.http.
+This is the Http service with fqdn go.micro.srv.sample.
 
 ## Getting Started
 
@@ -24,7 +24,6 @@ $ go run main.go
 
 If you would like to build the docker container do the following
 ```
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o http-srv ./main.go
-docker build -t http-srv .
-
+$ CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o sample ./main.go
+$ docker build -t hbchen/go-micro-istio-srv-sample:v0.0.1 .
 ```

@@ -2,7 +2,7 @@
 // source: srv/proto/example/example.proto
 
 /*
-Package go_micro_srv_http is a generated protocol buffer package.
+Package go_micro_srv_sample is a generated protocol buffer package.
 
 It is generated from these files:
 	srv/proto/example/example.proto
@@ -16,7 +16,7 @@ It has these top-level messages:
 	Ping
 	Pong
 */
-package go_micro_srv_http
+package go_micro_srv_sample
 
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
@@ -62,7 +62,7 @@ func NewExampleService(name string, c client.Client) ExampleService {
 		c = client.NewClient()
 	}
 	if len(name) == 0 {
-		name = "go.micro.srv.http"
+		name = "go.micro.srv.sample"
 	}
 	return &exampleService{
 		c:    c,
