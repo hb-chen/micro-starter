@@ -3,6 +3,11 @@ Go Micro 应用服务化治理实践
 
 <a href="/doc/README.md">![go-micro](/doc/img/micro.jpg "go-micro")</a>
 
+## Service Mesh
+go-micro服务加入service mesh
+- [istio示例](https://github.com/hb-go/micro/tree/master/istio)
+- [micro-plugin](https://github.com/hb-go/micro-plugins)
+
 ## 运行示例
 
 ### 服务发现-Consul
