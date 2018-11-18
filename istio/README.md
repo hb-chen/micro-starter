@@ -32,17 +32,16 @@ $ curl -H "Content-Type:application/json" -X POST -d '{"post":{ "name":{"key":"n
 - 需要一个编译好的SOFAMosn程序`sofa-mosn`
 
 ### 运行示例
-> 由于命令参数与micro有兼容问题，要运行示例sa、ca暂时需要手动修改代码
 ```bash
 $ cd pwd
 
 # run api service
 $ cd api
-$ go run main.go -sa localhost:8081 -ca localhost:2046
+$ go run main.go -server_address localhost:8081 -client_call_address localhost:2046
 
 # run srv service
 $ cd srv
-$ go run main.go -sa localhost:8082
+$ go run main.go -server_address localhost:8082
 
 # run api mosn 代理
 $ ./sofa-mosn start -c mosn_api.json

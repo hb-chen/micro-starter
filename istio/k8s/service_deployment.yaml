@@ -44,8 +44,10 @@ spec:
       - name: go-micro-srv-sample
         command: [
           "/sample",
+          "-server_address=0.0.0.0:9080",
+          "-client_call_address=:9080",
         ]
-        image: hbchen/go-micro-istio-srv-sample:v0.0.1
+        image: hbchen/go-micro-istio-srv-sample:v0.0.2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -82,8 +84,10 @@ spec:
       - name: go-micro-api-sample
         command: [
           "/sample",
+          "-server_address=0.0.0.0:9080",
+          "-client_call_address=:9080",
         ]
-        image: hbchen/go-micro-istio-api-sample:v0.0.3
+        image: hbchen/go-micro-istio-api-sample:v0.0.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
