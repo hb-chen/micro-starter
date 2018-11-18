@@ -6,18 +6,18 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/server"
-	
+	"github.com/micro/go-plugins/registry/noop"
 	httpClient "github.com/hb-go/micro-plugins/client/istio_http"
 	httpServer "github.com/hb-go/micro-plugins/server/istio_http"
+
 	apiClient "github.com/hb-go/micro/istio/http/api/client"
 	"github.com/hb-go/micro/istio/http/api/handler"
 	example "github.com/hb-go/micro/istio/http/api/proto/example"
-	"github.com/micro/go-plugins/registry/noop"
 )
 
 var (
-	serverAddr       string
-	callAddr string
+	serverAddr string
+	callAddr   string
 	cmdHelp    bool
 )
 
@@ -34,7 +34,7 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
-	
+
 	// 多client需要统一端口，或者在client中hard code
 	c := httpClient.NewClient(
 		client.ContentType("application/json"),
@@ -45,7 +45,7 @@ func main() {
 	s := httpServer.NewServer(
 		server.Address(serverAddr),
 	)
-	
+
 	// New Service
 	service := micro.NewService(
 		micro.Name("go.micro.api.sample"),
@@ -54,16 +54,16 @@ func main() {
 		micro.Client(c),
 		micro.Server(s),
 	)
-	
+
 	// Register Handler
 	example.RegisterExampleHandler(service.Server(), new(handler.Example))
-	
+
 	// Initialise service
 	service.Init(
 		// create wrap for the Example srv client
 		micro.WrapHandler(apiClient.ExampleWrapper(service)),
 	)
-	
+
 	// Run service
 	if err := service.Run(); err != nil {
 		log.Fatal(err)

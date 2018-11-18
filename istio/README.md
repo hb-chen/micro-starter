@@ -38,7 +38,7 @@ $ cd pwd
 
 # run api service
 $ cd api
-$ go run main.go -sa localhost:8081 -ca :2046
+$ go run main.go -sa localhost:8081 -ca localhost:2046
 
 # run srv service
 $ cd srv
