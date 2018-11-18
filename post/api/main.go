@@ -3,21 +3,20 @@ package main
 import (
 	"time"
 
+	"github.com/micro/go-api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-api"
-	"github.com/micro/go-plugins/wrapper/trace/opentracing"
 	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	"github.com/micro/go-plugins/wrapper/trace/opentracing"
 
 	tracer "github.com/hb-go/micro/pkg/opentracing"
-	"github.com/hb-go/micro/post/api/handler"
 	"github.com/hb-go/micro/post/api/client"
+	"github.com/hb-go/micro/post/api/handler"
+	comment "github.com/hb-go/micro/post/api/proto/comment"
 	example "github.com/hb-go/micro/post/api/proto/example"
 	post "github.com/hb-go/micro/post/api/proto/post"
-	comment "github.com/hb-go/micro/post/api/proto/comment"
-	"github.com/afex/hystrix-go/hystrix"
 )
 
 func main() {

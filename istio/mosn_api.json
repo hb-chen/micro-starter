@@ -33,7 +33,7 @@
                         "routers": [
                           {
                             "match": {
-                              "prefix": "/Example.Call"
+                              "prefix": "/example/call"
                             },
                             "route": {
                               "cluster_name": "apiCluster"

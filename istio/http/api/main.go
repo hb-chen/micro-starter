@@ -6,6 +6,7 @@ import (
 	httpClient "github.com/hb-go/micro-plugins/client/istio_http"
 	httpServer "github.com/hb-go/micro-plugins/server/istio_http"
 	"github.com/micro/cli"
+	"github.com/micro/go-api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
@@ -43,7 +44,7 @@ func main() {
 			o.CallOptions.Address = callAddr
 		},
 	)
-	s := httpServer.NewServer(
+	s := httpServer.NewApiServer(
 		server.Address(serverAddr),
 	)
 
@@ -66,13 +67,25 @@ func main() {
 	service.Options().Cmd.Init()
 
 	// Register Handler
-	example.RegisterExampleHandler(service.Server(), new(handler.Example))
+	example.RegisterExampleHandler(service.Server(), new(handler.Example),
+		api.WithEndpoint(&api.Endpoint{
+			// The RPC method
+			Name: "Example.Call",
+			// The HTTP paths. This can be a POSIX regex
+			Path: []string{"/example/call"},
+			// The HTTP Methods for this endpoint
+			Method: []string{"GET", "POST"},
+			// The API handler to use
+			Handler: api.Api,
+		}))
 
 	// Initialise service
 	service.Init(
 		// create wrap for the Example srv client
 		micro.WrapHandler(apiClient.ExampleWrapper(service)),
 	)
+
+	log.Logf("Service Run")
 
 	// Run service
 	if err := service.Run(); err != nil {

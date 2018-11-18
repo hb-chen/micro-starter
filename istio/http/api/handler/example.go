@@ -35,9 +35,19 @@ func (e *Example) Call(ctx context.Context, req *api.Request, rsp *api.Response)
 	}
 
 	// make request
-	response, err := exampleClient.Call(ctx, &example.Request{
-		Name: extractValue(req.Post["name"]),
-	})
+	log.Logf("post data:%v",req.GetPost())
+	r := example.Request{}
+	if req.Method == "POST" {
+		if err := json.Unmarshal([]byte(req.Body), &r); err != nil {
+			return errors.InternalServerError("go.micro.api.sample.example.call", err.Error())
+		}
+
+	} else {
+		name := extractValue(req.Get["name"])
+		r.Name = name
+	}
+	response, err := exampleClient.Call(ctx, &r)
+
 	if err != nil {
 		return errors.InternalServerError("go.micro.api.sample.example.call", err.Error())
 	}

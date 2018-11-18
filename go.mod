@@ -23,6 +23,8 @@ require (
 	github.com/go-ole/go-ole v1.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20181024230925-c65c006176ff // indirect
 	github.com/golang/protobuf v1.2.0
+	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.5.1 // indirect
@@ -47,10 +49,10 @@ require (
 	github.com/hashicorp/raft-boltdb v0.0.0-20171010151810-6e5ba93211ea // indirect
 	github.com/hashicorp/serf v0.0.0-20180507231928-80ab48778dee // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
-	github.com/hb-go/micro-plugins v0.0.1
+	github.com/hb-go/micro-plugins v0.0.0-20181118141418-3489ce9c80f5
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
-	github.com/micro/cli v0.0.0-20160406215405-3d2263bb0922 // indirect
+	github.com/micro/cli v0.0.0-20160406215405-3d2263bb0922
 	github.com/micro/examples v0.0.0-20180425142918-1891367d7b53
 	github.com/micro/go-api v0.3.1
 	github.com/micro/go-log v0.0.0-20170512141327-cbfa9447f9b6
@@ -88,6 +90,7 @@ require (
 	github.com/xiang90/probing v0.0.0-20160813154853-07dd2e8dfe18 // indirect
 	go.uber.org/atomic v1.3.2 // indirect
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277 // indirect
+	go.uber.org/zap v1.9.1 // indirect
 	golang.org/x/net v0.0.0-20180826012351-8a410e7b638d
 	gopkg.in/vmihailenco/msgpack.v2 v2.9.1 // indirect
 )

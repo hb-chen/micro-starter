@@ -25,7 +25,7 @@ spec:
   http:
   - match:
     - uri:
-        exact: /Example.Call
+        exact: /example/call
     route:
     - destination:
         host: go-micro-api-sample

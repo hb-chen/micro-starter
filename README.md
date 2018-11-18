@@ -6,7 +6,7 @@ Go Micro 应用服务化治理实践
 ## Service Mesh
 go-micro服务加入service mesh
 - [istio示例](https://github.com/hb-go/micro/tree/master/istio)
-- [micro-plugin](https://github.com/hb-go/micro-plugins)
+- [micro-plugins](https://github.com/hb-go/micro-plugins)
 
 ## 运行示例
 

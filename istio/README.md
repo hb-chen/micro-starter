@@ -7,7 +7,6 @@
 - micro-plugins
     - http
         - FQDN Server/Service address定义
-        - 支持server.HandlerOption定义api.Endpoint
         - 支持stream
     - gRPC
         - ……
@@ -21,7 +20,10 @@ $ kubectl apply -f virtual-service.yaml
 $ kubectl apply -f gateway.yaml
 
 # 验证
-$ curl -H "Content-Type:application/json" -X POST -d '{"post":{ "name":{"key":"name","values":["Hobo"]}}}' http://192.168.99.100:31380/Example.Call
+$ curl -H "Content-Type:application/json" -X GET http://192.168.99.100:31380/example/call?name=Hobo
+{"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
+
+$ curl -H "Content-Type:application/json" -X POST -d '{"name":"Hobo"}' http://192.168.99.100:31380/example/call
 {"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
 ```
 
@@ -52,6 +54,9 @@ $ ./sofa-mosn start -c mosn_srv.json
 
 ### 测试
 ```bash
-$ curl -H "Content-Type:application/json" -X POST -d '{"post":{ "name":{"key":"name","values":["Hobo"]}}}' http://127.0.0.1:2045/Example.Call
+$ curl -H "Content-Type:application/json" -X GET http://127.0.0.1:2045/example/call?name=Hobo
 {"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
+
+$ curl -H "Content-Type:application/json" -X POST -d '{"name":"Hobo"}' http://127.0.0.1:2045/example/call
+  {"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
 ```

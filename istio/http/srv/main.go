@@ -74,6 +74,8 @@ func main() {
 	// Initialise service
 	service.Init()
 
+	log.Logf("Service Run")
+
 	// Run service
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
