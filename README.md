@@ -1,4 +1,6 @@
 # Micro [github.com/micro](http://github.com/micro)
+[![Slack](https://img.shields.io/badge/slack-join-D60051.svg)](https://hbchen.slack.com/messages/CE68CJ60Z)
+
 Go Micro 应用服务化治理实践
 
 <a href="/doc/README.md">![go-micro](/doc/img/micro.jpg "go-micro")</a>

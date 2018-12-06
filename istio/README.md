@@ -34,8 +34,10 @@ $ curl -H "Content-Type:application/json" -X POST -d '{"name":"Hobo"}' http://19
 - 需要一个编译好的SOFAMosn程序`sofa-mosn`
 
 ### 运行示例
+
+#### HTTP
 ```bash
-$ cd pwd
+$ cd pwd/http
 
 # run api service
 $ cd api
@@ -52,11 +54,30 @@ $ ./sofa-mosn start -c mosn_api.json
 $ ./sofa-mosn start -c mosn_srv.json
 ```
 
-### 测试
+##### 测试
 ```bash
 $ curl -H "Content-Type:application/json" -X GET http://127.0.0.1:2045/example/call?name=Hobo
 {"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
 
 $ curl -H "Content-Type:application/json" -X POST -d '{"name":"Hobo"}' http://127.0.0.1:2045/example/call
   {"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
+```
+
+#### gRPC
+> TODO
+- Envoy代理
+
+```bash
+$ cd pwd/grpc
+
+# run api service
+$ cd api
+$ go run main.go -server_address localhost:8082 -client_call_address localhost:8081
+
+# run srv service
+$ cd srv
+$ go run main.go -server_address localhost:8081
+
+# 测试
+$ go run client.go
 ```
