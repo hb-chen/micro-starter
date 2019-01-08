@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"time"
 
 	grpcClient "github.com/hb-go/micro-plugins/client/istio_grpc"
@@ -12,9 +13,16 @@ import (
 	example "github.com/hb-go/micro/istio/grpc/api/proto/example"
 )
 
-const (
-	address = "localhost:8082"
+var (
+	address string
 )
+
+func init() {
+	// local:localhost:8082
+	// k8s:"192.168.99.100:31380"
+	flag.StringVar(&address, "address", "localhost:8082", "server address.")
+	flag.Parse()
+}
 
 func main() {
 	c := grpcClient.NewClient(

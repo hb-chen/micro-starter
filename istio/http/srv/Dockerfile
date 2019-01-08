@@ -3,5 +3,5 @@ ADD sample /sample
 
 EXPOSE 9080
 
-# 配yaml的command覆盖
-ENTRYPOINT [ "/sample -p 9080 -cp 9080" ]
+# 被yaml的command覆盖
+ENTRYPOINT [ "/sample" ]
