@@ -50,7 +50,6 @@ require (
 	github.com/hashicorp/serf v0.0.0-20180507231928-80ab48778dee // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
 	github.com/hb-go/micro-plugins v0.0.0-20181206114555-00b2912b9d08
-
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/micro/cli v0.0.0-20160406215405-3d2263bb0922
@@ -94,24 +93,7 @@ require (
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277 // indirect
 	go.uber.org/zap v1.9.1 // indirect
 	golang.org/x/net v0.0.0-20180826012351-8a410e7b638d
-	google.golang.org/genproto v0.0.0-20180831171423-11092d34479b
-	google.golang.org/grpc v1.13.0
+	google.golang.org/genproto v0.0.0-20180831171423-11092d34479b // indirect
+	google.golang.org/grpc v1.13.0 // indirect
 	gopkg.in/vmihailenco/msgpack.v2 v2.9.1 // indirect
-)
-
-replace (
-	cloud.google.com/go v0.26.0 => github.com/GoogleCloudPlatform/google-cloud-go v0.26.0
-	golang.org/x/crypto v0.0.0-20180820150726-614d502a4dac => github.com/golang/crypto v0.0.0-20180820150726-614d502a4dac
-	golang.org/x/net v0.0.0-20180826012351-8a410e7b638d => github.com/golang/net v0.0.0-20180826012351-8a410e7b638d
-	golang.org/x/oauth2 v0.0.0-20170807180024-9a379c6b3e95 => github.com/golang/oauth2 v0.0.0-20170807180024-9a379c6b3e95
-	golang.org/x/sync v0.0.0-20170927054112-8e0aa688b654 => github.com/golang/sync v0.0.0-20170927054112-8e0aa688b654
-	golang.org/x/sys v0.0.0-20180823144017-11551d06cbcc => github.com/golang/sys v0.0.0-20180823144017-11551d06cbcc
-	golang.org/x/sys v0.0.0-20180828065106-d99a578cf41b => github.com/golang/sys v0.0.0-20180828065106-d99a578cf41b
-	golang.org/x/text v0.3.0 => github.com/golang/text v0.3.0
-	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2 => github.com/golang/time v0.0.0-20180412165947-fbb02b2291d2
-	golang.org/x/tools v0.0.0 => github.com/golang/tools v0.0.0
-	google.golang.org/api v0.0.0-20180829000535-087779f1d2c9 => github.com/googleapis/google-api-go-client v0.0.0-20180829000535-087779f1d2c9
-	google.golang.org/appengine v1.1.0 => github.com/golang/appengine v1.1.0
-	google.golang.org/genproto v0.0.0-20180831171423-11092d34479b => github.com/google/go-genproto v0.0.0-20180831171423-11092d34479b
-	google.golang.org/grpc v1.13.0 => github.com/grpc/grpc-go v1.13.0
 )

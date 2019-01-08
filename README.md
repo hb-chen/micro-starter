@@ -12,6 +12,10 @@ go-micro服务加入service mesh
 
 ## 运行示例
 
+### 依赖安装
+###### go mod
+> GFW[goproxy.io](https://goproxy.io/)
+
 ### 服务发现-Consul
 ```bash
 $ consul agent -dev -advertise 127.0.0.1
