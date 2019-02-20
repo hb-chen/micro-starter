@@ -25,6 +25,14 @@ $ curl -H "Content-Type:application/json" -X POST -d '{"name":"Hobo"}' http://19
 $ go run grpc_client.go -address 192.168.99.100:31380
 2019/01/08 23:12:09 resp: statusCode:200 body:"{\"msg\":\"Hello Hobo\"}" 
 2019/01/08 23:12:09 duration: 17.664807ms
+
+# HTTP Gateway开启JWT
+$ kubectl apply -f gateway_jwt.yaml
+$ TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.1/security/tools/jwt/samples/demo.jwt -s)
+$ curl --header "Authorization: Bearer $TOKEN" -H "Content-Type:application/json" -X GET http://192.168.99.100:31380/example/call?name=Hobo
+{"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
+$ curl --header "Authorization: Bearer $TOKEN" -H "Content-Type:application/json" -X POST -d '{"name":"Hobo"}' http://192.168.99.100:31380/example/call
+{"statusCode":200,"body":"{\"msg\":\"Hello Hobo\"}"}
 ```
 
 ## Local测试
