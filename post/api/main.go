@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	"github.com/hb-go/micro/pkg/wrapper/auth"
 	"github.com/micro/go-api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
@@ -90,6 +91,7 @@ func main() {
 		// handler wrap
 		micro.WrapHandler(
 			ratelimit.NewHandlerWrapper(1024),
+			auth.NewHandlerWrapper(service, auth.ServiceName("go.micro.srv.auth")),
 			client.ExampleWrapper(service),
 			client.PostWrapper(service),
 			client.CommentWrapper(service),

@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+	"context"
 
 	"github.com/micro/go-api"
 	"github.com/micro/go-log"
@@ -11,6 +12,7 @@ import (
 	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
+	"github.com/hb-go/micro/pkg/wrapper/auth"
 	tracer "github.com/hb-go/micro/pkg/opentracing"
 	"github.com/hb-go/micro/account/api/handler"
 	"github.com/hb-go/micro/account/api/client"
@@ -87,6 +89,11 @@ func main() {
 		// handler wrap
 		micro.WrapHandler(
 			ratelimit.NewHandlerWrapper(1024),
+			auth.NewHandlerWrapper(
+				service,
+				auth.ServiceName("go.micro.srv.auth"),
+				auth.Skipper(authSkipperFunc),
+			),
 			client.ExampleWrapper(service),
 			client.UserWrapper(service),
 			client.TokenWrapper(service),
@@ -97,4 +104,19 @@ func main() {
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func authSkipperFunc(ctx context.Context, req server.Request) bool {
+	skipMethods := map[string]bool{
+		"Account.Login":    true,
+		"Account.Register": false,
+	}
+
+	log.Logf("req method:%v", req.Method())
+
+	if skip, ok := skipMethods[req.Method()]; ok && skip {
+		return true
+	}
+
+	return false
 }
