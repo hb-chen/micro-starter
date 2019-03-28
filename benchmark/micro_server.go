@@ -5,10 +5,10 @@ import (
 	fmt "fmt"
 	"time"
 
-	"golang.org/x/net/context"
 	micro "github.com/micro/go-micro"
 	"github.com/micro/go-plugins/transport/tcp"
-	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	ratelimit "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	"golang.org/x/net/context"
 
 	"github.com/hb-go/micro/benchmark/proto"
 )
@@ -27,7 +27,7 @@ func (t *HelloS) Say(ctx context.Context, args *proto.BenchmarkMessage, reply *p
 	return nil
 }
 
-//var host = flag.String("s", "127.0.0.1:8972", "listened ip and port")
+// var host = flag.String("s", "127.0.0.1:8972", "listened ip and port")
 
 var delay = flag.Duration("delay", 0, "delay to mock business processing")
 

@@ -3,7 +3,7 @@ package main
 import (
 	// registry
 	// k8s
-	_ "github.com/micro/go-plugins/registry/kubernetes"
+	// _ "github.com/micro/go-plugins/registry/kubernetes"
 	// etcd v3
 	//_ "github.com/micro/go-plugins/registry/etcdv3"
 

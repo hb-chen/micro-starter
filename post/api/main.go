@@ -5,6 +5,7 @@ import (
 
 	"github.com/hb-go/micro/pkg/wrapper/auth"
 	"github.com/micro/go-api"
+	ha "github.com/micro/go-api/handler/api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
@@ -53,7 +54,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"GET"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}))
 
 	post.RegisterPostHandler(service.Server(), new(handler.Post),
@@ -65,7 +66,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"GET"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}))
 
 	comment.RegisterCommentHandler(service.Server(), new(handler.Comment),
@@ -77,7 +78,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"GET"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}))
 
 	// Initialise service

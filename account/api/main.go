@@ -5,6 +5,7 @@ import (
 	"context"
 
 	"github.com/micro/go-api"
+	ha "github.com/micro/go-api/handler/api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
@@ -53,7 +54,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"GET"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}))
 
 	account.RegisterAccountHandler(service.Server(), new(handler.Account),
@@ -65,7 +66,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"POST"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}),
 		api.WithEndpoint(&api.Endpoint{
 			// The RPC method
@@ -75,7 +76,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"POST"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}))
 
 	// Initialise service
@@ -112,7 +113,11 @@ func authSkipperFunc(ctx context.Context, req server.Request) bool {
 		"Account.Register": false,
 	}
 
-	log.Logf("req method:%v", req.Method())
+	log.Logf("req Service:%v", req.Service())
+	log.Logf("req Method:%v", req.Method())
+	log.Logf("req Endpoint:%v", req.Endpoint())
+	log.Logf("req ContentType:%v", req.ContentType())
+	log.Logf("req Header:%v", req.Header())
 
 	if skip, ok := skipMethods[req.Method()]; ok && skip {
 		return true

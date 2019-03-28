@@ -5,7 +5,7 @@ import (
 	// k8s
 	//_ "github.com/micro/go-plugins/registry/kubernetes"
 	// etcd v3
-	_ "github.com/micro/go-plugins/registry/etcd"
+	// _ "github.com/micro/go-plugins/registry/etcd"
 
 	// transport
 	// tcp

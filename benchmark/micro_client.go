@@ -7,17 +7,17 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/afex/hystrix-go/hystrix"
+	"github.com/micro/go-micro/selector"
 	"github.com/montanaflynn/stats"
 	"golang.org/x/net/context"
 
-	"github.com/afex/hystrix-go/hystrix"
 	"github.com/micro/go-log"
 	//micro "github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/selector/cache"
 	"github.com/micro/go-plugins/transport/tcp"
 	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
-	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	ratelimit "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	proto "github.com/hb-go/micro/benchmark/proto"
 )
@@ -66,10 +66,14 @@ func main() {
 			//)
 			//c := proto.NewHelloService("hello", service.Client())
 
+			cache := selector.NewSelector(func(o *selector.Options) {
+				o.Context = context.WithValue(o.Context, "selector_ttl", time.Second*30)
+			})
+
 			helloClient := client.NewClient(
 				client.Transport(tcp.NewTransport()),
 				//client.ContentType("application/protobuf"),
-				client.Selector(cache.NewSelector(cache.TTL(time.Second*3000))),
+				client.Selector(cache),
 				client.Retries(1),
 				client.PoolSize(10),
 				client.RequestTimeout(time.Millisecond*100),

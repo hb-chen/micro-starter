@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
-
-	"golang.org/x/net/context"
+	"context"
 
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/selector/cache"
+	"github.com/micro/go-micro/selector"
 
 	user "github.com/hb-go/micro/auth/srv/proto/user"
 	"github.com/micro/go-plugins/transport/tcp"
@@ -25,10 +24,13 @@ func ExampleCall(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	time.Sleep(time.Millisecond *5)
+	time.Sleep(time.Millisecond * 5)
 
+	cache := selector.NewSelector(func(o *selector.Options) {
+		o.Context = context.WithValue(o.Context, "selector_ttl", time.Second*30)
+	})
 	client.NewClient(
-		client.Selector(cache.NewSelector(cache.TTL(time.Second *30))),
+		client.Selector(cache),
 		client.Transport(tcp.NewTransport()),
 	)
 
