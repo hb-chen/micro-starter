@@ -1,9 +1,8 @@
 module github.com/hb-go/micro
 
 require (
-	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/golang/protobuf v1.3.1
-	github.com/hb-go/micro-plugins v0.0.0-20181206114555-00b2912b9d08
+	github.com/hb-go/micro-plugins v0.0.0-20190612013830-d13068c6aa04
 	github.com/micro/cli v0.1.0
 	github.com/micro/examples v0.1.0
 	github.com/micro/go-api v0.7.0
@@ -18,7 +17,6 @@ require (
 	github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780 // indirect
 	github.com/vmware/vic v1.5.2
 	golang.org/x/net v0.0.0-20190522155817-f3200d17e092
-	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 )
 
 replace github.com/testcontainers/testcontainer-go => github.com/testcontainers/testcontainers-go v0.0.0-20181115231424-8e868ca12c0f

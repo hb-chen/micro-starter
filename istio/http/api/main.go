@@ -7,11 +7,11 @@ import (
 	httpServer "github.com/hb-go/micro-plugins/server/istio_http"
 	"github.com/micro/cli"
 	"github.com/micro/go-api"
+	ha "github.com/micro/go-api/handler/api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-plugins/registry/noop"
 
 	apiClient "github.com/hb-go/micro/istio/http/api/client"
 	"github.com/hb-go/micro/istio/http/api/handler"
@@ -52,7 +52,6 @@ func main() {
 	service := micro.NewService(
 		micro.Name("go.micro.api.sample"),
 		micro.Version("latest"),
-		micro.Registry(noop.NewRegistry()),
 		micro.Client(c),
 		micro.Server(s),
 
@@ -76,7 +75,7 @@ func main() {
 			// The HTTP Methods for this endpoint
 			Method: []string{"GET", "POST"},
 			// The API handler to use
-			Handler: api.Api,
+			Handler: ha.Handler,
 		}))
 
 	// Initialise service

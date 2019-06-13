@@ -10,7 +10,6 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-plugins/registry/noop"
 
 	"github.com/hb-go/micro/istio/http/srv/handler"
 	example "github.com/hb-go/micro/istio/http/srv/proto/example"
@@ -50,7 +49,6 @@ func main() {
 	service := micro.NewService(
 		micro.Name("go.micro.srv.sample"),
 		micro.Version("latest"),
-		micro.Registry(noop.NewRegistry()),
 		micro.Client(c),
 		micro.Server(s),
 

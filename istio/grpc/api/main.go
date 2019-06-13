@@ -8,9 +8,8 @@ import (
 	"github.com/micro/cli"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/server"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-plugins/registry/noop"
+	"github.com/micro/go-micro/server"
 
 	apiClient "github.com/hb-go/micro/istio/grpc/api/client"
 	"github.com/hb-go/micro/istio/grpc/api/handler"
@@ -50,7 +49,6 @@ func main() {
 	service := micro.NewService(
 		micro.Name("go.micro.api.sample"),
 		micro.Version("latest"),
-		micro.Registry(noop.NewRegistry()),
 		micro.Client(c),
 		micro.Server(s),
 
