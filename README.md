@@ -3,7 +3,7 @@
 
 Go Micro 应用服务化治理实践
 
-<a href="/doc/README.md">![go-micro](/doc/img/micro.jpg "go-micro")</a>
+![go-micro](/doc/img/micro.jpg "go-micro")
 
 ## Service Mesh
 go-micro服务加入service mesh

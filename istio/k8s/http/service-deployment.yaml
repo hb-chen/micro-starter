@@ -47,7 +47,7 @@ spec:
           "-server_address=0.0.0.0:9080",
           "-client_call_address=:9080",
         ]
-        image: hbchen/go-micro-istio-srv-sample:v0.0.3
+        image: hbchen/go-micro-istio-srv-sample:v0.0.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -87,7 +87,7 @@ spec:
           "-server_address=0.0.0.0:9080",
           "-client_call_address=:9080",
         ]
-        image: hbchen/go-micro-istio-api-sample:v0.0.5
+        image: hbchen/go-micro-istio-api-sample:v0.0.6
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080

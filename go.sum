@@ -709,8 +709,7 @@ github.com/hashicorp/vault/sdk v0.1.11/go.mod h1:XF2Bod+ahPWGARnyFq5LfkOZwWwvveR
 github.com/hashicorp/vic v1.5.1-0.20190403131502-bbfe86ec9443/go.mod h1:bEpDU35nTu0ey1EXjwNwPjI9xErAsoOCmcMb9GKvyxo=
 github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb/go.mod h1:+NfK9FKeTrX5uv1uIXGdwYDTeHna2qgaIlx54MXqjAM=
 github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d/go.mod h1:+NfK9FKeTrX5uv1uIXGdwYDTeHna2qgaIlx54MXqjAM=
-github.com/hb-go/micro-plugins v0.0.0-20181206114555-00b2912b9d08 h1:EHDXwa0f3RgYdEpVvqsFOKv4KQMtYUu1Trji72vbFYE=
-github.com/hb-go/micro-plugins v0.0.0-20181206114555-00b2912b9d08/go.mod h1:Ioltye0FTQ9gqpspQ97+nMQ7gbZDmEPyhwa2vADAtSc=
+github.com/hb-go/micro-plugins v0.0.0-20190612013830-d13068c6aa04 h1:bI/9YkAjfC70hE0QBDXh8dHozrjs3LTTMrgttpY5UtI=
 github.com/hb-go/micro-plugins v0.0.0-20190612013830-d13068c6aa04/go.mod h1:xNxusI81UyzmSlhZQ0Axrgly1RhVUUxVqcGlvo9Y99w=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
 github.com/huandu/xstrings v1.0.0/go.mod h1:4qWG/gcEcfX4z/mBDHJ++3ReCw9ibxbsNJbcucJdbSo=

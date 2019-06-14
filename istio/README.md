@@ -2,6 +2,8 @@
 
 使用go-micro的`client`&`server`istio插件: [hb-go/micro-plugins](https://github.com/hb-go/micro-plugins)
 
+![micro-istio](/doc/img/micro-istio.png "micro-istio")
+
 ### TODO
 - gRPC版本升级
 - micro-plugins
