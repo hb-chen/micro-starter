@@ -24,7 +24,7 @@ $ go run main.go
 
 If you would like to build the docker container do the following
 ```
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o account-web ./main.go
-docker build -t account-web .
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o account-web ./main.go ./plugins.go
+docker build -t hbchen/micro-account-web:v0.0.1 .
 
 ```

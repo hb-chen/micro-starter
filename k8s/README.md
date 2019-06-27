@@ -45,10 +45,17 @@ $ minikube ip
 
 ### API
 ```bash
-http://192.168.64.4:30001/account/account/login?nickname=hobo&pwd=123456
+curl -X POST \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer VALID_TOKEN" \
+-d '{"nickname": "Hobo", "pwd": "pwd"}' \
+http://192.168.39.147:30001/login
 ```
 
 ### Web
 ```bash
 http://192.168.64.4:30003/
+curl -X POST \
+-d '{"nickname": "Hobo", "pwd": "pwd"}' \
+http://192.168.39.147:30003/account/example/call
 ```

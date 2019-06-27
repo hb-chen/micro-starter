@@ -11,6 +11,7 @@ spec:
         name: auth-srv
         micro: go.micro.srv.auth
     spec:
+      serviceAccountName: micro-services
       containers:
         - name: auth
           resources:
@@ -19,6 +20,8 @@ spec:
           command: [
 		"/auth-srv",
 		"--registry=kubernetes",
+        "--server=rpc",
+        "--transport=http",
 		"--selector=cache",
 		"--server_address=0.0.0.0:9090",
 		"--broker_address=0.0.0.0:10001"

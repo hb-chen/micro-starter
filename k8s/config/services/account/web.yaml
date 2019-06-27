@@ -10,6 +10,7 @@ spec:
       labels:
         name: account-web
     spec:
+      serviceAccountName: micro-services
       containers:
         - name: account-web
           resources:
@@ -18,6 +19,8 @@ spec:
           command: [
 		"/account-web",
 		"--registry=kubernetes",
+        "--server=rpc",
+        "--transport=http",
 		"--selector=cache",
 	  ]
           image: hbchen/micro-account-web:v0.0.4

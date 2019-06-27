@@ -10,6 +10,7 @@ spec:
       labels:
         name: micro-web
     spec:
+      serviceAccountName: micro-services
       containers:
         - name: web
           resources:
@@ -18,13 +19,16 @@ spec:
           command: [
             "/micro",
             "--registry=kubernetes",
+            "--server=rpc",
+            "--broker=http",
+            "--transport=http",
             "--register_ttl=60",
             "--register_interval=30",
             "--selector=cache",
             "--enable_stats",
             "web"
           ]
-          image: microhq/micro:kubernetes
+          image: hbchen/micro:k8s
           imagePullPolicy: Always
           ports:
           - containerPort: 8082

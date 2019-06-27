@@ -10,19 +10,22 @@ spec:
       labels:
         name: account-api
     spec:
+      serviceAccountName: micro-services
       containers:
-        - name: discovery
+        - name: account-api
           resources:
             requests:
               cpu: "20m"
           command: [
 		"/account-api",
 		"--registry=kubernetes",
+        "--server=rpc",
+        "--transport=http",
 		"--selector=cache",
 		"--server_address=0.0.0.0:9090",
 		"--broker_address=0.0.0.0:10001"
 	  ]
-          image: hbchen/micro-account-api:v0.0.1
+          image: hbchen/micro-account-api:v0.0.2
           imagePullPolicy: Always
           ports:
           - containerPort: 9090

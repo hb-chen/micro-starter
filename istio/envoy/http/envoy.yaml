@@ -94,7 +94,7 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: 192.168.1.110
+                address: 192.168.1.5
                 port_value: 8081
   - name: srvProxyCluster
     connect_timeout: 0.25s
@@ -120,5 +120,5 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: 192.168.1.110
+                address: 192.168.1.5
                 port_value: 8082

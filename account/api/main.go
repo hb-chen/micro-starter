@@ -1,33 +1,33 @@
 package main
 
 import (
-	"time"
 	"context"
+	"time"
 
 	"github.com/micro/go-api"
 	ha "github.com/micro/go-api/handler/api"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-plugins/wrapper/trace/opentracing"
+	// "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
-	"github.com/hb-go/micro/pkg/wrapper/auth"
-	tracer "github.com/hb-go/micro/pkg/opentracing"
-	"github.com/hb-go/micro/account/api/handler"
 	"github.com/hb-go/micro/account/api/client"
+	"github.com/hb-go/micro/pkg/wrapper/auth"
+	// tracer "github.com/hb-go/micro/pkg/opentracing"
+	"github.com/hb-go/micro/account/api/handler"
 	account "github.com/hb-go/micro/account/api/proto/account"
 	example "github.com/hb-go/micro/account/api/proto/example"
 )
 
 func main() {
 	// Tracer
-	t, closer, err := tracer.NewJaegerTracer("account.api", "127.0.0.1:6831")
-	if err != nil {
-		log.Fatalf("opentracing tracer create error:%v", err)
-	}
-	defer closer.Close()
+	// t, closer, err := tracer.NewJaegerTracer("account.api", "127.0.0.1:6831")
+	// if err != nil {
+	// 	log.Fatalf("opentracing tracer create error:%v", err)
+	// }
+	// defer closer.Close()
 
 	// New Service
 	service := micro.NewService(
@@ -35,13 +35,13 @@ func main() {
 		micro.Version("latest"),
 		micro.RegisterTTL(time.Second*30),
 		micro.RegisterInterval(time.Second*15),
-		micro.WrapClient(opentracing.NewClientWrapper(t)),
-		micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
+		// micro.WrapClient(opentracing.NewClientWrapper(t)),
+		// micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
 	)
 
 	// graceful
 	service.Server().Init(
-		server.Wait(true),
+		server.Wait(nil),
 	)
 
 	// Register Handler

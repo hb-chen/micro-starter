@@ -20,6 +20,7 @@ import (
 	client "github.com/micro/go-micro/client"
 	server "github.com/micro/go-micro/server"
 	context "context"
+	"github.com/micro/go-log"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -64,6 +65,7 @@ func NewExampleService(name string, c client.Client) ExampleService {
 }
 
 func (c *exampleService) Call(ctx context.Context, in *go_api.Request, opts ...client.CallOption) (*go_api.Response, error) {
+	log.Logf("call")
 	req := c.c.NewRequest(c.name, "Example.Call", in)
 	out := new(go_api.Response)
 	err := c.c.Call(ctx, req, out, opts...)
