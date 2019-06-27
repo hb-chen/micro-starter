@@ -12,10 +12,7 @@ rules:
   - ""
   resources:
   - pods
-  - endpoints
-  - services
   verbs:
-  - get
   - list
   - patch
   - watch
