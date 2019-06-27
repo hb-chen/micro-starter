@@ -12,19 +12,19 @@ spec:
     spec:
       serviceAccountName: micro-services
       containers:
-        - name: account-web
-          resources:
-            requests:
-              cpu: "20m"
-          command: [
-		"/account-web",
-		"--registry=kubernetes",
-        "--server=rpc",
-        "--transport=http",
-		"--selector=cache",
-	  ]
-          image: hbchen/micro-account-web:v0.0.4
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 9090
-            name: geo-web-port
+      - name: account-web
+        resources:
+          requests:
+            cpu: "20m"
+        command: [
+          "/account-web",
+          "--registry=kubernetes",
+          "--server=rpc",
+          "--transport=http",
+          "--selector=cache",
+        ]
+        image: hbchen/micro-account-web:v0.0.4
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+          name: acc-web-port

@@ -13,21 +13,21 @@ spec:
     spec:
       serviceAccountName: micro-services
       containers:
-        - name: auth
-          resources:
-            requests:
-              cpu: "35m"
-          command: [
-		"/auth-srv",
-		"--registry=kubernetes",
-        "--server=rpc",
-        "--transport=http",
-		"--selector=cache",
-		"--server_address=0.0.0.0:9090",
-		"--broker_address=0.0.0.0:10001"
-	  ]
-          image: hbchen/micro-auth-srv:v0.0.1
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 9090
-            name: auth-srv-port
+      - name: auth
+        resources:
+          requests:
+            cpu: "35m"
+        command: [
+          "/auth-srv",
+          "--registry=kubernetes",
+          "--server=rpc",
+          "--transport=http",
+          "--selector=cache",
+          "--server_address=0.0.0.0:9090",
+          "--broker_address=0.0.0.0:10001"
+        ]
+        image: hbchen/micro-auth-srv:v0.0.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+          name: auth-srv-port

@@ -6,24 +6,23 @@ import (
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	// "github.com/micro/go-plugins/wrapper/trace/opentracing"
 
-	tracer "github.com/hb-go/micro/pkg/opentracing"
 	"github.com/hb-go/micro/auth/srv/handler"
-	"github.com/hb-go/micro/auth/srv/subscriber"
 	example "github.com/hb-go/micro/auth/srv/proto/example"
 	token "github.com/hb-go/micro/auth/srv/proto/token"
 	user "github.com/hb-go/micro/auth/srv/proto/user"
+	"github.com/hb-go/micro/auth/srv/subscriber"
 )
 
 func main() {
 	// Tracer
-	t, closer, err := tracer.NewJaegerTracer("auth.srv", "127.0.0.1:6831")
-	if err != nil {
-		log.Fatalf("opentracing tracer create error:%v", err)
-	}
-	defer closer.Close()
+	// t, closer, err := tracer.NewJaegerTracer("auth.srv", "127.0.0.1:6831")
+	// if err != nil {
+	// 	log.Fatalf("opentracing tracer create error:%v", err)
+	// }
+	// defer closer.Close()
 
 	// New Service
 	service := micro.NewService(
@@ -31,13 +30,13 @@ func main() {
 		micro.Version("latest"),
 		micro.RegisterTTL(time.Second*30),
 		micro.RegisterInterval(time.Second*15),
-		micro.WrapClient(opentracing.NewClientWrapper(t)),
-		micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
+		// micro.WrapClient(opentracing.NewClientWrapper(t)),
+		// micro.WrapHandler(opentracing.NewHandlerWrapper(t)),
 	)
 
 	// graceful
 	service.Server().Init(
-		server.Wait(true),
+		server.Wait(nil),
 	)
 
 	// Register Handler

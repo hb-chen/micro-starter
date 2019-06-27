@@ -12,24 +12,24 @@ spec:
     spec:
       serviceAccountName: micro-services
       containers:
-        - name: web
-          resources:
-            limits:
-              cpu: "25m"
-          command: [
-            "/micro",
-            "--registry=kubernetes",
-            "--server=rpc",
-            "--broker=http",
-            "--transport=http",
-            "--register_ttl=60",
-            "--register_interval=30",
-            "--selector=cache",
-            "--enable_stats",
-            "web"
-          ]
-          image: hbchen/micro:k8s
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 8082
-            name: web-port
+      - name: web
+        resources:
+          limits:
+            cpu: "25m"
+        command: [
+          "/micro",
+          "--registry=kubernetes",
+          "--server=rpc",
+          "--broker=http",
+          "--transport=http",
+          "--register_ttl=60",
+          "--register_interval=30",
+          "--selector=cache",
+          "--enable_stats",
+          "web"
+        ]
+        image: hbchen/micro:k8s
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
+          name: web-port

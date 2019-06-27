@@ -40,7 +40,7 @@ gcr.io/google_containers/pause-amd64:3.0
 $ ./run.sh start
 
 $ minikube ip
-192.168.64.4
+192.168.39.147
 ```
 
 ### API
@@ -54,7 +54,7 @@ http://192.168.39.147:30001/login
 
 ### Web
 ```bash
-http://192.168.64.4:30003/
+http://192.168.39.147:30003/
 curl -X POST \
 -d '{"nickname": "Hobo", "pwd": "pwd"}' \
 http://192.168.39.147:30003/account/example/call
