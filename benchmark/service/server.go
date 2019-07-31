@@ -1,11 +1,11 @@
 package service
 
 import (
+	"context"
 	"time"
 
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
-	"golang.org/x/net/context"
+	"github.com/micro/go-micro/util/log"
 
 	"github.com/hb-go/micro/benchmark/proto"
 )

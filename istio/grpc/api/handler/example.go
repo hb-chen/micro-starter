@@ -1,13 +1,13 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"sync"
 
-	"github.com/micro/go-log"
-	"golang.org/x/net/context"
+	api "github.com/micro/go-micro/api/proto"
 	"github.com/micro/go-micro/errors"
-	api "github.com/micro/go-api/proto"
+	"github.com/micro/go-micro/util/log"
 
 	"github.com/hb-go/micro/istio/grpc/api/client"
 	example "github.com/hb-go/micro/istio/grpc/srv/proto/example"

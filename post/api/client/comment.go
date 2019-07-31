@@ -1,11 +1,11 @@
 package client
 
 import (
+	comment "github.com/hb-go/micro/post/srv/proto/comment"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	comment "github.com/hb-go/micro/post/srv/proto/comment"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
 type commentKey struct{}

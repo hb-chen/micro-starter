@@ -1,14 +1,14 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"time"
 
 	grpcClient "github.com/hb-go/micro-plugins/client/istio_grpc"
-	"github.com/micro/go-api/proto"
-	"github.com/micro/go-log"
+	"github.com/micro/go-micro/api/proto"
 	"github.com/micro/go-micro/client"
-	"golang.org/x/net/context"
+	"github.com/micro/go-micro/util/log"
 
 	example "github.com/hb-go/micro/istio/grpc/api/proto/example"
 )

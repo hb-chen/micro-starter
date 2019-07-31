@@ -1,11 +1,11 @@
 package client
 
 import (
+	user "github.com/hb-go/micro/auth/srv/proto/user"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	user "github.com/hb-go/micro/auth/srv/proto/user"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
 type userKey struct{}

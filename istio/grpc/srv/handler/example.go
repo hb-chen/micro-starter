@@ -1,8 +1,9 @@
 package handler
 
 import (
-	"github.com/micro/go-log"
-	"golang.org/x/net/context"
+	"context"
+
+	"github.com/micro/go-micro/util/log"
 
 	example "github.com/hb-go/micro/istio/grpc/srv/proto/example"
 )

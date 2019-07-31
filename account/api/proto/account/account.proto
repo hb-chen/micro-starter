@@ -2,11 +2,13 @@ syntax = "proto3";
 
 package go.micro.api.account;
 
-import "github.com/micro/go-api/proto/api.proto";
+import "github.com/micro/go-micro/api/proto/api.proto";
 
 service Account {
-    rpc Login(go.api.Request) returns (go.api.Response) {}
-    rpc Register(go.api.Request) returns (go.api.Response) {}
+    rpc Login (go.api.Request) returns (go.api.Response) {
+    }
+    rpc Register (go.api.Request) returns (go.api.Response) {
+    }
 }
 
 message ReqLogin {
@@ -17,7 +19,7 @@ message ReqLogin {
 message ReqRegister {
     string nickname = 1;
     string pwd = 2;
-    string pwdRe= 3;
+    string pwdRe = 3;
 }
 
 message Rsp {

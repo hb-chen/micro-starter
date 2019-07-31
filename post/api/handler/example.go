@@ -1,15 +1,15 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
-	"github.com/micro/go-log"
+
+	"github.com/micro/go-micro/util/log"
 
 	"github.com/hb-go/micro/post/api/client"
-	"github.com/micro/go-micro/errors"
-	api "github.com/micro/go-api/proto"
 	example "github.com/micro/examples/template/srv/proto/example"
-
-	"golang.org/x/net/context"
+	api "github.com/micro/go-micro/api/proto"
+	"github.com/micro/go-micro/errors"
 )
 
 type Example struct{}

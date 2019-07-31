@@ -3,8 +3,10 @@ syntax = "proto3";
 package go.micro.srv.auth.user;
 
 service User {
-    rpc GetUser(ReqId) returns (Rsp) {}
-    rpc GetUserLogin(ReqLogin) returns (Rsp) {}
+    rpc GetUser (ReqId) returns (Rsp) {
+    }
+    rpc GetUserLogin (ReqLogin) returns (Rsp) {
+    }
 }
 
 message ReqId {

@@ -5,7 +5,8 @@ package go.micro.srv.post.comment;
 import "github.com/hb-go/micro/post/srv/proto/post/post.proto";
 
 service Comment {
-    rpc GetComments(post.Req) returns (Rsp) {}
+    rpc GetComments (post.Req) returns (Rsp) {
+    }
 }
 
 message Rsp {

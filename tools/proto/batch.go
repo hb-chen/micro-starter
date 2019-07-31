@@ -2,13 +2,13 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"flag"
-
-	"github.com/hb-go/micro/pkg/file"
+	"fmt"
+	"os"
 	"os/exec"
 	"strings"
-	"os"
+
+	"github.com/hb-go/micro/pkg/file"
 )
 
 var (

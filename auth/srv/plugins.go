@@ -11,9 +11,9 @@ import (
 	// tcp
 	_ "github.com/micro/go-plugins/transport/tcp"
 	// nats
-	//_ "github.com/micro/go-plugins/transport/nats"
+	// _ "github.com/micro/go-plugins/transport/nats"
 
 	// broker
 	// kafka
-	//_ "github.com/micro/go-plugins/broker/kafka"
+	// _ "github.com/micro/go-plugins/broker/kafka"
 )

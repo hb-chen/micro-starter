@@ -3,7 +3,8 @@ syntax = "proto3";
 package go.micro.srv.post;
 
 service Post {
-    rpc GetPost(Req) returns (Rsp) {}
+    rpc GetPost (Req) returns (Rsp) {
+    }
 }
 
 message Req {

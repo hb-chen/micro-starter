@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/micro/go-log"
+	"context"
+
+	"github.com/micro/go-micro/util/log"
 
 	post "github.com/hb-go/micro/post/srv/proto/post"
-	"golang.org/x/net/context"
 )
 
 type Post struct{}

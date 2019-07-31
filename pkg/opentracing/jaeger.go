@@ -3,11 +3,11 @@ package opentracing
 import (
 	"io"
 
+	"github.com/micro/go-micro/util/log"
 	"github.com/opentracing/opentracing-go"
-	"github.com/uber/jaeger-lib/metrics"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
-	"github.com/micro/go-log"
+	"github.com/uber/jaeger-lib/metrics"
 )
 
 func NewJaegerTracer(serviceName, addr string) (opentracing.Tracer, io.Closer, error) {

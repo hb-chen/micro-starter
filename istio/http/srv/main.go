@@ -6,10 +6,10 @@ import (
 	httpClient "github.com/hb-go/micro-plugins/client/istio_http"
 	httpServer "github.com/hb-go/micro-plugins/server/istio_http"
 	"github.com/micro/cli"
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/server"
+	"github.com/micro/go-micro/util/log"
 
 	"github.com/hb-go/micro/istio/http/srv/handler"
 	example "github.com/hb-go/micro/istio/http/srv/proto/example"

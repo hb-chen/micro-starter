@@ -3,8 +3,10 @@ syntax = "proto3";
 package go.micro.srv.auth.token;
 
 service Token {
-    rpc Generate(ReqKey) returns (Rsp) {}
-    rpc Verify(ReqToken) returns (Rsp) {}
+    rpc Generate (ReqKey) returns (Rsp) {
+    }
+    rpc Verify (ReqToken) returns (Rsp) {
+    }
 }
 
 message ReqKey {

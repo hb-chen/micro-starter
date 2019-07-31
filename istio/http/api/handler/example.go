@@ -1,12 +1,12 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 
-	"golang.org/x/net/context"
-	"github.com/micro/go-log"
-	api "github.com/micro/go-api/proto"
+	api "github.com/micro/go-micro/api/proto"
 	"github.com/micro/go-micro/errors"
+	"github.com/micro/go-micro/util/log"
 
 	apiClient "github.com/hb-go/micro/istio/http/api/client"
 	example "github.com/hb-go/micro/istio/http/srv/proto/example"
@@ -35,7 +35,7 @@ func (e *Example) Call(ctx context.Context, req *api.Request, rsp *api.Response)
 	}
 
 	// make request
-	log.Logf("post data:%v",req.GetPost())
+	log.Logf("post data:%v", req.GetPost())
 	r := example.Request{}
 	if req.Method == "POST" {
 		if err := json.Unmarshal([]byte(req.Body), &r); err != nil {

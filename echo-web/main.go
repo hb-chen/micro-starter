@@ -3,10 +3,10 @@ package main
 import (
 	"time"
 
-	"github.com/micro/go-log"
-	"github.com/micro/go-web"
+	"github.com/micro/go-micro/util/log"
+	"github.com/micro/go-micro/web"
 
-	"github.com/hb-go/micro/_echo-web/router"
+	"github.com/hb-go/micro/echo-web/router"
 )
 
 func main() {

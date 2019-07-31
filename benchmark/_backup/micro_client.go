@@ -1,6 +1,7 @@
 package _backup
 
 import (
+	"context"
 	"flag"
 	"reflect"
 	"sync"
@@ -8,18 +9,17 @@ import (
 	"time"
 
 	"github.com/afex/hystrix-go/hystrix"
-	"github.com/micro/go-micro/selector"
+	"github.com/micro/go-micro/client/selector"
 	"github.com/montanaflynn/stats"
-	"golang.org/x/net/context"
 
-	"github.com/micro/go-log"
-	//micro "github.com/micro/go-micro"
+	"github.com/micro/go-micro/util/log"
+	// micro "github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-plugins/transport/tcp"
 	breaker "github.com/micro/go-plugins/wrapper/breaker/hystrix"
-	ratelimit "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
-	proto "github.com/hb-go/micro/benchmark/proto"
+	"github.com/hb-go/micro/benchmark/proto"
 )
 
 var concurrency = flag.Int("c", 1, "concurrency")
@@ -40,8 +40,8 @@ func main() {
 		MaxConcurrentRequests: hystrix.DefaultMaxConcurrent * 2,
 	})
 
-	//b, _ := proto.Marshal(args)
-	//log.Logf("message size: %d bytes\n\n", len(b))
+	// b, _ := proto.Marshal(args)
+	// log.Logf("message size: %d bytes\n\n", len(b))
 
 	var wg sync.WaitGroup
 	wg.Add(n * m)
@@ -51,20 +51,20 @@ func main() {
 
 	d := make([][]int64, n, n)
 
-	//it contains warmup time but we can ignore it
+	// it contains warmup time but we can ignore it
 	totalT := time.Now().UnixNano()
 	for i := 0; i < n; i++ {
 		dt := make([]int64, 0, m)
 		d = append(d, dt)
 
 		go func(i int) {
-			//service := micro.NewService(
-			//	micro.Name("hello.client"),
-			//	micro.Transport(tcp.NewTransport()),
-			//	micro.Selector(cache.NewSelector(cache.TTL(time.Second*3000))),
+			// service := micro.NewService(
+			// 	micro.Name("hello.client"),
+			// 	micro.Transport(tcp.NewTransport()),
+			// 	micro.Selector(cache.NewSelector(cache.TTL(time.Second*3000))),
 			//
-			//)
-			//c := proto.NewHelloService("hello", service.Client())
+			// )
+			// c := proto.NewHelloService("hello", service.Client())
 
 			cache := selector.NewSelector(func(o *selector.Options) {
 				o.Context = context.WithValue(o.Context, "selector_ttl", time.Second*30)
@@ -72,7 +72,7 @@ func main() {
 
 			helloClient := client.NewClient(
 				client.Transport(tcp.NewTransport()),
-				//client.ContentType("application/protobuf"),
+				// client.ContentType("application/protobuf"),
 				client.Selector(cache),
 				client.Retries(1),
 				client.PoolSize(10),
@@ -82,7 +82,7 @@ func main() {
 			)
 			c := proto.NewHelloService("hello", helloClient)
 
-			//warmup
+			// warmup
 			for j := 0; j < 5; j++ {
 				c.Say(context.Background(), args)
 			}

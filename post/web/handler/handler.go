@@ -1,15 +1,15 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"time"
-	"context"
 
-	"github.com/micro/go-log"
+	"github.com/micro/go-micro/util/log"
 
-	"github.com/micro/go-micro/client"
 	example "github.com/hb-go/micro/post/srv/proto/example"
+	"github.com/micro/go-micro/client"
 )
 
 func ExampleCall(w http.ResponseWriter, r *http.Request) {

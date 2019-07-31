@@ -2,11 +2,12 @@ syntax = "proto3";
 
 package go.micro.api.post;
 
-import "github.com/micro/go-api/proto/api.proto";
+import "github.com/micro/go-micro/api/proto/api.proto";
 import "github.com/hb-go/micro/post/srv/proto/post/post.proto";
 
 service Post {
-    rpc Post(go.api.Request) returns (go.api.Response) {}
+    rpc Post (go.api.Request) returns (go.api.Response) {
+    }
 }
 
 message Rsp {

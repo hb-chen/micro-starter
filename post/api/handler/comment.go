@@ -1,17 +1,16 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 
-	"github.com/micro/go-log"
+	"github.com/micro/go-micro/util/log"
 
 	"github.com/hb-go/micro/post/api/client"
-	"github.com/micro/go-micro/errors"
-	api "github.com/micro/go-api/proto"
 	comment "github.com/hb-go/micro/post/api/proto/comment"
 	postSrv "github.com/hb-go/micro/post/srv/proto/post"
-
-	"golang.org/x/net/context"
+	api "github.com/micro/go-micro/api/proto"
+	"github.com/micro/go-micro/errors"
 )
 
 type Comment struct{}

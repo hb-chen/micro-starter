@@ -1,14 +1,14 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"time"
-	"context"
 
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/selector"
+	"github.com/micro/go-micro/client/selector"
+	"github.com/micro/go-micro/util/log"
 
 	user "github.com/hb-go/micro/auth/srv/proto/user"
 	"github.com/micro/go-plugins/transport/tcp"

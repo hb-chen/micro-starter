@@ -1,11 +1,11 @@
 package client
 
 import (
+	token "github.com/hb-go/micro/auth/srv/proto/token"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	token "github.com/hb-go/micro/auth/srv/proto/token"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
 type tokenKey struct{}

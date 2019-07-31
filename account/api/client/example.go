@@ -1,14 +1,14 @@
 package client
 
 import (
+	example "github.com/micro/examples/template/srv/proto/example"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	example "github.com/micro/examples/template/srv/proto/example"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
-type exampleKey struct {}
+type exampleKey struct{}
 
 // FromContext retrieves the client from the Context
 func ExampleFromContext(ctx context.Context) (example.ExampleService, bool) {

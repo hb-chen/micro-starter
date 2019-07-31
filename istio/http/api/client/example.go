@@ -5,7 +5,7 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
 type exampleKey struct{}

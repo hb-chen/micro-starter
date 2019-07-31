@@ -6,14 +6,14 @@ import (
 	grpcClient "github.com/hb-go/micro-plugins/client/istio_grpc"
 	grpcServer "github.com/hb-go/micro-plugins/server/istio_grpc"
 	"github.com/micro/cli"
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/server"
+	"github.com/micro/go-micro/util/log"
 
-	"github.com/hb-go/micro/istio/grpc/srv/subscriber"
 	"github.com/hb-go/micro/istio/grpc/srv/handler"
 	example "github.com/hb-go/micro/istio/grpc/srv/proto/example"
+	"github.com/hb-go/micro/istio/grpc/srv/subscriber"
 )
 
 var (

@@ -1,9 +1,10 @@
 package client
 
 import (
+	"context"
+
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	"golang.org/x/net/context"
 
 	example "github.com/hb-go/micro/istio/grpc/srv/proto/example"
 )

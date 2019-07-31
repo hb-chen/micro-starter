@@ -1,13 +1,13 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"time"
 
 	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/selector"
+	"github.com/micro/go-micro/client/selector"
 	"github.com/micro/go-plugins/transport/grpc"
-	"golang.org/x/net/context"
 
 	"github.com/hb-go/micro/benchmark/service"
 )

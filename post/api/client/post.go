@@ -1,11 +1,11 @@
 package client
 
 import (
+	post "github.com/hb-go/micro/post/srv/proto/post"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	post "github.com/hb-go/micro/post/srv/proto/post"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
 type postKey struct{}

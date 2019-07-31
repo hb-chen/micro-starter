@@ -1,14 +1,14 @@
 package _backup
 
 import (
+	"context"
 	"flag"
-	fmt "fmt"
+	"fmt"
 	"time"
 
-	micro "github.com/micro/go-micro"
+	"github.com/micro/go-micro"
 	"github.com/micro/go-plugins/transport/tcp"
-	ratelimit "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
-	"golang.org/x/net/context"
+	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 
 	"github.com/hb-go/micro/benchmark/proto"
 )

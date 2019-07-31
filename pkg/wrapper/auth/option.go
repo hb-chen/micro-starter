@@ -1,7 +1,5 @@
 package auth
 
-import ()
-
 type Options struct {
 	serviceName string
 	skipper     SkipperFunc

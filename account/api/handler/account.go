@@ -1,18 +1,18 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
+	"strings"
 
-	"github.com/micro/go-log"
+	api "github.com/micro/go-micro/api/proto"
 	"github.com/micro/go-micro/errors"
+	"github.com/micro/go-micro/util/log"
 
 	"github.com/hb-go/micro/account/api/client"
 	account "github.com/hb-go/micro/account/api/proto/account"
-	user "github.com/hb-go/micro/auth/srv/proto/user"
 	token "github.com/hb-go/micro/auth/srv/proto/token"
-	api "github.com/micro/go-api/proto"
-	"golang.org/x/net/context"
-	"strings"
+	user "github.com/hb-go/micro/auth/srv/proto/user"
 )
 
 type Account struct{}
@@ -38,6 +38,7 @@ func (a *Account) Login(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.InternalServerError("go.micro.api.account", "user client not found")
 	}
 
+	// 登录验证
 	u, err := userClient.GetUserLogin(ctx, reqLogin)
 	if err != nil {
 		return errors.InternalServerError("go.micro.api.account", "user login err:"+err.Error())
@@ -48,6 +49,7 @@ func (a *Account) Login(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.InternalServerError("go.micro.api.account", "token client not found")
 	}
 
+	// 生成Token
 	reqToken := token.ReqKey{Key: u.Nickname}
 	t, err := tokenClient.Generate(ctx, &reqToken)
 	if err != nil {

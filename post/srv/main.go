@@ -3,18 +3,18 @@ package main
 import (
 	"time"
 
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-plugins/wrapper/trace/opentracing"
+	"github.com/micro/go-micro/util/log"
 	"github.com/micro/go-plugins/wrapper/ratelimiter/uber"
+	"github.com/micro/go-plugins/wrapper/trace/opentracing"
 
 	tracer "github.com/hb-go/micro/pkg/opentracing"
 	"github.com/hb-go/micro/post/srv/handler"
-	"github.com/hb-go/micro/post/srv/subscriber"
+	comment "github.com/hb-go/micro/post/srv/proto/comment"
 	example "github.com/hb-go/micro/post/srv/proto/example"
 	post "github.com/hb-go/micro/post/srv/proto/post"
-	comment "github.com/hb-go/micro/post/srv/proto/comment"
+	"github.com/hb-go/micro/post/srv/subscriber"
 )
 
 func main() {

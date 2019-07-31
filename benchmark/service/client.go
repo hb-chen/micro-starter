@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -10,10 +11,9 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.com/micro/go-log"
 	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/util/log"
 	"github.com/montanaflynn/stats"
-	"golang.org/x/net/context"
 
 	"github.com/hb-go/micro/benchmark/proto"
 )
