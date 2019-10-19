@@ -1,6 +1,6 @@
 package main
 
-//go:generate statik -src=./vue/dist -dest=./ -f
+//go:generate statik -src=./vue-admin-template/dist -dest=./ -f
 import (
 	"net/http"
 

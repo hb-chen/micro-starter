@@ -17,7 +17,7 @@ docker:
 
 .PHONY: vue
 vue:
-	cd vue && npm run build:prod
+	cd vue-admin-template && npm run build:prod
 
 .PHONY: statik
 statik:
