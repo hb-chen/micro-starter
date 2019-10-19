@@ -1,24 +1,25 @@
 package client
 
 import (
-	example "github.com/micro/examples/template/srv/proto/example"
+	"context"
+
+	user "github.com/hb-go/micro/console/srv/proto/user"
+
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
-
-	"context"
 )
 
 type exampleKey struct{}
 
 // FromContext retrieves the client from the Context
-func ExampleFromContext(ctx context.Context) (example.ExampleService, bool) {
-	c, ok := ctx.Value(exampleKey{}).(example.ExampleService)
+func UserFromContext(ctx context.Context) (user.UserService, bool) {
+	c, ok := ctx.Value(exampleKey{}).(user.UserService)
 	return c, ok
 }
 
 // Client returns a wrapper for the ExampleClient
-func ExampleWrapper(service micro.Service) server.HandlerWrapper {
-	client := example.NewExampleService("go.micro.srv.post", service.Client())
+func UserWrapper(service micro.Service) server.HandlerWrapper {
+	client := user.NewUserService("go.micro.srv.console", service.Client())
 
 	return func(fn server.HandlerFunc) server.HandlerFunc {
 		return func(ctx context.Context, req server.Request, rsp interface{}) error {
