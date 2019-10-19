@@ -31,16 +31,13 @@ func NewJaegerTracer(serviceName, addr string) (opentracing.Tracer, io.Closer, e
 	jLogger := &jaegerLogger{}
 	jMetricsFactory := metrics.NullFactory
 
-	metricsFactory := metrics.NewLocalFactory(0)
-	metrics := jaeger.NewMetrics(metricsFactory, nil)
-
 	sender, err := jaeger.NewUDPTransport(addr, 0)
 	if err != nil {
 		log.Logf("could not initialize jaeger sender: %s", err.Error())
 		return nil, nil, err
 	}
 
-	repoter := jaeger.NewRemoteReporter(sender, jaeger.ReporterOptions.Metrics(metrics))
+	repoter := jaeger.NewRemoteReporter(sender)
 
 	return cfg.NewTracer(
 		jaegercfg.Logger(jLogger),
