@@ -6,16 +6,16 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/test"
-	"github.com/micro/go-micro/util/log"
+	"github.com/micro/micro/v3/service/logger"
 
-	example "github.com/hb-go/micro/console/srv/proto/user"
+	pb "github.com/hb-chen/micro/console/srv/proto/user"
 )
 
 type User struct{}
 
 // Call is a single request handler called via client.Call or the generated client code
-func (e *User) Login(ctx context.Context, req *example.LoginRequest, rsp *example.LoginResponse) error {
-	log.Log("Received Example.Call request")
+func (e *User) Login(ctx context.Context, req *pb.LoginRequest, rsp *pb.LoginResponse) error {
+	logger.Info("Received Example.Call request")
 
 	claims := jwt.StandardClaims{
 		Id:        req.Username,
@@ -31,14 +31,14 @@ func (e *User) Login(ctx context.Context, req *example.LoginRequest, rsp *exampl
 }
 
 // Call is a single request handler called via client.Call or the generated client code
-func (e *User) Logout(ctx context.Context, req *example.Request, rsp *example.LogoutResponse) error {
-	log.Log("Received Example.Call request")
+func (e *User) Logout(ctx context.Context, req *pb.Request, rsp *pb.LogoutResponse) error {
+	logger.Info("Received Example.Call request")
 	return nil
 }
 
 // Call is a single request handler called via client.Call or the generated client code
-func (e *User) Info(ctx context.Context, req *example.Request, rsp *example.InfoResponse) error {
-	log.Log("Received Example.Call request")
+func (e *User) Info(ctx context.Context, req *pb.Request, rsp *pb.InfoResponse) error {
+	logger.Info("Received Example.Call request")
 	rsp.Name = "Hobo"
 	rsp.Avatar = "https://avatars3.githubusercontent.com/u/730866?s=460&v=4"
 	return nil

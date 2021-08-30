@@ -1,28 +1,25 @@
 package main
 
 import (
-	"github.com/hb-go/micro/console/srv/handler"
-	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/util/log"
+	"github.com/micro/micro/v3/service"
+	"github.com/micro/micro/v3/service/logger"
 
-	user "github.com/hb-go/micro/console/srv/proto/user"
+	"github.com/hb-chen/micro/console/srv/handler"
+	pb "github.com/hb-chen/micro/console/srv/proto/user"
 )
 
 func main() {
 	// New Service
-	service := micro.NewService(
-		micro.Name("go.micro.srv.console"),
-		micro.Version("latest"),
+	srv := service.New(
+		service.Name("console"),
+		service.Version("latest"),
 	)
 
-	// Initialise service
-	service.Init()
-
 	// Register Handler
-	user.RegisterUserHandler(service.Server(), new(handler.User))
+	pb.RegisterUserHandler(srv.Server(), new(handler.User))
 
 	// Run service
-	if err := service.Run(); err != nil {
-		log.Fatal(err)
+	if err := srv.Run(); err != nil {
+		logger.Fatal(err)
 	}
 }
