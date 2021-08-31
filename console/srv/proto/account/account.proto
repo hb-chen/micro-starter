@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package go.micro.srv.user;
 
-option go_package = "./proto/user;user";
+option go_package = "./proto/account;account";
 
-service User {
+service Account {
     rpc Login (LoginRequest) returns (LoginResponse) {
     }
     rpc Logout (Request) returns (LogoutResponse) {

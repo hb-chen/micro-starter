@@ -6,7 +6,7 @@ import (
 
 	_ "github.com/rakyll/statik/fs"
 
-	_ "github.com/hb-chen/micro/console/web/statik"
+	_ "github.com/hb-chen/micro-starter/console/web/statik"
 )
 
 func main() {

@@ -4,8 +4,8 @@ import (
 	"github.com/micro/micro/v3/service"
 	"github.com/micro/micro/v3/service/logger"
 
-	"github.com/hb-chen/micro/console/srv/handler"
-	pb "github.com/hb-chen/micro/console/srv/proto/user"
+	"github.com/hb-chen/micro-starter/console/srv/handler"
+	pb "github.com/hb-chen/micro-starter/console/srv/proto/account"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	)
 
 	// Register Handler
-	pb.RegisterUserHandler(srv.Server(), new(handler.User))
+	pb.RegisterAccountHandler(srv.Server(), new(handler.Account))
 
 	// Run service
 	if err := srv.Run(); err != nil {

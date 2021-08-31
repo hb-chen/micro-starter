@@ -1,9 +1,9 @@
-module github.com/hb-chen/micro
+module github.com/hb-chen/micro-starter
 
 go 1.15
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/golang/protobuf v1.4.3
 	github.com/micro/micro/v3 v3.4.0
 	github.com/rakyll/statik v0.1.6

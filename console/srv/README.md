@@ -1,55 +1,57 @@
-# Example Service
+# Console Service
 
-This is the Example service
-
-Generated with
-
-```
-micro new github.com/hb-go/micro/console/srv --namespace=go.micro --alias=example --type=srv
-```
-
-## Getting Started
-
-- [Configuration](#configuration)
-- [Dependencies](#dependencies)
-- [Usage](#usage)
-
-## Configuration
-
-- FQDN: go.micro.srv.example
-- Type: srv
-- Alias: example
-
-## Dependencies
-
-Micro services depend on service discovery. The default is multicast DNS, a zeroconf system.
-
-In the event you need a resilient multi-host setup we recommend consul.
-
-```
-# install consul
-brew install consul
-
-# run consul
-consul agent -dev
-```
+This is the Console service
 
 ## Usage
 
-A Makefile is included for convenience
-
-Build the binary
+Generate the proto code
 
 ```
-make build
+make proto
 ```
 
 Run the service
+
 ```
-./example-srv
+micro run --name console .
 ```
 
-Build a docker image
+Call service
+
+```shell script
+$ curl "http://localhost:8080/console/account/login?username=hbchen"
+{"token":"token"}
+
+$ curl "http://localhost:8080/console/account/info"
+{"avatar":"https://avatars3.githubusercontent.com/u/730866?s=460&v=4","name":"Hobo"}
 ```
-make docker
+
+```shell script
+$ micro console --help      
+NAME:
+        micro console
+
+VERSION:
+        latest
+
+USAGE:
+        micro console [command]
+
+COMMANDS:
+        account info
+        account login
+        account logout
+```
+
+```shell script
+$ micro console account login --username=test
+{
+        "token": "token"
+}
+
+$ micro console account info
+{
+        "name": "Hobo",
+        "avatar": "https://avatars3.githubusercontent.com/u/730866?s=460\u0026v=4"
+}
 ```

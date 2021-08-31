@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/hb-chen/micro/pkg/file"
+	"github.com/hb-chen/micro-starter/pkg/file"
 )
 
 var (
