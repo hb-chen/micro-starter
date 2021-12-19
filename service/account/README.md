@@ -1,6 +1,6 @@
-# Console Service
+# Account Service
 
-This is the Console service
+This is the Account service
 
 ## Usage
 
@@ -13,45 +13,14 @@ make proto
 Run the service
 
 ```
-micro run --name console .
+go run main.go --profile starter-local
 ```
 
 Call service
 
 ```shell script
-$ curl "http://localhost:8080/console/account/login?username=hbchen"
-{"token":"token"}
+curl -XPOST -H"Content-Type: application/json" "http://localhost:8080/account/login" -d '{"username":"admin","password":"123456"}'
 
-$ curl "http://localhost:8080/console/account/info"
-{"avatar":"https://avatars3.githubusercontent.com/u/730866?s=460&v=4","name":"Hobo"}
+curl "http://localhost:8080/account/info?id=1"
 ```
 
-```shell script
-$ micro console --help      
-NAME:
-        micro console
-
-VERSION:
-        latest
-
-USAGE:
-        micro console [command]
-
-COMMANDS:
-        account info
-        account login
-        account logout
-```
-
-```shell script
-$ micro console account login --username=test
-{
-        "token": "token"
-}
-
-$ micro console account info
-{
-        "name": "Hobo",
-        "avatar": "https://avatars3.githubusercontent.com/u/730866?s=460\u0026v=4"
-}
-```

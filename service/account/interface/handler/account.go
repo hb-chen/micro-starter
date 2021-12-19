@@ -34,7 +34,7 @@ func (a *Account) Login(ctx context.Context, req *account.LoginRequest, rsp *acc
 	if err != nil {
 		return err
 	} else if user == nil {
-		return errors.New("go.micro.srv.account", "用户名或密码错误", 200)
+		return errors.Forbidden("go.micro.srv.account", "用户名或密码错误: %v, %v", req.Username, req.Password)
 	}
 
 	claims := jwt.StandardClaims{
@@ -63,6 +63,8 @@ func (a *Account) Info(ctx context.Context, req *account.Request, rsp *account.I
 	user, err := a.userUseCase.GetUser(req.Id)
 	if err != nil {
 		return err
+	} else if user == nil {
+		return errors.NotFound("go.micro.srv.account", "用户不存在: %v", req.Id)
 	}
 
 	rsp.Name = fmt.Sprintf("%s-ID:%d", user.Name, req.Id)

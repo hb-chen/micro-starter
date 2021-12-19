@@ -5,6 +5,8 @@ import (
 	"github.com/hb-chen/micro-starter/service/account/registry"
 	"github.com/micro/micro/v3/service"
 	"github.com/micro/micro/v3/service/logger"
+
+	_ "github.com/hb-chen/micro-starter/profile"
 )
 
 func main() {
