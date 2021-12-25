@@ -8,24 +8,32 @@ Build micro cmd
 go build -o bin/micro cmd/micro/main.go
 ```
 
-Run registry
+Start registry & api with server runtime
+```shell script
+./bin/micro --profile starter-local server
+```
+
+<details>
+  <summary> Start registry & api with service command </summary>
+Run registry service
 ```shell script
 ./bin/micro --profile starter-local service registry
 ```
 
-Run API
+Run API service
 ```shell script
 ./bin/micro --profile starter-local service api
 ```
+</details>
 
-Run service example
+Run example service 
 ```shell script
 cd service/account
 
 go run main.go --profile starter-local
 ```
 
-Test service example
+Test example service 
 ```shell script
 curl "http://localhost:8080/account/info?id=1"
 ```
