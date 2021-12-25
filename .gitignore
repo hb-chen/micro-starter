@@ -18,8 +18,5 @@ go.sum
 .idea
 bin
 build
+dist
 vendor
-
-account/api/account-api
-account/web/account-web
-auth/srv/auth-srv

@@ -1,0 +1,156 @@
+# This is an example goreleaser.yaml file with some sane defaults.
+# Make sure to check the documentation at http://goreleaser.com
+project_name: "micro-starter"
+env:
+  - VERSION=0.0.1
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod download
+
+builds:
+  - # ID of the build.
+    # Defaults to the project name.
+    id: "example"
+
+    # Path to project's (sub)directory containing Go code.
+    # This is the working directory for the Go build command(s).
+    # Default is `.`.
+    dir: ./service/account
+
+    # Path to main.go file or main package.
+    # Default is `.`.
+    main: .
+
+    # Binary name.
+    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
+    # Default is the name of the project directory.
+    binary: bin/example
+
+    # Custom flags templates.
+    # Default is empty.
+    flags:
+
+    # Custom ldflags templates.
+    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
+    ldflags:
+      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen
+
+    # Custom environment variables to be set during the builds.
+    # Default is empty.
+    env:
+
+    # GOOS list to build for.
+    # For more info refer to: https://golang.org/doc/install/source#environment
+    # Defaults are darwin and linux.
+    goos:
+      #- linux
+      - darwin
+      #- windows
+
+    # GOARCH to build for.
+    # For more info refer to: https://golang.org/doc/install/source#environment
+    # Defaults are 386 and amd64.
+    goarch:
+      - amd64
+      #- 386
+      #- arm64
+
+  - # ID of the build.
+    # Defaults to the project name.
+    id: "micro"
+
+    # Path to project's (sub)directory containing Go code.
+    # This is the working directory for the Go build command(s).
+    # Default is `.`.
+    dir: ./cmd/micro
+
+    # Path to main.go file or main package.
+    # Default is `.`.
+    main: .
+
+    # Binary name.
+    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
+    # Default is the name of the project directory.
+    binary: bin/micro
+
+    # Custom flags templates.
+    # Default is empty.
+    flags:
+
+    # Custom ldflags templates.
+    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
+    ldflags:
+      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen
+
+    # Custom environment variables to be set during the builds.
+    # Default is empty.
+    env:
+
+    # GOOS list to build for.
+    # For more info refer to: https://golang.org/doc/install/source#environment
+    # Defaults are darwin and linux.
+    goos:
+      #- linux
+      - darwin
+      #- windows
+
+    # GOARCH to build for.
+    # For more info refer to: https://golang.org/doc/install/source#environment
+    # Defaults are 386 and amd64.
+    goarch:
+      - amd64
+      #- 386
+      #- arm64
+
+archives:
+  - # ID of this archive.
+    # Defaults to `default`.
+    id: micro-starter
+
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    # Archive name template.
+    # Defaults:
+    # - if format is `tar.gz`, `tar.xz`, `gz` or `zip`:
+    #   - `{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}`
+    # - if format is `binary`:
+    #   - `{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}`
+    name_template: "{{ .ProjectName }}_{{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}"
+    format: tar.gz
+    files:
+      - README.md
+      - doc
+      - k8s
+
+    # Set to true, if you want all files in the archive to be in a single directory.
+    # If set to true and you extract the archive 'goreleaser_Linux_arm64.tar.gz',
+    # you get a folder 'goreleaser_Linux_arm64'.
+    # If set to false, all files are extracted separately.
+    # You can also set it to a custom folder name (templating is supported).
+    # Default is false.
+    wrap_in_directory: true
+
+    # Disables the binary count check.
+    # Default: false
+    allow_different_binary_count: true
+snapshot:
+  # Allows you to change the name of the generated snapshot
+  #
+  # Note that some pipes require this to be semantic version compliant (nfpm,
+  # for example).
+  #
+  # Default is `{{ .Tag }}-SNAPSHOT-{{.ShortCommit}}`.
+  name_template: '{{ .Env.VERSION }}-SNAPSHOT-{{ .ShortCommit }}'
+checksum:
+  name_template: 'checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
