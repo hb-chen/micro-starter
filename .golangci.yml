@@ -1,0 +1,50 @@
+# options for analysis running
+run:
+  deadline: 10m
+  skip-dirs:
+    - benchmark
+
+  # default is true. Enables skipping of directories:
+  #   vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
+  skip-dirs-use-default: true
+
+linters:
+  disable-all: false
+  enable-all: false
+  enable:
+    - megacheck
+    - staticcheck
+    - deadcode
+    - varcheck
+    - gosimple
+    - unused
+    - prealloc
+    - scopelint
+    - goimports
+    - unconvert
+    - govet
+    - nakedret
+    - structcheck
+    - gosec
+  disable:
+    - maligned
+    - interfacer
+    - typecheck
+    - dupl
+    - gocritic
+linters-settings:
+  govet:
+    check-shadowing: true
+issues:
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    # Exclude known linters from partially hard-vendored code,
+    # which is impossible to exclude via "nolint" comments.
+    - text: "weak cryptographic primitive"
+      linters:
+        - gosec
+  # Independently from option `exclude` we use default exclude patterns,
+  # it can be disabled by this option. To list all
+  # excluded by default patterns execute `golangci-lint run --help`.
+  # Default value for this option is true.
+  exclude-use-default: false

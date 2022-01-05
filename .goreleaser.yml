@@ -44,7 +44,7 @@ builds:
     # For more info refer to: https://golang.org/doc/install/source#environment
     # Defaults are darwin and linux.
     goos:
-      #- linux
+      - linux
       - darwin
       #- windows
 
@@ -91,7 +91,7 @@ builds:
     # For more info refer to: https://golang.org/doc/install/source#environment
     # Defaults are darwin and linux.
     goos:
-      #- linux
+      - linux
       - darwin
       #- windows
 
@@ -124,6 +124,7 @@ archives:
     format: tar.gz
     files:
       - README.md
+      - LICENSE
       - doc
       - k8s
 

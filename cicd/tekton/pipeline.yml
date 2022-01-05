@@ -1,0 +1,105 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: micro-starter-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+    - name: dockerconfig
+    - name: kubeconfig
+  params:
+    - name: url
+    - name: revision
+      default: master
+  tasks:
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: $(params.url)
+        - name: revision
+          value: $(params.revision)
+        - name: subdirectory
+          value: "micro-starter"
+        - name: deleteExisting
+          value: "true"
+#    - name: run-test
+#      taskRef:
+#        name: golang-test
+#      runAfter:
+#        - fetch-repository
+#      workspaces:
+#        - name: source
+#          workspace: shared-workspace
+#      params:
+#        - name: package
+#          value: github.com/hb-chen/micro-starter
+#        - name: subdirectory
+#          value: "micro-starter"
+#        - name: version
+#          value: 1.14.15
+    - name: run-build
+      taskRef:
+        name: golang-build
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: package
+          value: github.com/hb-chen/micro-starter
+        - name: packages
+          value: "./cmd/micro/main.go"
+        - name: subdirectory
+          value: "micro-starter"
+        - name: version
+          value: 1.15.11
+        - name: flags
+          value: -v -o $(workspaces.source.path)/micro-starter/bin/linux/gateway
+    - name: docker-build
+      taskRef:
+        name: kaniko
+      runAfter:
+        - run-build
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: dockerconfig
+          workspace: dockerconfig
+      params:
+        - name: IMAGE
+          value: registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro:latest
+        - name: DOCKERFILE
+          value: ./micro-starter/Dockerfile.micro
+        - name: CONTEXT
+          value: ./micro-starter/
+        - name: EXTRA_ARGS
+          value:
+            - "--skip-tls-verify"
+            - "--insecure-registry=registry.cn-hangzhou.aliyuncs.com"
+    - name: helm-kubectl-deploy
+      taskRef:
+        name: helm-kubectl-deploy
+      runAfter:
+        - docker-build
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: kubeconfig
+          workspace: kubeconfig
+      params:
+        - name: commands
+          value: |
+            helm template \
+            --release-name micro-starter \
+            --no-hooks \
+            --set image.repository=registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro \
+            --set image.tag=latest \
+            --set image.digest=@$(tasks.docker-build.results.IMAGE-DIGEST) \
+            ./micro-starter/cicd/helm | kubectl apply -n micro-starter -f -

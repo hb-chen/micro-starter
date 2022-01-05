@@ -1,0 +1,35 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: micro-starter-pipeline-template
+spec:
+  params:
+    - name: gitrevision
+      description: The git revision
+      default: master
+    - name: gitrepositoryurl
+      description: The git repository url
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: micro-starter-pipeline-run-
+      spec:
+        serviceAccountName: build-bot
+        pipelineRef:
+          name: micro-starter-pipeline
+        workspaces:
+          - name: shared-workspace
+            persistentvolumeclaim:
+              claimName: golang-source-pvc
+          - name: dockerconfig
+            secret:
+              secretName: dockerconfig
+          - name: kubeconfig
+            secret:
+              secretName: k8s-kubeconfig
+        params:
+          - name: url
+            value: $(tt.params.gitrepositoryurl)
+          - name: revision
+            value: $(tt.params.gitrevision)
