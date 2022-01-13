@@ -1,0 +1,15 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: micro-starter
+spec:
+  components:
+    - name: micro-server
+      type: helm
+      properties:
+        repoType: git
+        version: 0.0.1
+        url: https://github.com/hb-chen/micro-starter
+        chart: ./cicd/helm
+        git:
+          branch: main
