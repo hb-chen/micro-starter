@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "micro-starter.fullname" . }}
+  name: {{ include "micro.fullname" . }}
   labels:
-    {{- include "micro-starter.labels" . | nindent 4 }}
+    {{- include "micro.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "micro-starter.selectorLabels" . | nindent 6 }}
+      {{- include "micro.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "micro-starter.selectorLabels" . | nindent 8 }}
+        {{- include "micro.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "micro-starter.serviceAccountName" . }}
+      serviceAccountName: {{ include "micro.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
