@@ -61,7 +61,7 @@ spec:
         - name: version
           value: 1.15.11
         - name: flags
-          value: -v -o $(workspaces.source.path)/micro-starter/bin/linux/gateway
+          value: -v -o $(workspaces.source.path)/micro-starter/dist/micro_linux_amd64/bin/micro
     - name: docker-build
       taskRef:
         name: kaniko
@@ -76,30 +76,30 @@ spec:
         - name: IMAGE
           value: registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro:latest
         - name: DOCKERFILE
-          value: ./micro-starter/Dockerfile.micro
+          value: ./micro-starter/Dockerfile
         - name: CONTEXT
           value: ./micro-starter/
         - name: EXTRA_ARGS
           value:
             - "--skip-tls-verify"
             - "--insecure-registry=registry.cn-hangzhou.aliyuncs.com"
-    - name: helm-kubectl-deploy
-      taskRef:
-        name: helm-kubectl-deploy
-      runAfter:
-        - docker-build
-      workspaces:
-        - name: source
-          workspace: shared-workspace
-        - name: kubeconfig
-          workspace: kubeconfig
-      params:
-        - name: commands
-          value: |
-            helm template \
-            --release-name micro-starter \
-            --no-hooks \
-            --set image.repository=registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro \
-            --set image.tag=latest \
-            --set image.digest=@$(tasks.docker-build.results.IMAGE-DIGEST) \
-            ./micro-starter/cicd/helm | kubectl apply -n micro-starter -f -
+#    - name: helm-kubectl-deploy
+#      taskRef:
+#        name: helm-kubectl-deploy
+#      runAfter:
+#        - docker-build
+#      workspaces:
+#        - name: source
+#          workspace: shared-workspace
+#        - name: kubeconfig
+#          workspace: kubeconfig
+#      params:
+#        - name: commands
+#          value: |
+#            helm template \
+#            --release-name micro-starter \
+#            --no-hooks \
+#            --set image.repository=registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro \
+#            --set image.tag=latest \
+#            --set image.digest=@$(tasks.docker-build.results.IMAGE-DIGEST) \
+#            ./micro-starter/cicd/helm | kubectl apply -n micro-starter -f -

@@ -12,7 +12,7 @@ spec:
     - name: url
       value: https://github.com/hb-chen/micro-starter
     - name: revision
-      value: master
+      value: main
   workspaces:
     - name: shared-workspace
       persistentvolumeclaim:
