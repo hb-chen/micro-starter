@@ -10,6 +10,6 @@ spec:
         repoType: git
         version: 0.0.1
         url: https://github.com/hb-chen/micro-starter
-        chart: ./cicd/helm
+        chart: ./cicd/charts/micro
         git:
           branch: main
