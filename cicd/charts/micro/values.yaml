@@ -47,7 +47,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: api.micro.hbhen.com
+    - host: api.micro.hbchen.com
       paths:
         - path: /
           pathType: ImplementationSpecific
