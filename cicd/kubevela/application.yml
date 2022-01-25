@@ -5,11 +5,44 @@ metadata:
 spec:
   components:
     - name: micro-server
-      type: helm
       properties:
-        repoType: git
-        version: 0.0.1
-        url: https://github.com/hb-chen/micro-starter
         chart: ./cicd/charts/micro
         git:
           branch: main
+        installTimeout: 10m
+        pullInterval: 5m
+        releaseName: micro-server
+        repoType: git
+        targetNamespace: micro
+        url: https://github.com/hb-chen/micro-starter
+        values:
+          image:
+            repository: registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro
+            tag: latest
+          ingress:
+            annotations:
+              kubernetes.io/ingress.class: nginx
+            enabled: 'true'
+          service:
+            port: '8080'
+        version: '*'
+      type: helm
+  policies:
+    - name: env-bindings-dev
+      properties:
+        envs:
+          - name: micro
+            patch: {}
+            placement:
+              clusterSelector:
+                name: local
+              namespaceSelector:
+                name: micro
+      type: env-binding
+  workflow:
+    steps:
+      - name: micro
+        properties:
+          env: micro
+          policy: env-bindings-dev
+        type: deploy2env
