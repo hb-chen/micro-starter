@@ -103,3 +103,43 @@ spec:
 #            --set image.tag=latest \
 #            --set image.digest=@$(tasks.docker-build.results.IMAGE-DIGEST) \
 #            ./micro-starter/cicd/helm | kubectl apply -n micro-starter -f -
+    - name: run-build-service
+      taskRef:
+        name: golang-build
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: package
+          value: github.com/hb-chen/micro-starter
+        - name: packages
+          value: "./service/account/main.go"
+        - name: subdirectory
+          value: "micro-starter"
+        - name: version
+          value: 1.15.11
+        - name: flags
+          value: -v -o $(workspaces.source.path)/micro-starter/dist/micro_linux_amd64/bin/example
+    - name: docker-build-service
+      taskRef:
+        name: kaniko
+      runAfter:
+        - run-build
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: dockerconfig
+          workspace: dockerconfig
+      params:
+        - name: IMAGE
+          value: registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-example:latest
+        - name: DOCKERFILE
+          value: ./micro-starter/service/account/Dockerfile
+        - name: CONTEXT
+          value: ./micro-starter/
+        - name: EXTRA_ARGS
+          value:
+            - "--skip-tls-verify"
+            - "--insecure-registry=registry.cn-hangzhou.aliyuncs.com"
