@@ -35,3 +35,13 @@ test:
 .PHONY: lint
 lint:
 	golangci-lint run ./cmd/... ./service/...  ./profile/... ./pkg/...
+
+.PHONY: pack_build
+pack_build:
+	pack build micro \
+	--builder paketobuildpacks/builder:tiny \
+	--descriptor cicd/buildpacks/project.toml
+
+.PHONY: run
+run:
+	docker run micro --profile starter-local server

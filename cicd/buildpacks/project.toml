@@ -1,0 +1,29 @@
+[project]
+id = "com.hbchen.micro"
+name = "Micro"
+version = "3.8.0"
+
+[build]
+exclude = [
+    "../../README.md",
+    "../../LICENSE"
+]
+
+[[build.buildpacks]]
+uri = "paketobuildpacks/go:0.15.0"
+
+[[ build.env ]]
+name="BP_GO_VERSION"
+value="1.16.13"
+
+[[ build.env ]]
+name="BP_GO_TARGETS"
+value="./cmd/micro"
+
+[[ build.env ]]
+name="BP_GO_BUILD_LDFLAGS"
+value="-s -w"
+
+[[ build.env ]]
+name="GOPROXY"
+value="https://mirrors.aliyun.com/goproxy/,direct"
