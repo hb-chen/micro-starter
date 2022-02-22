@@ -1,0 +1,25 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  #  name: micro-starter-pipeline-run
+  generateName: micro-starter-buildpacks-pipeline-run-
+spec:
+  serviceAccountName: build-bot
+  pipelineRef:
+    name: micro-starter-run-pipeline
+  params:
+    - name: url
+      value: https://github.com/hb-chen/micro-starter
+    - name: revision
+      value: main
+  workspaces:
+    - name: shared-workspace
+      persistentvolumeclaim:
+        claimName: golang-source-pvc
+    - name: dockerconfig
+      secret:
+        secretName: dockerconfig
+    - name: kubeconfig
+      secret:
+        secretName: k8s-kubeconfig

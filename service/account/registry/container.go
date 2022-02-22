@@ -7,7 +7,6 @@ import (
 
 	"github.com/hb-chen/micro-starter/service/account/domain/repository/persistence/gorm"
 	"github.com/hb-chen/micro-starter/service/account/domain/repository/persistence/memory"
-	"github.com/hb-chen/micro-starter/service/account/domain/repository/persistence/xorm"
 	"github.com/hb-chen/micro-starter/service/account/domain/service"
 	"github.com/hb-chen/micro-starter/service/account/usecase"
 )

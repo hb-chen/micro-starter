@@ -10,9 +10,8 @@ require (
 	github.com/hb-go/pkg v0.0.3-0.20211117154348-e76fc4121c84
 	github.com/jinzhu/gorm v1.9.16
 	github.com/micro/micro/v3 v3.8.0
-	github.com/rakyll/statik v0.1.6
 	github.com/urfave/cli/v2 v2.3.0
 	go.uber.org/dig v1.13.0
 	google.golang.org/protobuf v1.25.0
-	xorm.io/xorm v1.2.4
+	xorm.io/xorm v1.2.5 // indirect
 )

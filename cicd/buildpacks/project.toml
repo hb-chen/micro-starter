@@ -18,7 +18,7 @@ value="1.16.13"
 
 [[ build.env ]]
 name="BP_GO_TARGETS"
-value="/workspace/source/micro-starter/cmd/micro"
+value="./cmd/micro"
 
 [[ build.env ]]
 name="BP_GO_BUILD_LDFLAGS"
@@ -26,4 +26,4 @@ value="-s -w"
 
 [[ build.env ]]
 name="GOPROXY"
-value="https://mirrors.aliyun.com/goproxy/,direct"
+value="https://proxy.golang.org/,https://mirrors.aliyun.com/goproxy/,direct"
