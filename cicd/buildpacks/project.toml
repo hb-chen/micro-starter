@@ -26,4 +26,4 @@ value="-s -w"
 
 [[ build.env ]]
 name="GOPROXY"
-value="https://proxy.golang.org/,https://mirrors.aliyun.com/goproxy/,direct"
+value="https://mirrors.aliyun.com/goproxy/,direct"

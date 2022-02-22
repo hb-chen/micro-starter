@@ -37,6 +37,9 @@ spec:
           value: micro-starter
         - name: BUILDER_IMAGE
           value: 'paketobuildpacks/builder:tiny'
+        - name: ENV_VARS
+          value:
+            - GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
       runAfter:
         - fetch-repository
       taskRef:
