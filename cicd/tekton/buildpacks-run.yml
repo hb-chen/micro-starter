@@ -7,12 +7,14 @@ metadata:
 spec:
   serviceAccountName: build-bot
   pipelineRef:
-    name: micro-starter-run-pipeline
+    name: micro-starter-buildpacks-pipeline
   params:
     - name: url
       value: https://github.com/hb-chen/micro-starter
     - name: revision
       value: main
+    - name: image
+      value: registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro
   workspaces:
     - name: shared-workspace
       persistentvolumeclaim:
