@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  #  name: micro-starter-pipeline-run
+  #  name: micro-starter-buildpacks-pipeline-run
   generateName: micro-starter-buildpacks-pipeline-run-
 spec:
   serviceAccountName: build-bot

@@ -17,7 +17,7 @@ spec:
       spec:
         serviceAccountName: build-bot
         pipelineRef:
-          name: micro-starter-pipeline
+          name: micro-starter-buildpacks-pipeline
         workspaces:
           - name: shared-workspace
             persistentvolumeclaim:
