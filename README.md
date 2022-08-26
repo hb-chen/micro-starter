@@ -3,6 +3,8 @@
 
 ![go-micro](/doc/img/micro.jpg "go-micro")
 
+## Local
+
 Build micro cmd
 ```shell script
 go build -o bin/micro cmd/micro/main.go
@@ -37,3 +39,7 @@ Test example service
 ```shell script
 curl "http://localhost:8080/account/info?id=1"
 ```
+
+## Kubernetes
+
+> TODO
