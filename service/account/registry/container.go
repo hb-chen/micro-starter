@@ -7,6 +7,7 @@ import (
 
 	"github.com/hb-chen/micro-starter/service/account/domain/repository/persistence/gorm"
 	"github.com/hb-chen/micro-starter/service/account/domain/repository/persistence/memory"
+	// "github.com/hb-chen/micro-starter/service/account/domain/repository/persistence/xorm"
 	"github.com/hb-chen/micro-starter/service/account/domain/service"
 	"github.com/hb-chen/micro-starter/service/account/usecase"
 )
@@ -25,10 +26,10 @@ func buildUserUseCase(c *dig.Container) {
 
 	// ORM选择，gorm、xorm...
 	switch persistence {
-	case "xorm":
-		// DB初始化
-		xorm.InitDB()
-		c.Provide(xorm.NewUserRepository)
+	// case "xorm":
+	// 	// DB初始化
+	// 	xorm.InitDB()
+	// 	c.Provide(xorm.NewUserRepository)
 	case "gorm":
 		// DB初始化
 		gorm.InitDB()

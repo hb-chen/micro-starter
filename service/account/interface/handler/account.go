@@ -44,8 +44,7 @@ func (a *Account) Login(ctx context.Context, req *account.LoginRequest, rsp *acc
 	}
 
 	privateKey := test.LoadRSAPrivateKeyFromDisk(conf.BASE_PATH + "auth_key")
-	tokenString := test.MakeSampleToken(claims, privateKey)
-
+	tokenString := test.MakeSampleToken(claims, jwt.SigningMethodRS256, privateKey)
 	rsp.Token = tokenString
 
 	return nil
