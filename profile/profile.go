@@ -10,7 +10,6 @@ import (
 	"github.com/micro/micro/v3/profile"
 	"github.com/micro/micro/v3/service/broker"
 	memBroker "github.com/micro/micro/v3/service/broker/memory"
-	"github.com/micro/micro/v3/service/build/golang"
 	"github.com/micro/micro/v3/service/client"
 	"github.com/micro/micro/v3/service/config"
 	storeConfig "github.com/micro/micro/v3/service/config/store"
@@ -21,9 +20,7 @@ import (
 	"github.com/micro/micro/v3/service/registry"
 	"github.com/micro/micro/v3/service/registry/memory"
 	"github.com/micro/micro/v3/service/router"
-	k8sRouter "github.com/micro/micro/v3/service/router/kubernetes"
 	regRouter "github.com/micro/micro/v3/service/router/registry"
-	"github.com/micro/micro/v3/service/runtime/kubernetes"
 	"github.com/micro/micro/v3/service/runtime/local"
 	"github.com/micro/micro/v3/service/server"
 	"github.com/micro/micro/v3/service/store/file"
@@ -33,7 +30,6 @@ import (
 	"github.com/urfave/cli/v2"
 
 	microAuth "github.com/micro/micro/v3/service/auth"
-	microBuilder "github.com/micro/micro/v3/service/build"
 	microEvents "github.com/micro/micro/v3/service/events"
 	microRuntime "github.com/micro/micro/v3/service/runtime"
 	microStore "github.com/micro/micro/v3/service/store"
@@ -138,11 +134,7 @@ var Kubernetes = &profile.Profile{
 	Setup: func(ctx *cli.Context) (err error) {
 		microAuth.DefaultAuth = noop.NewAuth()
 
-		microRuntime.DefaultRuntime = kubernetes.NewRuntime()
-		microBuilder.DefaultBuilder, err = golang.NewBuilder()
-		if err != nil {
-			logger.Fatalf("Error configuring golang builder: %v", err)
-		}
+		microRuntime.DefaultRuntime = local.NewRuntime()
 
 		microEvents.DefaultStream, err = memStream.NewStream()
 		if err != nil {
@@ -189,10 +181,6 @@ var Kubernetes = &profile.Profile{
 			logger.Fatalf("Error configuring config: %v", err)
 		}
 		SetupConfigSecretKey(ctx)
-
-		// Use k8s routing which is DNS based
-		router.DefaultRouter = k8sRouter.NewRouter()
-		client.DefaultClient.Init(client.Router(router.DefaultRouter))
 
 		// Configure tracing with Jaeger:
 		tracingServiceName := ctx.Args().Get(1)

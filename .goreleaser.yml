@@ -126,7 +126,7 @@ archives:
       - README.md
       - LICENSE
       - doc
-      - k8s
+      - cicd
 
     # Set to true, if you want all files in the archive to be in a single directory.
     # If set to true and you extract the archive 'goreleaser_Linux_arm64.tar.gz',

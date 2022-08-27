@@ -11,5 +11,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 8000
+      targetPort: registry
+      protocol: TCP
+      name: registry
   selector:
     {{- include "micro.selectorLabels" . | nindent 4 }}

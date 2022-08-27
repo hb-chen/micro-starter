@@ -35,18 +35,18 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: MICRO_PROFILE
-              value: starter-local
+              value: starter-kubernetes
+            - name: MICRO_SERVICE_ADDRESS
+              value: :8080
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
