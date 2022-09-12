@@ -1,5 +1,6 @@
 # Micro [github.com/micro](http://github.com/micro)
-[![Slack](https://img.shields.io/badge/slack-join-D60051.svg)](https://hbchen.slack.com/messages/CE68CJ60Z)\
+
+[![Slack](https://img.shields.io/badge/slack-join-D60051.svg)](https://hbchen.slack.com/messages/CE68CJ60Z)
 
 ![go-micro](/doc/img/micro.jpg "go-micro")
 
