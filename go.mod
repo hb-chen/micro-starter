@@ -3,16 +3,18 @@ module github.com/hb-chen/micro-starter
 go 1.17
 
 require (
-	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-sql-driver/mysql v1.7.0
 	github.com/golang-jwt/jwt/v4 v4.3.0
 	github.com/golang/protobuf v1.4.3
 	github.com/google/uuid v1.2.0
 	github.com/hb-go/pkg v0.0.3-0.20211117154348-e76fc4121c84
-	github.com/jinzhu/gorm v1.9.16
 	github.com/micro/micro/v3 v3.12.3
 	github.com/urfave/cli/v2 v2.3.0
 	go.uber.org/dig v1.13.0
 	google.golang.org/protobuf v1.25.0
+	gorm.io/driver/mysql v1.4.5
+	gorm.io/gorm v1.24.3
+	gorm.io/plugin/dbresolver v1.4.0
 )
 
 require (
@@ -22,7 +24,6 @@ require (
 	github.com/cloudflare/cloudflare-go v0.10.9 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/denisenkom/go-mssqldb v0.10.0 // indirect
 	github.com/desertbit/timer v0.0.0-20180107155436-c41aec40b27f // indirect
 	github.com/evanphx/json-patch/v5 v5.0.0 // indirect
 	github.com/fatih/camelcase v1.0.0 // indirect
@@ -36,9 +37,8 @@ require (
 	github.com/hpcloud/tail v1.0.0 // indirect
 	github.com/improbable-eng/grpc-web v0.13.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/cpuid v1.3.1 // indirect
-	github.com/lib/pq v1.10.2 // indirect
-	github.com/mattn/go-sqlite3 v1.14.8 // indirect
 	github.com/miekg/dns v1.1.27 // indirect
 	github.com/nightlyone/lockfile v1.0.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect

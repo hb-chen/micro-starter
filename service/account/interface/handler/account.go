@@ -26,7 +26,7 @@ func NewAccountService(userUseCase usecase.UserUseCase) *Account {
 	}
 }
 
-// Call is a single request handler called via client.Call or the generated client code
+// Login Call is a single request handler called via client.Call or the generated client code
 func (a *Account) Login(ctx context.Context, req *account.LoginRequest, rsp *account.LoginResponse) error {
 	log.Infof("Received Account.Login request")
 
@@ -50,13 +50,13 @@ func (a *Account) Login(ctx context.Context, req *account.LoginRequest, rsp *acc
 	return nil
 }
 
-// Call is a single request handler called via client.Call or the generated client code
+// Logout Call is a single request handler called via client.Call or the generated client code
 func (*Account) Logout(ctx context.Context, req *account.Request, rsp *account.LogoutResponse) error {
 	log.Info("Received Account.Logout request")
 	return nil
 }
 
-// Call is a single request handler called via client.Call or the generated client code
+// Info Call is a single request handler called via client.Call or the generated client code
 func (a *Account) Info(ctx context.Context, req *account.Request, rsp *account.InfoResponse) error {
 	log.Info("Received Account.Info request")
 	user, err := a.userUseCase.GetUser(req.Id)

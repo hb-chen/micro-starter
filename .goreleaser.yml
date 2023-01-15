@@ -11,7 +11,7 @@ before:
 builds:
   - # ID of the build.
     # Defaults to the project name.
-    id: "example"
+    id: "account"
 
     # Path to project's (sub)directory containing Go code.
     # This is the working directory for the Go build command(s).
@@ -25,7 +25,7 @@ builds:
     # Binary name.
     # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
     # Default is the name of the project directory.
-    binary: bin/example
+    binary: bin/account
 
     # Custom flags templates.
     # Default is empty.
@@ -34,7 +34,54 @@ builds:
     # Custom ldflags templates.
     # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
     ldflags:
-      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen
+      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen.com
+
+    # Custom environment variables to be set during the builds.
+    # Default is empty.
+    env:
+
+    # GOOS list to build for.
+    # For more info refer to: https://golang.org/doc/install/source#environment
+    # Defaults are darwin and linux.
+    goos:
+      - linux
+      - darwin
+      #- windows
+
+    # GOARCH to build for.
+    # For more info refer to: https://golang.org/doc/install/source#environment
+    # Defaults are 386 and amd64.
+    goarch:
+      - amd64
+      #- 386
+      #- arm64
+
+  - # ID of the build.
+    # Defaults to the project name.
+    id: "greeting"
+
+    # Path to project's (sub)directory containing Go code.
+    # This is the working directory for the Go build command(s).
+    # Default is `.`.
+    dir: ./service/greeting
+
+    # Path to main.go file or main package.
+    # Default is `.`.
+    main: .
+
+    # Binary name.
+    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
+    # Default is the name of the project directory.
+    binary: bin/greeting
+
+    # Custom flags templates.
+    # Default is empty.
+    flags:
+
+    # Custom ldflags templates.
+    # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
+    ldflags:
+      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen.com
 
     # Custom environment variables to be set during the builds.
     # Default is empty.
@@ -81,7 +128,7 @@ builds:
     # Custom ldflags templates.
     # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
     ldflags:
-      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen
+      - -s -w -X main.version={{ if .IsSnapshot  }}{{ .Version }}{{ else }}{{ .Env.VERSION }}{{ end }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }} -X main.builtBy=hbchen.com
 
     # Custom environment variables to be set during the builds.
     # Default is empty.
