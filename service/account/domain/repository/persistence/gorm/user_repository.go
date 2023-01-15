@@ -1,6 +1,10 @@
 package gorm
 
 import (
+	"errors"
+
+	"gorm.io/gorm"
+
 	"github.com/hb-chen/micro-starter/service/account/domain/model"
 	"github.com/hb-chen/micro-starter/service/account/domain/repository"
 )
@@ -15,7 +19,7 @@ func NewUserRepository() repository.UserRepository {
 func (r *userRepository) FindById(id int64) (*model.User, error) {
 	user := model.User{}
 	if result := db.Where("id = ?", id).First(&user); result.Error != nil {
-		if result.RecordNotFound() {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, nil
 		} else {
 			return nil, result.Error
@@ -28,7 +32,7 @@ func (r *userRepository) FindById(id int64) (*model.User, error) {
 func (r *userRepository) FindByName(name string) (*model.User, error) {
 	user := model.User{}
 	if result := db.Where("name = ?", name).First(&user); result.Error != nil {
-		if result.RecordNotFound() {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, nil
 		} else {
 			return nil, result.Error

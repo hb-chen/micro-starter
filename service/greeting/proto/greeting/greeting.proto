@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package go.micro.srv.greeting;
+
+option go_package = "./proto/greeting;greeting";
+
+service Greeting {
+  rpc Call (CallRequest) returns (CallResponse) {
+  }
+}
+
+message CallRequest {
+  string msg = 1;
+}
+
+message CallResponse {
+  int64 id = 1;
+  string msg = 2;
+}

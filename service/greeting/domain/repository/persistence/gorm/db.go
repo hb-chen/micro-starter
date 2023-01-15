@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
 
-	"github.com/hb-chen/micro-starter/service/account/conf"
-	"github.com/hb-chen/micro-starter/service/account/domain/model"
+	"github.com/hb-chen/micro-starter/service/greeting/conf"
+	"github.com/hb-chen/micro-starter/service/greeting/domain/model"
 )
 
 var (
@@ -50,7 +50,7 @@ func InitDB() {
 			return
 		}
 
-		err = db.AutoMigrate(&model.User{})
+		err = db.AutoMigrate(&model.Msg{})
 		if err != nil {
 			log.Fatal(err)
 		}
