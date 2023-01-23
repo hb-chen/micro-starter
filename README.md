@@ -31,14 +31,23 @@ Run API service
 
 Run example service 
 ```shell script
+# Account
 cd service/account
+go run main.go --profile starter-local
 
+# Greeting
+cd service/greeting
 go run main.go --profile starter-local
 ```
 
 Test example service 
 ```shell script
+# Account
 curl "http://localhost:8080/account/info?id=1"
+
+# Greeting
+curl "http://localhost:8080/greeting/call?msg=helloworld"
+{"id":"1","msg":"helloworld"}
 ```
 
 ## Kubernetes
