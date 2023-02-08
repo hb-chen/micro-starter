@@ -102,7 +102,7 @@ spec:
 #            --set image.repository=registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro \
 #            --set image.tag=latest \
 #            --set image.digest=@$(tasks.docker-build.results.IMAGE-DIGEST) \
-#            ./micro-starter/cicd/helm | kubectl apply -n micro-starter -f -
+#            ./micro-starter/manifests/helm | kubectl apply -n micro-starter -f -
     - name: run-build-service
       taskRef:
         name: golang-build

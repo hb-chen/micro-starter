@@ -1,4 +1,7 @@
 
+GOOS=$(shell go env GOOS)
+GOARCH=$(shell go env GOARCH)
+
 ifeq ($(OS),Windows_NT)
     uname_S := Windows
 else
