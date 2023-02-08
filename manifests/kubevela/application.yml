@@ -6,7 +6,7 @@ spec:
   components:
     - name: micro-server
       properties:
-        chart: ./cicd/charts/micro
+        chart: ./manifests/charts/micro
         git:
           branch: main
         installTimeout: 10m

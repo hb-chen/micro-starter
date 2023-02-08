@@ -31,14 +31,23 @@ Run API service
 
 Run example service 
 ```shell script
+# Account
 cd service/account
+go run main.go --profile starter-local
 
+# Greeting
+cd service/greeting
 go run main.go --profile starter-local
 ```
 
 Test example service 
 ```shell script
+# Account
 curl "http://localhost:8080/account/info?id=1"
+
+# Greeting
+curl "http://localhost:8080/greeting/call?msg=helloworld"
+{"id":"1","msg":"helloworld"}
 ```
 
 ## Kubernetes
@@ -46,20 +55,20 @@ curl "http://localhost:8080/account/info?id=1"
 > Attention: default ingress class=nginx, host=api.micro.hbchen.com
 
 ```shell
-helm install -n micro micro-server cicd/charts/micro \
+helm install -n micro micro-server manifests/charts/micro \
 --set ingress.enabled=true
 
 # Digest
-helm install -n micro micro-server cicd/charts/micro \
+helm install -n micro micro-server manifests/charts/micro \
 --set image.tag="latest@sha256:1e2c8df50398c2dcd4b96065b8b81842a86c5cc83d8ef1ae96ac7b5d8432add3" \
 --set ingress.enabled=true
 ```
 
 ```shell
-helm install -n micro micro-example cicd/charts/servic
+helm install -n micro micro-example manifests/charts/servic
 
 # Digest
-helm install -n micro micro-example cicd/charts/service \
+helm install -n micro micro-example manifests/charts/service \
 --set image.tag="latest@sha256:fa2e56f01a4704ad298331cd0356a0e174e9358701922552934bbd4987c9fb80"
 ```
 
