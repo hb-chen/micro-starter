@@ -1,4 +1,4 @@
-# Account Service
+# Greeting Service
 
 This is the Greeting service
 
@@ -19,8 +19,7 @@ go run main.go --profile starter-local
 Call service
 
 ```shell script
-curl -XPOST -H"Content-Type: application/json" "http://localhost:8080/account/login" -d '{"username":"admin","password":"123456"}'
-
-curl "http://localhost:8080/account/info?id=1"
+curl "http://localhost:8080/greeting/call?msg=helloworld"
+{"id":"1","msg":"helloworld"}
 ```
 

@@ -43,6 +43,7 @@ func NewGreetingEndpoints() []*api.Endpoint {
 
 type GreetingService interface {
 	Call(ctx context.Context, in *CallRequest, opts ...client.CallOption) (*CallResponse, error)
+	List(ctx context.Context, in *Page, opts ...client.CallOption) (*ListResponse, error)
 }
 
 type greetingService struct {
@@ -67,15 +68,27 @@ func (c *greetingService) Call(ctx context.Context, in *CallRequest, opts ...cli
 	return out, nil
 }
 
+func (c *greetingService) List(ctx context.Context, in *Page, opts ...client.CallOption) (*ListResponse, error) {
+	req := c.c.NewRequest(c.name, "Greeting.List", in)
+	out := new(ListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Greeting service
 
 type GreetingHandler interface {
 	Call(context.Context, *CallRequest, *CallResponse) error
+	List(context.Context, *Page, *ListResponse) error
 }
 
 func RegisterGreetingHandler(s server.Server, hdlr GreetingHandler, opts ...server.HandlerOption) error {
 	type greeting interface {
 		Call(ctx context.Context, in *CallRequest, out *CallResponse) error
+		List(ctx context.Context, in *Page, out *ListResponse) error
 	}
 	type Greeting struct {
 		greeting
@@ -90,4 +103,8 @@ type greetingHandler struct {
 
 func (h *greetingHandler) Call(ctx context.Context, in *CallRequest, out *CallResponse) error {
 	return h.GreetingHandler.Call(ctx, in, out)
+}
+
+func (h *greetingHandler) List(ctx context.Context, in *Page, out *ListResponse) error {
+	return h.GreetingHandler.List(ctx, in, out)
 }

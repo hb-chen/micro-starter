@@ -2,19 +2,18 @@ package registry
 
 import (
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/hb-chen/micro-starter/service/greeting/repo/gorm"
 	"github.com/micro/micro/v3/service/config"
 	"go.uber.org/dig"
 
-	"github.com/hb-chen/micro-starter/service/greeting/domain/repository/persistence/gorm"
-	"github.com/hb-chen/micro-starter/service/greeting/domain/repository/persistence/memory"
-	"github.com/hb-chen/micro-starter/service/greeting/domain/service"
-	"github.com/hb-chen/micro-starter/service/greeting/usecase"
+	"github.com/hb-chen/micro-starter/service/greeting/domain/usecase"
+	"github.com/hb-chen/micro-starter/service/greeting/service"
 )
 
 func NewContainer() (*dig.Container, error) {
 	c := dig.New()
 
-	err := buildGreetingUseCase(c)
+	err := build(c)
 	if err != nil {
 		return nil, err
 	}
@@ -22,32 +21,28 @@ func NewContainer() (*dig.Container, error) {
 	return c, nil
 }
 
-func buildGreetingUseCase(c *dig.Container) error {
+func build(c *dig.Container) error {
 	conf, _ := config.Get("persistence")
-	persistence := conf.String("")
+	persistence := conf.String("gorm")
 
 	// ORM选择，gorm、xorm...
 	switch persistence {
+	case "xorm":
 	case "gorm":
+	default:
 		// DB初始化
-		gorm.InitDB()
+		c.Provide(gorm.NewDB)
 		err := c.Provide(gorm.NewGreetingRepository)
 		if err != nil {
 			return err
 		}
-	default:
-		// 默认memory作为mock
-		err := c.Provide(memory.NewGreetingRepository)
-		if err != nil {
-			return err
-		}
 	}
 
-	err := c.Provide(service.NewGreetingService)
+	err := c.Provide(usecase.NewGreetingUsecase)
 	if err != nil {
 		return err
 	}
-	err = c.Provide(usecase.NewGreetingUseCase)
+	err = c.Provide(service.NewGreetingService)
 	if err != nil {
 		return err
 	}

@@ -1,4 +1,4 @@
-package service
+package usecase
 
 import (
 	"fmt"
@@ -7,17 +7,23 @@ import (
 	"github.com/hb-chen/micro-starter/service/greeting/domain/repository"
 )
 
-type GreetingService struct {
+type GreetingUsecase interface {
+	Add(msg string) (*model.Msg, error)
+	List(page, size int) ([]*model.Msg, error)
+	Duplicated(msg string) error
+}
+
+type greetingUsecase struct {
 	repo repository.GreetingRepository
 }
 
-func NewGreetingService(repo repository.GreetingRepository) *GreetingService {
-	return &GreetingService{
+func NewGreetingUsecase(repo repository.GreetingRepository) GreetingUsecase {
+	return &greetingUsecase{
 		repo: repo,
 	}
 }
 
-func (s *GreetingService) Add(msg string) (*model.Msg, error) {
+func (s *greetingUsecase) Add(msg string) (*model.Msg, error) {
 	err := s.Duplicated(msg)
 	if err != nil {
 		return nil, err
@@ -34,7 +40,7 @@ func (s *GreetingService) Add(msg string) (*model.Msg, error) {
 	return &u, nil
 }
 
-func (s *GreetingService) List(page, size int) ([]*model.Msg, error) {
+func (s *greetingUsecase) List(page, size int) ([]*model.Msg, error) {
 	items, err := s.repo.List(page, size)
 	if err != nil {
 		return nil, err
@@ -43,7 +49,7 @@ func (s *GreetingService) List(page, size int) ([]*model.Msg, error) {
 	return items, nil
 }
 
-func (s *GreetingService) Duplicated(msg string) error {
+func (s *greetingUsecase) Duplicated(msg string) error {
 	item, err := s.repo.FindByMsg(msg)
 	if item != nil {
 		return fmt.Errorf("msg duplicated: %s", item.Msg)
