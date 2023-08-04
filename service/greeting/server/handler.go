@@ -1,6 +1,7 @@
 package server
 
 import (
+	log "github.com/micro/micro/v3/service/logger"
 	"github.com/micro/micro/v3/service/server"
 	"go.uber.org/dig"
 
@@ -8,7 +9,15 @@ import (
 )
 
 func Apply(server server.Server, c *dig.Container) {
-	c.Invoke(func(svc pb.GreetingHandler) {
-		pb.RegisterGreetingHandler(server, svc)
+	err := c.Invoke(func(svc pb.GreetingHandler) {
+		err := pb.RegisterGreetingHandler(server, svc)
+		if err != nil {
+			log.Error(err)
+			return
+		}
 	})
+	if err != nil {
+		log.Error(err)
+		return
+	}
 }

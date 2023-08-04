@@ -24,9 +24,13 @@ func NewGreetingUsecase(repo repository.GreetingRepository) GreetingUsecase {
 }
 
 func (s *greetingUsecase) Add(msg string) (*model.Msg, error) {
-	err := s.Duplicated(msg)
+	item, err := s.repo.FindByMsg(msg)
 	if err != nil {
 		return nil, err
+	}
+
+	if item != nil {
+		return item, nil
 	}
 
 	u := model.Msg{

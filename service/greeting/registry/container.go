@@ -3,6 +3,7 @@ package registry
 import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/hb-chen/micro-starter/service/greeting/repo/gorm"
+	"github.com/hb-chen/micro-starter/service/greeting/repo/memory"
 	"github.com/micro/micro/v3/service/config"
 	"go.uber.org/dig"
 
@@ -23,16 +24,24 @@ func NewContainer() (*dig.Container, error) {
 
 func build(c *dig.Container) error {
 	conf, _ := config.Get("persistence")
-	persistence := conf.String("gorm")
+	persistence := conf.String("")
 
 	// ORM选择，gorm、xorm...
 	switch persistence {
 	case "xorm":
 	case "gorm":
-	default:
 		// DB初始化
-		c.Provide(gorm.NewDB)
-		err := c.Provide(gorm.NewGreetingRepository)
+		err := c.Provide(gorm.NewDB)
+		if err != nil {
+			return err
+		}
+		err = c.Provide(gorm.NewGreetingRepository)
+		if err != nil {
+			return err
+		}
+	default:
+		// 默认memory作为mock
+		err := c.Provide(memory.NewGreetingRepository)
 		if err != nil {
 			return err
 		}

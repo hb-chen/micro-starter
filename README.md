@@ -29,18 +29,21 @@ Run API service
 ```
 </details>
 
-Run example service 
+Run example service
 ```shell script
 # Greeting
 cd service/greeting
 go run main.go --profile starter-local
 ```
 
-Test example service 
+Test example service
 ```shell script
 # Greeting
 curl "http://localhost:8080/greeting/call?msg=helloworld"
 {"id":"1","msg":"helloworld"}
+
+curl "http://localhost:8080/greeting/list?page=1&size=10"
+{"items":[{"id":"1","msg":"helloworld"}]}
 ```
 
 ## Kubernetes
