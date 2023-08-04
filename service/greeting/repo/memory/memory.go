@@ -49,7 +49,22 @@ func (r *greetingRepository) Add(item *model.Msg) error {
 }
 
 func (r *greetingRepository) List(page, size int) ([]*model.Msg, error) {
-	return nil, nil
+	idx := (page - 1) * size
+	offset := idx + size
+
+	if offset > len(r.items) {
+		offset = len(r.items)
+	}
+
+	if offset <= idx {
+		return []*model.Msg{}, nil
+	}
+
+	items := make([]*model.Msg, 0, offset-idx)
+	for _, item := range r.items[idx:offset] {
+		items = append(items, item)
+	}
+	return items, nil
 }
 
 func NewGreetingRepository() repository.GreetingRepository {

@@ -5,8 +5,8 @@ import (
 	"github.com/micro/micro/v3/service/logger"
 
 	_ "github.com/hb-chen/micro-starter/profile"
-	"github.com/hb-chen/micro-starter/service/greeting/interface/handler"
 	"github.com/hb-chen/micro-starter/service/greeting/registry"
+	"github.com/hb-chen/micro-starter/service/greeting/server"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	}
 
 	// Register Handler
-	handler.Apply(srv.Server(), c)
+	server.Apply(srv.Server(), c)
 
 	// Run service
 	if err := srv.Run(); err != nil {
