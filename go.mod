@@ -9,7 +9,7 @@ require (
 	github.com/micro/micro/v3 v3.19.0
 	github.com/urfave/cli/v2 v2.3.0
 	go.uber.org/dig v1.13.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.30.0
 	gorm.io/driver/mysql v1.4.5
 	gorm.io/gorm v1.24.3
 	gorm.io/plugin/dbresolver v1.4.0
@@ -64,8 +64,8 @@ require (
 	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/time v0.1.0 // indirect
 	golang.org/x/tools v0.9.1 // indirect
-	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4 // indirect
-	google.golang.org/grpc v1.54.1 // indirect
+	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
+	google.golang.org/grpc v1.56.3 // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/square/go-jose.v2 v2.4.1 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
