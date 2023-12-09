@@ -1,9 +1,11 @@
+//go:build ignore
+
 package server
 
 import (
 	"fmt"
-
-	"github.com/micro/micro/v3/plugin"
+	"plugin"
+	// "micro.dev/v4/plugin"
 )
 
 var (

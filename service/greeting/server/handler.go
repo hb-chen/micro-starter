@@ -1,9 +1,9 @@
 package server
 
 import (
-	log "github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/server"
 	"go.uber.org/dig"
+	log "micro.dev/v4/service/logger"
+	"micro.dev/v4/service/server"
 
 	pb "github.com/hb-chen/micro-starter/service/greeting/proto/greeting"
 )

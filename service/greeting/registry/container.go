@@ -4,8 +4,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/hb-chen/micro-starter/service/greeting/repo/gorm"
 	"github.com/hb-chen/micro-starter/service/greeting/repo/memory"
-	"github.com/micro/micro/v3/service/config"
 	"go.uber.org/dig"
+	"micro.dev/v4/service/config"
 
 	"github.com/hb-chen/micro-starter/service/greeting/domain/usecase"
 	"github.com/hb-chen/micro-starter/service/greeting/service"
