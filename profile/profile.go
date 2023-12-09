@@ -4,39 +4,30 @@
 package profile
 
 import (
-	"os"
 	"path/filepath"
 
-	"github.com/micro/micro/v3/profile"
-	"github.com/micro/micro/v3/service/broker"
-	memBroker "github.com/micro/micro/v3/service/broker/memory"
-	"github.com/micro/micro/v3/service/client"
-	"github.com/micro/micro/v3/service/config"
-	storeConfig "github.com/micro/micro/v3/service/config/store"
-	evStore "github.com/micro/micro/v3/service/events/store"
-	memStream "github.com/micro/micro/v3/service/events/stream/memory"
-	"github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/model"
-	"github.com/micro/micro/v3/service/registry"
-	"github.com/micro/micro/v3/service/registry/memory"
-	"github.com/micro/micro/v3/service/router"
-	regRouter "github.com/micro/micro/v3/service/router/registry"
-	"github.com/micro/micro/v3/service/runtime/local"
-	"github.com/micro/micro/v3/service/server"
-	"github.com/micro/micro/v3/service/store/file"
-	mem "github.com/micro/micro/v3/service/store/memory"
-	// "github.com/micro/micro/v3/util/opentelemetry"
-	// "github.com/micro/micro/v3/util/opentelemetry/jaeger"
-	"github.com/urfave/cli/v2"
-
-	microAuth "github.com/micro/micro/v3/service/auth"
-	microEvents "github.com/micro/micro/v3/service/events"
-	microRuntime "github.com/micro/micro/v3/service/runtime"
-	microStore "github.com/micro/micro/v3/service/store"
-	inAuth "github.com/micro/micro/v3/util/auth"
-	"github.com/micro/micro/v3/util/user"
-
 	"github.com/hb-chen/micro-starter/service/auth/noop"
+	"github.com/urfave/cli/v2"
+	microAuth "micro.dev/v4/service/auth"
+	"micro.dev/v4/service/broker"
+	memBroker "micro.dev/v4/service/broker/memory"
+	"micro.dev/v4/service/config"
+	storeConfig "micro.dev/v4/service/config/store"
+	microEvents "micro.dev/v4/service/events"
+	evStore "micro.dev/v4/service/events/store"
+	memStream "micro.dev/v4/service/events/stream/memory"
+	"micro.dev/v4/service/logger"
+	"micro.dev/v4/service/model"
+	"micro.dev/v4/service/model/sql"
+	"micro.dev/v4/service/profile"
+	"micro.dev/v4/service/registry"
+	memRegistry "micro.dev/v4/service/registry/memory"
+	microRuntime "micro.dev/v4/service/runtime"
+	"micro.dev/v4/service/runtime/local"
+	microStore "micro.dev/v4/service/store"
+	"micro.dev/v4/service/store/file"
+	mem "micro.dev/v4/service/store/memory"
+	"micro.dev/v4/util/user"
 )
 
 func init() {
@@ -57,40 +48,42 @@ func init() {
 var Local = &profile.Profile{
 	Name: "starter-local",
 	Setup: func(ctx *cli.Context) error {
+		// catch all
+		profile.SetupDefaults()
+
 		microAuth.DefaultAuth = noop.NewAuth()
 		microStore.DefaultStore = file.NewStore(file.WithDir(filepath.Join(user.Dir, "server", "store")))
-		SetupConfigSecretKey(ctx)
+		profile.SetupConfigSecretKey()
 		config.DefaultConfig, _ = storeConfig.NewConfig(microStore.DefaultStore, "")
-		SetupJWT(ctx)
+		profile.SetupJWT()
 
 		// the registry service uses the memory registry, the other core services will use the default
 		// rpc client and call the registry service
 		if ctx.Args().Get(1) == "registry" {
-			SetupRegistry(memory.NewRegistry())
+			profile.SetupRegistry(memRegistry.NewRegistry())
 		} else {
 			// set the registry address
 			registry.DefaultRegistry.Init(
 				registry.Addrs("localhost:8000"),
 			)
 
-			SetupRegistry(registry.DefaultRegistry)
+			profile.SetupRegistry(registry.DefaultRegistry)
 		}
 
 		// the broker service uses the memory broker, the other core services will use the default
 		// rpc client and call the broker service
 		if ctx.Args().Get(1) == "broker" {
-			SetupBroker(memBroker.NewBroker())
+			profile.SetupBroker(memBroker.NewBroker())
 		} else {
 			broker.DefaultBroker.Init(
 				broker.Addrs("localhost:8003"),
 			)
-			SetupBroker(broker.DefaultBroker)
+			profile.SetupBroker(broker.DefaultBroker)
 		}
 
 		// set the store in the model
-		model.DefaultModel = model.NewModel(
-			model.WithStore(microStore.DefaultStore),
-		)
+		// TODO sql model
+		model.DefaultModel = sql.NewModel()
 
 		// use the local runtime, note: the local runtime is designed to run source code directly so
 		// the runtime builder should NOT be set when using this implementation
@@ -132,6 +125,9 @@ var Local = &profile.Profile{
 var Kubernetes = &profile.Profile{
 	Name: "starter-kubernetes",
 	Setup: func(ctx *cli.Context) (err error) {
+		// catch all
+		profile.SetupDefaults()
+
 		microAuth.DefaultAuth = noop.NewAuth()
 
 		microRuntime.DefaultRuntime = local.NewRuntime()
@@ -148,39 +144,38 @@ var Kubernetes = &profile.Profile{
 		}
 
 		// set the store in the model
-		model.DefaultModel = model.NewModel(
-			model.WithStore(microStore.DefaultStore),
-		)
+		// TODO sql model
+		model.DefaultModel = sql.NewModel()
 
 		// the registry service uses the memory registry, the other core services will use the default
 		// rpc client and call the registry service
 		if ctx.Args().Get(1) == "registry" {
-			SetupRegistry(memory.NewRegistry())
+			profile.SetupRegistry(memRegistry.NewRegistry())
 		} else {
 			// set the registry address
 			registry.DefaultRegistry.Init(
 				registry.Addrs("micro-server.micro.svc.cluster.local:8000"),
 			)
 
-			SetupRegistry(registry.DefaultRegistry)
+			profile.SetupRegistry(registry.DefaultRegistry)
 		}
 
 		// the broker service uses the memory broker, the other core services will use the default
 		// rpc client and call the broker service
 		if ctx.Args().Get(1) == "broker" {
-			SetupBroker(memBroker.NewBroker())
+			profile.SetupBroker(memBroker.NewBroker())
 		} else {
 			broker.DefaultBroker.Init(
 				broker.Addrs("micro-server.micro.svc.cluster.local:8003"),
 			)
-			SetupBroker(broker.DefaultBroker)
+			profile.SetupBroker(broker.DefaultBroker)
 		}
 
 		config.DefaultConfig, err = storeConfig.NewConfig(microStore.DefaultStore, "")
 		if err != nil {
 			logger.Fatalf("Error configuring config: %v", err)
 		}
-		SetupConfigSecretKey(ctx)
+		profile.SetupConfigSecretKey()
 
 		// Configure tracing with Jaeger:
 		tracingServiceName := ctx.Args().Get(1)
@@ -204,50 +199,17 @@ var Kubernetes = &profile.Profile{
 var Test = &profile.Profile{
 	Name: "starter-test",
 	Setup: func(ctx *cli.Context) error {
+		// catch all
+		profile.SetupDefaults()
+
 		microAuth.DefaultAuth = noop.NewAuth()
 		microStore.DefaultStore = mem.NewStore()
 		microStore.DefaultBlobStore, _ = file.NewBlobStore()
 		config.DefaultConfig, _ = storeConfig.NewConfig(microStore.DefaultStore, "")
-		SetupRegistry(memory.NewRegistry())
+		profile.SetupRegistry(memRegistry.NewRegistry())
 		// set the store in the model
-		model.DefaultModel = model.NewModel(
-			model.WithStore(microStore.DefaultStore),
-		)
+		// TODO sql model
+		model.DefaultModel = sql.NewModel()
 		return nil
 	},
-}
-
-// SetupRegistry configures the registry
-func SetupRegistry(reg registry.Registry) {
-	registry.DefaultRegistry = reg
-	router.DefaultRouter = regRouter.NewRouter(router.Registry(reg))
-	client.DefaultClient.Init(client.Registry(reg), client.Router(router.DefaultRouter))
-	server.DefaultServer.Init(server.Registry(reg))
-}
-
-// SetupBroker configures the broker
-func SetupBroker(b broker.Broker) {
-	broker.DefaultBroker = b
-	client.DefaultClient.Init(client.Broker(b))
-	server.DefaultServer.Init(server.Broker(b))
-}
-
-// SetupJWT configures the default internal system rules
-func SetupJWT(ctx *cli.Context) {
-	for _, rule := range inAuth.SystemRules {
-		if err := microAuth.DefaultAuth.Grant(rule); err != nil {
-			logger.Fatal("Error creating default rule: %v", err)
-		}
-	}
-}
-
-func SetupConfigSecretKey(ctx *cli.Context) {
-	key := ctx.String("config_secret_key")
-	if len(key) == 0 {
-		k, err := user.GetConfigSecretKey()
-		if err != nil {
-			logger.Fatal("Error getting config secret: %v", err)
-		}
-		os.Setenv("MICRO_CONFIG_SECRET_KEY", k)
-	}
 }

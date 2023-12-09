@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"micro.dev/v4/service"
+	"micro.dev/v4/service/logger"
 
 	_ "github.com/hb-chen/micro-starter/profile"
 	"github.com/hb-chen/micro-starter/service/greeting/registry"

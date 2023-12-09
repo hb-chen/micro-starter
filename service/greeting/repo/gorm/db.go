@@ -4,11 +4,11 @@ import (
 	"time"
 
 	"github.com/hb-chen/micro-starter/service/greeting/domain/model"
-	"github.com/micro/micro/v3/service/config"
-	log "github.com/micro/micro/v3/service/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
+	"micro.dev/v4/service/config"
+	log "micro.dev/v4/service/logger"
 
 	"github.com/hb-chen/micro-starter/service/greeting/conf"
 )

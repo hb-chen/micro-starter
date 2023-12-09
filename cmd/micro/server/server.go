@@ -6,28 +6,28 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
+	"time"
 
-	"github.com/micro/micro/v3/cmd"
-	"github.com/micro/micro/v3/service/auth"
-	log "github.com/micro/micro/v3/service/logger"
-	"github.com/micro/micro/v3/service/runtime"
+	"github.com/hb-chen/micro-starter/cmd/micro/service/api"
 	"github.com/urfave/cli/v2"
+	"micro.dev/v4/cmd"
+	"micro.dev/v4/service/client"
+	log "micro.dev/v4/service/logger"
+	"micro.dev/v4/service/runtime"
+	"micro.dev/v4/service/runtime/local"
 )
 
 var (
 	// list of services managed
 	services = []string{
 		"registry", // :8000
-		// "broker",   // :8003
-		"network", // :8443
+		"broker",   // :8003
+		"network",  // :8443
 		// "runtime",  // :8088
-		// "config",   // :8001
+		"config", // :8001
 		// "store",    // :8002
-		// "events",   // :unset
+		// "events",   // :8005
 		// "auth",     // :8010
-		// "proxy",    // :8081
-		"api", // :8080
-		"web", // :8082
 	}
 )
 
@@ -35,26 +35,19 @@ var (
 	// Name of the server microservice
 	Name = "server"
 	// Address is the server address
-	Address = ":10001"
+	Address = ":8081"
 )
 
 func init() {
 	command := &cli.Command{
-		Name:  "server",
-		Usage: "Run the micro server",
-		Description: `Launching the micro server ('micro server') will enable one to connect to it by
-		setting the appropriate Micro environment (see 'micro env' && 'micro env --help') commands.`,
+		Name:        "server",
+		Usage:       "Run the micro server",
+		Description: "Launch the micro server",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "address",
-				Usage:   "Set the micro server address :10001",
+				Usage:   "Set the micro server address :8081",
 				EnvVars: []string{"MICRO_SERVER_ADDRESS"},
-			},
-			&cli.StringFlag{
-				Name:    "image",
-				Usage:   "Set the micro server image",
-				EnvVars: []string{"MICRO_SERVER_IMAGE"},
-				Value:   "micro/micro:latest",
 			},
 		},
 		Action: func(ctx *cli.Context) error {
@@ -63,17 +56,13 @@ func init() {
 		},
 	}
 
-	for _, p := range Plugins() {
-		if cmds := p.Commands(); len(cmds) > 0 {
-			command.Subcommands = append(command.Subcommands, cmds...)
-		}
-
-		if flags := p.Flags(); len(flags) > 0 {
-			command.Flags = append(command.Flags, flags...)
-		}
-	}
-
 	cmd.Register(command)
+}
+
+func setNetwork() {
+	client.DefaultClient.Init(
+		client.Network("127.0.0.1:8443"),
+	)
 }
 
 // Run runs the entire platform
@@ -83,8 +72,6 @@ func Run(context *cli.Context) error {
 		os.Exit(1)
 	}
 
-	// TODO: reimplement peering of servers e.g --peer=node1,node2,node3
-	// peers are configured as network nodes to cluster between
 	log.Info("Starting server")
 
 	// parse the env vars
@@ -101,7 +88,7 @@ func Run(context *cli.Context) error {
 		}
 
 		// skip the profile and proxy, that's set below since it can be service specific
-		if comps[0] == "MICRO_PROFILE" || comps[0] == "MICRO_PROXY" {
+		if comps[0] == "MICRO_SERVICE_PROFILE" || comps[0] == "MICRO_SERVICE_NETWORK" {
 			continue
 		}
 
@@ -109,62 +96,18 @@ func Run(context *cli.Context) error {
 	}
 
 	// save the runtime
-	runtimeServer := runtime.DefaultRuntime
+	runtimeServer := local.NewRuntime()
 
 	// start the services
 	for _, service := range services {
-		log.Infof("Registering %s", service)
-
 		// all things run by the server are `micro service [name]`
-		cmdArgs := []string{}
+		var cmdArgs []string
 
-		// TODO: remove hacks
-		profile := context.String("profile")
-
-		// web has to behave like a client
-		// if service == "web" {
-		// 	profile = "client"
-		// }
+		profile := "server"
 
 		env := envvars
-		env = append(env, "MICRO_PROFILE="+profile)
-
-		// set the proxy address, default to the network running locally
-		if service != "network" {
-			proxy := context.String("proxy_address")
-			if len(proxy) == 0 {
-				proxy = "127.0.0.1:8443"
-			}
-			env = append(env, "MICRO_PROXY="+proxy)
-		}
-
-		// for kubernetes we want to provide a port and instruct the service to bind to it. we don't do
-		// this locally because the services are not isolated and the ports will conflict
-		var port string
-		if runtime.DefaultRuntime.String() == "kubernetes" {
-			switch service {
-			case "api":
-				// run the api on :443, the standard port for HTTPs
-				port = "443"
-				env = append(env, "MICRO_API_ADDRESS=:443")
-				// pass :8080 for the internal service address, since this is the default port used for the
-				// static (k8s) router. Because the http api will register on :443 it won't conflict
-				env = append(env, "MICRO_SERVICE_ADDRESS=:8080")
-			case "proxy":
-				// run the proxy on :443, the standard port for HTTPs
-				port = "443"
-				env = append(env, "MICRO_PROXY_ADDRESS=:443")
-				// pass :8080 for the internal service address, since this is the default port used for the
-				// static (k8s) router. Because the grpc proxy will register on :443 it won't conflict
-				env = append(env, "MICRO_SERVICE_ADDRESS=:8080")
-			case "network":
-				port = "8443"
-				env = append(env, "MICRO_SERVICE_ADDRESS=:8443")
-			default:
-				port = "8080"
-				env = append(env, "MICRO_SERVICE_ADDRESS=:8080")
-			}
-		}
+		env = append(env, "MICRO_SERVICE_NAME="+service)
+		env = append(env, "MICRO_SERVICE_PROFILE="+profile)
 
 		// we want to pass through the global args so go up one level in the context lineage
 		if len(context.Lineage()) > 1 {
@@ -180,15 +123,11 @@ func Run(context *cli.Context) error {
 			runtime.WithCommand(os.Args[0]),
 			runtime.WithArgs(cmdArgs...),
 			runtime.WithEnv(env),
-			runtime.WithPort(port),
+			runtime.WithPort("0"),
 			runtime.WithRetries(10),
-			runtime.WithServiceAccount("micro"),
-			runtime.WithVolume("store-pvc", "/store"),
-			runtime.CreateImage(context.String("image")),
-			runtime.CreateNamespace("micro"),
-			runtime.WithSecret("MICRO_AUTH_PUBLIC_KEY", auth.DefaultAuth.Options().PublicKey),
-			runtime.WithSecret("MICRO_AUTH_PRIVATE_KEY", auth.DefaultAuth.Options().PrivateKey),
 		}
+
+		log.Infof("Registering %s, args: %v", service, cmdArgs)
 
 		// NOTE: we use Version right now to check for the latest release
 		muService := &runtime.Service{Name: service, Version: "latest"}
@@ -198,12 +137,7 @@ func Run(context *cli.Context) error {
 		}
 	}
 
-	// server is deployed as a pod in k8s, meaning it should exit once the services have been created.
-	if runtimeServer.String() == "kubernetes" {
-		return nil
-	}
-
-	log.Info("Starting server runtime")
+	log.Info("Starting runtime")
 
 	// start the runtime
 	if err := runtimeServer.Start(); err != nil {
@@ -211,11 +145,32 @@ func Run(context *cli.Context) error {
 		return err
 	}
 
+	// start the proxy
+	wait := make(chan bool)
+
+	setNetwork()
+
+	// run the proxy
+	go runProxy(context, wait)
+
+	// run the api
+	apiCmd := api.NewAPI(wait)
+	go apiCmd.Run(context)
+
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGKILL)
 	<-ch
 
+	log.Info("Stopping server")
+
+	// close wait chan
+	close(wait)
+
+	// stop the runtime
 	runtimeServer.Stop()
-	log.Info("Stopped server")
+
+	// just wait 1 sec
+	<-time.After(time.Second)
+
 	return nil
 }
