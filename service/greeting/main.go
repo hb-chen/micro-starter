@@ -4,6 +4,7 @@ import (
 	"micro.dev/v4/service"
 	"micro.dev/v4/service/logger"
 
+	svc "github.com/hb-chen/micro-starter/pkg/service"
 	_ "github.com/hb-chen/micro-starter/profile"
 	"github.com/hb-chen/micro-starter/service/greeting/registry"
 	"github.com/hb-chen/micro-starter/service/greeting/server"
@@ -11,7 +12,7 @@ import (
 
 func main() {
 	// New Service
-	srv := service.New(
+	srv := svc.New(
 		service.Name("greeting"),
 		service.Version("latest"),
 	)

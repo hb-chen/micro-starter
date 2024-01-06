@@ -23,3 +23,11 @@ curl "http://localhost:8080/greeting/call?msg=helloworld"
 {"id":"1","msg":"helloworld"}
 ```
 
+## Image
+
+```shell
+$ make snapshot
+
+$ docker build ./ -f Dockerfile  --platform=linux/amd64 -t registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-example:latest
+```
+

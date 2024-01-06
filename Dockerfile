@@ -5,4 +5,4 @@ ADD dist/micro_linux_amd64_v1/bin/micro /opt/service/micro
 EXPOSE 8080
 WORKDIR /opt/service
 
-ENTRYPOINT [ "./micro" ]
+CMD [ "./micro"]
