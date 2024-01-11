@@ -34,7 +34,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: MICRO_PROFILE
+            - name: MICRO_SERVICE_PROFILE
               value: starter-kubernetes
             - name: MICRO_SERVICE_ADDRESS
               value: :8080

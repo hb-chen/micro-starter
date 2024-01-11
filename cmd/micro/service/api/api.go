@@ -53,6 +53,8 @@ func Run(ctx *cli.Context) error {
 }
 
 func (a *API) Run(ctx *cli.Context) error {
+	addr := ctx.String("address")
+
 	// Init API
 	var opts []api.Option
 
@@ -82,7 +84,7 @@ func (a *API) Run(ctx *cli.Context) error {
 	))
 
 	// create a new api server with wrappers
-	api := httpapi.NewServer(":8080")
+	api := httpapi.NewServer(addr)
 
 	// initialise
 	api.Init(opts...)

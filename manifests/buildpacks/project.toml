@@ -10,11 +10,11 @@ exclude = [
 ]
 
 [[build.buildpacks]]
-uri = "paketobuildpacks/go:0.15.0"
+uri = "paketobuildpacks/go:4"
 
 [[ build.env ]]
 name="BP_GO_VERSION"
-value="1.16.13"
+value="1.20"
 
 [[ build.env ]]
 name="BP_GO_TARGETS"

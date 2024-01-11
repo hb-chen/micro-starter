@@ -1,4 +1,7 @@
 FROM alpine:3.10
-ADD dist/greeting_linux_amd64_v1/bin/greeting /opt/service/main
+
+ADD dist/service_linux_amd64_v1/bin/main /opt/service/main
+
 WORKDIR /opt/service
-ENTRYPOINT [ "./main" ]
+
+CMD [ "./main" ]

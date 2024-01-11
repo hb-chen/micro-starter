@@ -43,7 +43,8 @@ lint:
 pack_build:
 	pack build micro \
 	--builder paketobuildpacks/builder:tiny \
-	--descriptor cicd/buildpacks/project.toml
+	--descriptor manifests/buildpacks/project.toml \
+	--tag registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro:latest
 
 .PHONY: run
 run:

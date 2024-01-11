@@ -31,13 +31,6 @@ var (
 	}
 )
 
-var (
-	// Name of the server microservice
-	Name = "server"
-	// Address is the server address
-	Address = ":8081"
-)
-
 func init() {
 	command := &cli.Command{
 		Name:        "server",
@@ -46,8 +39,15 @@ func init() {
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "address",
-				Usage:   "Set the micro server address :8081",
-				EnvVars: []string{"MICRO_SERVER_ADDRESS"},
+				Usage:   "Set the micro api address",
+				EnvVars: []string{"MICRO_API_ADDRESS"},
+				Value:   ":8080",
+			},
+			&cli.StringFlag{
+				Name:    "proxy_address",
+				Usage:   "Set the micro proxy address",
+				EnvVars: []string{"MICRO_PROXY_ADDRESS"},
+				Value:   ":8081",
 			},
 		},
 		Action: func(ctx *cli.Context) error {

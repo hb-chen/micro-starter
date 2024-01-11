@@ -27,7 +27,7 @@ builds:
 
     # Custom flags templates.
     # Default is empty.
-    flags:
+    #flags:
 
     # Custom ldflags templates.
     # Default is `-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser`.
@@ -36,7 +36,7 @@ builds:
 
     # Custom environment variables to be set during the builds.
     # Default is empty.
-    env:
+    #env:
 
     # GOOS list to build for.
     # For more info refer to: https://golang.org/doc/install/source#environment
@@ -59,12 +59,13 @@ archives:
     # Defaults to `default`.
     id: micro
 
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
+    #replacements:
+    #  darwin: Darwin
+    #  linux: Linux
+    #  windows: Windows
+    #  386: i386
+    #  amd64: x86_64
+
     # Archive name template.
     # Defaults:
     # - if format is `tar.gz`, `tar.xz`, `gz` or `zip`:

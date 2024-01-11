@@ -23,7 +23,7 @@ builds:
     # Binary name.
     # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
     # Default is the name of the project directory.
-    binary: bin/{{ .ProjectName }}
+    binary: bin/main
 
     # Custom flags templates.
     # Default is empty.
@@ -59,12 +59,6 @@ archives:
     # Defaults to `default`.
     id: service
 
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
     # Archive name template.
     # Defaults:
     # - if format is `tar.gz`, `tar.xz`, `gz` or `zip`:

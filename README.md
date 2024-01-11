@@ -33,7 +33,7 @@ Run example service
 ```shell script
 # Greeting
 cd service/greeting
-go run main.go --profile starter-local
+CGO_ENABLED=0 go run main.go --profile starter-local
 ```
 
 Test example service
@@ -48,6 +48,12 @@ curl "http://localhost:8080/greeting/list?page=1&size=10"
 
 ## Kubernetes
 
+```shell
+$ make snapshot
+
+$ docker build ./ -f Dockerfile --platform=linux/amd64 -t registry.cn-hangzhou.aliyuncs.com/hb-chen/micro-starter-micro:latest
+```
+
 > Attention: default ingress class=nginx, host=api.micro.hbchen.com
 
 ```shell
@@ -56,16 +62,16 @@ helm install -n micro micro-server manifests/charts/micro \
 
 # Digest
 helm install -n micro micro-server manifests/charts/micro \
---set image.tag="latest@sha256:1e2c8df50398c2dcd4b96065b8b81842a86c5cc83d8ef1ae96ac7b5d8432add3" \
+--set image.tag="latest@sha256:aceabd67ac333dcd19bde3524c54e7a556b8651cf049495ab6e086d45bb7ad77" \
 --set ingress.enabled=true
 ```
 
 ```shell
-helm install -n micro micro-example manifests/charts/servic
+helm install -n micro micro-example manifests/charts/service
 
 # Digest
 helm install -n micro micro-example manifests/charts/service \
---set image.tag="latest@sha256:fa2e56f01a4704ad298331cd0356a0e174e9358701922552934bbd4987c9fb80"
+--set image.tag="latest@sha256:a2af30ff9a0a66ade77672e01679a2b02ead3b2b0f27bd7092d726d75fd069e0"
 ```
 
 ```shell

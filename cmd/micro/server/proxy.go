@@ -13,13 +13,15 @@ import (
 )
 
 func runProxy(ctx *cli.Context, wait chan bool) error {
+	addr := ctx.String("proxy_address")
+
 	// set the context
 	popts := []proxy.Option{
 		proxy.WithClient(client.DefaultClient),
 	}
 
 	serverOpts := []server.Option{
-		server.Address(Address),
+		server.Address(addr),
 		server.Registry(noop.NewRegistry()),
 		server.Broker(bmem.NewBroker()),
 	}
